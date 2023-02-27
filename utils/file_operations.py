@@ -22,7 +22,7 @@ def get_appdata_logs():
                     after_keyword = after_keyword[0: last_dot]
                     print(after_keyword)
     except IOError:
-        print(f'Could not open file {app_data_filename}')
+        return f'Could not open file {app_data_filename}'
 
 
 def get_programdata_logs():
@@ -40,4 +40,4 @@ def get_programdata_logs():
                     after_keyword = after_keyword[0: last_dot]
                     print(after_keyword)
     except IOError:
-        print(f'Could not open file {program_data_filename}')
+        return f'Could not open file {program_data_filename}'
