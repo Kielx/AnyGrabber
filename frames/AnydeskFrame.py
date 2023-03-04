@@ -22,24 +22,26 @@ class AnydeskFrame(customtkinter.CTkFrame):
         self.grid_rowconfigure(0, weight=1)
 
         # create checkbox and switch frame
-        self.checkbox_var = tkinter.BooleanVar()
-        self.checkbox_var2 = tkinter.BooleanVar()
+        self.fetch_appdata_logs_switch = tkinter.BooleanVar()
+        self.fetch_programdata_logs_switch = tkinter.BooleanVar()
 
         self.checkbox_slider_frame = customtkinter.CTkFrame(master=self)
         self.checkbox_slider_frame.grid(row=0, column=0, padx=(20, 20), pady=(20, 0), sticky="nsew")
-        self.checkbox_1 = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame, variable=self.checkbox_var,
-                                                    onvalue=True, offvalue=False)
-        self.checkbox_1.grid(row=1, column=0, pady=(20, 0), padx=20, sticky="n")
-        self.checkbox_2 = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame, variable=self.checkbox_var2,
-                                                    onvalue=True, offvalue=False)
-        self.checkbox_2.grid(row=2, column=0, pady=(20, 0), padx=20, sticky="n")
+        self.fetch_appdata_logs_checkbox = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame,
+                                                                     variable=self.fetch_appdata_logs_switch,
+                                                                     onvalue=True, offvalue=False)
+        self.fetch_appdata_logs_checkbox.grid(row=1, column=0, pady=(20, 0), padx=20, sticky="n")
+        self.fetch_programdata_logs_checkbox = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame,
+                                                                         variable=self.fetch_programdata_logs_switch,
+                                                                         onvalue=True, offvalue=False)
+        self.fetch_programdata_logs_checkbox.grid(row=2, column=0, pady=(20, 0), padx=20, sticky="n")
         self.checkbox_3 = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame)
         self.checkbox_3.grid(row=3, column=0, pady=20, padx=20, sticky="n")
 
-        self.button = customtkinter.CTkButton(self, command=self.button_callback,
-                                              text="Fetch logs")
+        self.fetch_logs_button = customtkinter.CTkButton(self, command=self.button_callback,
+                                                         text="Fetch logs")
 
-        self.button.grid(row=1, column=0, columnspan=2, padx=20, pady=(20, 0), sticky="ew")
+        self.fetch_logs_button.grid(row=1, column=0, columnspan=2, padx=20, pady=(20, 0), sticky="ew")
 
         self.textbox = customtkinter.CTkTextbox(self)
         self.textbox.grid(row=2, column=0, padx=20, pady=20, sticky='nsew')
@@ -51,9 +53,9 @@ class AnydeskFrame(customtkinter.CTkFrame):
         Clears texbox contents after it gets invoked, and disables textbox editing after fetching data"""
         self.textbox.configure(state="normal")
         self.textbox.delete("0.0", "end")  # delete all text
-        if self.checkbox_var.get():
+        if self.fetch_appdata_logs_switch.get():
             self.print_logs(log_filename_with_path=app_data_filename)
-        if self.checkbox_var2.get():
+        if self.fetch_programdata_logs_switch.get():
             self.print_logs(log_filename_with_path=program_data_filename)
         self.textbox.configure(state="disabled")
 
