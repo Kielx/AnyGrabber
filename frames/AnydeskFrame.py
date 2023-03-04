@@ -46,12 +46,18 @@ class AnydeskFrame(customtkinter.CTkFrame):
 
         if self.checkbox_var.get():
             log_entries = get_anydesk_logs(app_data_filename)
-            self.textbox.insert("insert", "Fetching appdata logs: \n")
-            for entry in log_entries:
-                self.textbox.insert("insert", entry + "\n\n")
+            if log_entries is not None:
+                self.textbox.insert("insert", "Fetching appdata logs: \n")
+                for entry in log_entries:
+                    self.textbox.insert("insert", entry + "\n\n")
+            else:
+                self.textbox.insert("insert", "AppData log trace not found! \n")
         if self.checkbox_var2.get():
             log_entries = get_anydesk_logs(program_data_filename)
-            self.textbox.insert("insert", "Fetching programdata logs: \n")
-            for entry in log_entries:
-                self.textbox.insert("insert", entry + "\n\n")
+            if log_entries is not None:
+                self.textbox.insert("insert", "Fetching programdata logs: \n")
+                for entry in log_entries:
+                    self.textbox.insert("insert", entry + "\n\n")
+            else:
+                self.textbox.insert("insert", "ProgramData log trace not found! \n")
         self.textbox.configure(state="disabled")
