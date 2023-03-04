@@ -3,7 +3,7 @@ import dateutil.parser as dparser
 search_string = 'Logged in from '
 
 
-def get_anydesk_logs(filepath: str):
+def get_anydesk_logs(filepath: str) -> list[str] | None:
     try:
         with open(filepath, 'r') as f:
             log_entries = []
@@ -18,4 +18,4 @@ def get_anydesk_logs(filepath: str):
                     log_entries.append(date_of_login + "  -  " + after_keyword)
         return log_entries
     except IOError:
-        return f'Could not open file {filepath}'
+        return None
