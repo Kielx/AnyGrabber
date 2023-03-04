@@ -7,6 +7,8 @@ image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../asset
 
 
 class HomeFrame(customtkinter.CTkFrame):
+    """Home frame class."""
+
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
 

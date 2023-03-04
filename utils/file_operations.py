@@ -1,9 +1,15 @@
 import dateutil.parser as dparser
 
+# Search string in the log file that is used to identify the line that contains the login information
 search_string = 'Logged in from '
 
 
 def get_anydesk_logs(filepath: str) -> list[str] | None:
+    """A function that reads a file and returns a list of strings that contain login information
+
+    :param filepath: a path to a file that contains Anydesk logs
+    :return: a list of strings that contain login information or None if file doesn't exist
+    """
     try:
         with open(filepath, 'r') as f:
             log_entries = []

@@ -1,18 +1,19 @@
 import os
-import tkinter
 import customtkinter
-
-from frames.HomeFrame import HomeFrame
-from frames.AnydeskFrame import AnydeskFrame
-
 from PIL import Image
+
+from frames.AnydeskFrame import AnydeskFrame
+from frames.HomeFrame import HomeFrame
 
 
 def change_appearance_mode_event(new_appearance_mode):
+    """Change appearance mode event handler for appearance mode menu."""
     customtkinter.set_appearance_mode(new_appearance_mode)
 
 
 class App(customtkinter.CTk):
+    """Main application class."""
+
     def __init__(self):
         super().__init__()
 
@@ -77,6 +78,7 @@ class App(customtkinter.CTk):
         self.select_frame_by_name("home")
 
     def select_frame_by_name(self, name):
+        """Function that highlights selected button and shows selected frame."""
         # set button color for selected button
         self.home_button.configure(fg_color=("gray75", "gray25") if name == "home" else "transparent")
         self.frame_2_button.configure(fg_color=("gray75", "gray25") if name == "anydesk_frame" else "transparent")
@@ -92,9 +94,11 @@ class App(customtkinter.CTk):
             self.anydesk_frame.grid_forget()
 
     def home_button_event(self):
+        """Home button event handler."""
         self.select_frame_by_name("home")
 
     def frame_2_button_event(self):
+        """Frame 2 button event handler."""
         self.select_frame_by_name("anydesk_frame")
 
 
