@@ -1,4 +1,5 @@
 import os
+import tkinter
 import customtkinter
 
 from frames.HomeFrame import HomeFrame
