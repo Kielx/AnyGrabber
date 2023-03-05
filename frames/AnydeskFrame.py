@@ -20,8 +20,6 @@ search_finished = False
 
 def find_files(filename: str | list, search_path):
     """A function that searches for files in a given path and returns a list of paths to found files"""
-    global search_finished
-    search_finished = False
     # Walking top-down from the root
     for root, dir, files in os.walk(search_path):
         if type(filename) == list:
@@ -31,7 +29,6 @@ def find_files(filename: str | list, search_path):
         else:
             if filename in files:
                 message_queue.append(os.path.join(root, filename))
-    search_finished = True
 
 
 class AnydeskFrame(customtkinter.CTkFrame):
@@ -42,7 +39,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         super().__init__(master, **kwargs)
 
         self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(2, weight=1)
 
         # create checkbox and switch frame
         self.fetch_appdata_logs_switch = tkinter.BooleanVar()
@@ -50,16 +47,16 @@ class AnydeskFrame(customtkinter.CTkFrame):
 
         self.checkbox_slider_frame = customtkinter.CTkFrame(master=self)
         self.checkbox_slider_frame.grid(row=0, column=0, padx=(20, 20), pady=(20, 0), sticky="nsew")
-        self.fetch_appdata_logs_checkbox = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame,
+        self.checkbox_fetch_appdata_logs = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame,
                                                                      variable=self.fetch_appdata_logs_switch,
                                                                      onvalue=True, offvalue=False)
-        self.fetch_appdata_logs_checkbox.grid(row=1, column=0, pady=(20, 0), padx=20, sticky="n")
-        self.fetch_programdata_logs_checkbox = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame,
+        self.checkbox_fetch_appdata_logs.grid(row=0, column=0, pady=(20, 0), padx=20, sticky="n")
+        self.checkbox_fetch_programdata_logs = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame,
                                                                          variable=self.fetch_programdata_logs_switch,
                                                                          onvalue=True, offvalue=False)
-        self.fetch_programdata_logs_checkbox.grid(row=2, column=0, pady=(20, 0), padx=20, sticky="n")
-        self.checkbox_3 = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame)
-        self.checkbox_3.grid(row=3, column=0, pady=20, padx=20, sticky="n")
+        self.checkbox_fetch_programdata_logs.grid(row=0, column=1, pady=(20, 0), padx=20, sticky="n")
+        self.checkbox_find_logs = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame)
+        self.checkbox_find_logs.grid(row=0, column=2, pady=20, padx=20, sticky="n")
 
         self.textbox = customtkinter.CTkTextbox(self)
         self.textbox.grid(row=2, column=0, padx=20, pady=20, sticky='nsew')
@@ -81,25 +78,22 @@ class AnydeskFrame(customtkinter.CTkFrame):
             self.print_logs(log_filename_with_path=app_data_filename)
         if self.fetch_programdata_logs_switch.get():
             self.print_logs(log_filename_with_path=program_data_filename)
-        if self.checkbox_3.get():
-            self.fetch_logs_button.configure(state="disabled")
-            threading.Thread(target=self.checkbox_callback, daemon=True).start()
+        if self.checkbox_find_logs.get():
+            threading.Thread(target=self.search_filesystem_callback, daemon=True).start()
 
     def print_logs(self, log_filename_with_path: str):
         print(f"Printing logs from {log_filename_with_path}")
         """A function that calls get_anydesk_logs function and prints output to textbox
 
-        Shows a message if no logs are found in a file or if file doesn't exist
+        get_anydesk_logs searches through a file and returns a list of IP addresses that were found in it
+        print_logs inserts result into textbox and shows a message if no logs are found in a file or if file doesn't 
+        exist. It also displays a message if file is empty or no IP addresses were found in it.
 
         :param log_filename_with_path: a path to a file that contains Anydesk logs
         """
         log_entries = get_anydesk_logs(log_filename_with_path)
-        print(log_entries)
         if log_entries is not None:
-            print(self)
-            print(self.textbox)
             self.textbox.insert("insert", f'Fetching logs from {log_filename_with_path}: \n')
-            print(self.textbox)
             if len(log_entries) < 1:
                 self.textbox.insert("insert", "No IP logs found inside file!")
             else:
@@ -108,25 +102,45 @@ class AnydeskFrame(customtkinter.CTkFrame):
         else:
             self.textbox.insert("insert", f'Logs not found in {log_filename_with_path} \n')
 
-    def checkbox_callback(self):
+    def search_filesystem_callback(self):
+        """A callback function that calls find_files function and prints output to textbox
+
+        It's a wrapper that is responsible for displaying a progressbar while find_files is running, disabling
+        checkboxes and buttons while searching for files and enabling them after search is finished.
+        It calls update_textbox function to update textbox contents while find_files is running.
+        It cleans up after itself by destroying progressbar and enabling buttons and checkboxes after search is finished.
+        """
         global search_finished
-        self.textbox.insert("insert", "---- Searching for files, it may take a while! ----\n")
+        self.textbox.insert("insert", "---- Searching for files, it may take a while! ----\n\n")
+        self.fetch_logs_button.configure(state="disabled")
+        self.checkbox_fetch_appdata_logs.configure(state="disabled")
+        self.checkbox_fetch_programdata_logs.configure(state="disabled")
+        self.checkbox_find_logs.configure(state="disabled")
         progressbar = customtkinter.CTkProgressBar(master=self, mode="indeterminate")
-        progressbar.grid(row=3, column=0, pady=20, padx=20, sticky="n")
+        progressbar.grid(row=4, column=0, pady=20, padx=20, sticky="ew")
         progressbar.start()
         search_finished = False
-        self.update()
+        self.update_textbox()
         find_files(["ad.trace", "ad_svc.trace"], "C:\\")
+        search_finished = True
         progressbar.stop()
         progressbar.destroy()
         self.fetch_logs_button.configure(state="normal")
+        self.checkbox_fetch_appdata_logs.configure(state="normal")
+        self.checkbox_fetch_programdata_logs.configure(state="normal")
+        self.checkbox_find_logs.configure(state="normal")
+        self.textbox.insert("insert", "---- Searching for files finished! ----\n\n")
 
-    def update(self):
-        """A function that updates the frame's contents"""
+    def update_textbox(self):
+        """A function that updates the textbox with new logs found by the search function
+
+        It is called recursively every 2 seconds by the gui thread, and it checks if the search function has finished
+        searching
+        """
+
         try:
             self.print_logs(message_queue.popleft())
         except IndexError:
             pass
         if not search_finished:
-            self.after(2000, func=self.update)
-        print("Updating frame...")
+            self.after(2000, func=self.update_textbox)
