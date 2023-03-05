@@ -5,6 +5,8 @@ from PIL import Image
 from frames.AnydeskFrame import AnydeskFrame
 from frames.HomeFrame import HomeFrame
 
+customtkinter.set_appearance_mode("System")
+
 
 def change_appearance_mode_event(new_appearance_mode):
     """Change appearance mode event handler for appearance mode menu."""
@@ -17,7 +19,9 @@ class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
 
-        self.geometry("700x450")
+        self.geometry("720x450+0+0")
+        self.title("AnyGrabber - Grabber for AnyDesk logs")
+        self.minsize(720, 450)
 
         # set grid layout 1x2
         self.grid_rowconfigure(0, weight=1)
@@ -67,6 +71,7 @@ class App(customtkinter.CTk):
                                                                 values=["Light", "Dark", "System"],
                                                                 command=change_appearance_mode_event)
         self.appearance_mode_menu.grid(row=6, column=0, padx=20, pady=20, sticky="s")
+        self.appearance_mode_menu.set("System")
 
         # create home frame
         self.home_frame = HomeFrame(self, corner_radius=0, fg_color="transparent")
