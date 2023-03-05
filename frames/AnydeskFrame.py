@@ -44,19 +44,28 @@ class AnydeskFrame(customtkinter.CTkFrame):
         # create checkbox and switch frame
         self.fetch_appdata_logs_switch = tkinter.BooleanVar()
         self.fetch_programdata_logs_switch = tkinter.BooleanVar()
+        self.find_files_switch = tkinter.BooleanVar(value=True)
 
         self.checkbox_slider_frame = customtkinter.CTkFrame(master=self)
         self.checkbox_slider_frame.grid(row=0, column=0, padx=(20, 20), pady=(20, 0), sticky="nsew")
+        self.checkbox_slider_frame_label = customtkinter.CTkLabel(master=self.checkbox_slider_frame,
+                                                                  text="Choose where to search for logs:",
+                                                                  font=customtkinter.CTkFont(size=15, weight="bold"))
+        self.checkbox_slider_frame_label.grid(row=0, column=0, columnspan=3, sticky="n")
         self.checkbox_fetch_appdata_logs = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame,
                                                                      variable=self.fetch_appdata_logs_switch,
-                                                                     onvalue=True, offvalue=False)
-        self.checkbox_fetch_appdata_logs.grid(row=0, column=0, pady=(20, 0), padx=20, sticky="n")
+                                                                     onvalue=True, offvalue=False, text="AppData")
+        self.checkbox_fetch_appdata_logs.grid(row=1, column=0, pady=(20, 0), padx=20, sticky="n")
         self.checkbox_fetch_programdata_logs = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame,
                                                                          variable=self.fetch_programdata_logs_switch,
-                                                                         onvalue=True, offvalue=False)
-        self.checkbox_fetch_programdata_logs.grid(row=0, column=1, pady=(20, 0), padx=20, sticky="n")
-        self.checkbox_find_logs = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame)
-        self.checkbox_find_logs.grid(row=0, column=2, pady=20, padx=20, sticky="n")
+                                                                         onvalue=True, offvalue=False,
+                                                                         text="ProgramData")
+        self.checkbox_fetch_programdata_logs.grid(row=1, column=1, pady=(20, 0), padx=20, sticky="n")
+        self.checkbox_find_logs = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame,
+                                                            variable=self.find_files_switch,
+                                                            onvalue=True, offvalue=False, text="Search filesystem "
+                                                                                               "for logs")
+        self.checkbox_find_logs.grid(row=1, column=2, pady=20, padx=20, sticky="n")
 
         self.textbox = customtkinter.CTkTextbox(self)
         self.textbox.grid(row=2, column=0, padx=20, pady=20, sticky='nsew')
@@ -82,7 +91,6 @@ class AnydeskFrame(customtkinter.CTkFrame):
             threading.Thread(target=self.search_filesystem_callback, daemon=True).start()
 
     def print_logs(self, log_filename_with_path: str):
-        print(f"Printing logs from {log_filename_with_path}")
         """A function that calls get_anydesk_logs function and prints output to textbox
 
         get_anydesk_logs searches through a file and returns a list of IP addresses that were found in it
