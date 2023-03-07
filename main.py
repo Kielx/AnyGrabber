@@ -19,7 +19,7 @@ class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
 
-        self.geometry("720x450+0+0")
+        self.geometry("750x450+0+0")
         self.title("AnyGrabber - Grabber for AnyDesk logs")
         self.minsize(720, 450)
 

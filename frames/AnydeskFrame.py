@@ -42,9 +42,9 @@ class AnydeskFrame(customtkinter.CTkFrame):
         self.grid_rowconfigure(2, weight=1)
 
         # create checkbox and switch frame
-        self.fetch_appdata_logs_switch = tkinter.BooleanVar()
-        self.fetch_programdata_logs_switch = tkinter.BooleanVar()
-        self.find_files_switch = tkinter.BooleanVar(value=True)
+        self.fetch_appdata_logs_switch = tkinter.BooleanVar(value=True)
+        self.fetch_programdata_logs_switch = tkinter.BooleanVar(value=True)
+        self.find_files_switch = tkinter.BooleanVar(value=False)
 
         self.checkbox_slider_frame = customtkinter.CTkFrame(master=self)
         self.checkbox_slider_frame.grid(row=0, column=0, padx=(20, 20), pady=(20, 0), sticky="nsew")
@@ -63,8 +63,9 @@ class AnydeskFrame(customtkinter.CTkFrame):
         self.checkbox_fetch_programdata_logs.grid(row=1, column=1, pady=(20, 0), padx=20, sticky="n")
         self.checkbox_find_logs = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame,
                                                             variable=self.find_files_switch,
-                                                            onvalue=True, offvalue=False, text="Search filesystem "
-                                                                                               "for logs")
+                                                            onvalue=True, offvalue=False, text="Search custom location "
+                                                                                               "for logs",
+                                                            command=self.toggle_checkboxes)
         self.checkbox_find_logs.grid(row=1, column=2, pady=20, padx=20, sticky="n")
 
         self.textbox = customtkinter.CTkTextbox(self)
@@ -119,6 +120,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         It cleans up after itself by destroying progressbar and enabling buttons and checkboxes after search is finished.
         """
         global search_finished
+        search_location = customtkinter.filedialog.askdirectory()
         self.textbox.insert("insert", "---- Searching for files, it may take a while! ----\n\n")
         self.fetch_logs_button.configure(state="disabled")
         self.checkbox_fetch_appdata_logs.configure(state="disabled")
@@ -129,13 +131,11 @@ class AnydeskFrame(customtkinter.CTkFrame):
         progressbar.start()
         search_finished = False
         self.update_textbox()
-        find_files(["ad.trace", "ad_svc.trace"], "C:\\")
+        find_files(["ad.trace", "ad_svc.trace"], search_location)
         search_finished = True
         progressbar.stop()
         progressbar.destroy()
         self.fetch_logs_button.configure(state="normal")
-        self.checkbox_fetch_appdata_logs.configure(state="normal")
-        self.checkbox_fetch_programdata_logs.configure(state="normal")
         self.checkbox_find_logs.configure(state="normal")
         self.textbox.insert("insert", "---- Searching for files finished! ----\n\n")
 
@@ -151,4 +151,15 @@ class AnydeskFrame(customtkinter.CTkFrame):
         except IndexError:
             pass
         if not search_finished:
-            self.after(2000, func=self.update_textbox)
+            self.after(1000, func=self.update_textbox)
+
+    def toggle_checkboxes(self):
+        """A function that disables checkboxes if "Search filesystem for logs" checkbox is selected"""
+        if self.checkbox_find_logs.get():
+            self.fetch_appdata_logs_switch.set(False)
+            self.fetch_programdata_logs_switch.set(False)
+            self.checkbox_fetch_appdata_logs.configure(state="disabled")
+            self.checkbox_fetch_programdata_logs.configure(state="disabled")
+        else:
+            self.checkbox_fetch_appdata_logs.configure(state="normal")
+            self.checkbox_fetch_programdata_logs.configure(state="normal")
