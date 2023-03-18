@@ -126,7 +126,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         self.checkbox_fetch_appdata_logs.configure(state="disabled")
         self.checkbox_fetch_programdata_logs.configure(state="disabled")
         self.checkbox_find_logs.configure(state="disabled")
-        progressbar = customtkinter.CTkProgressBar(master=self, mode="indeterminate")
+        progressbar = customtkinter.CTkProgressBar(master=self, mode="indeterminate", indeterminate_speed=1.15)
         progressbar.grid(row=4, column=0, pady=20, padx=20, sticky="ew")
         progressbar.start()
         search_finished = False
