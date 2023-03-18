@@ -12,10 +12,10 @@ class HomeFrame(customtkinter.CTkFrame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
 
-        self.large_test_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "large_test_image.png")),
-                                                       size=(500, 150))
+        self.any_grabber_logo = customtkinter.CTkImage(Image.open(os.path.join(image_path, "AnyGrabberLogo.png")),
+                                                       size=(200, 144))
 
         self.grid_columnconfigure(0, weight=1)
         self.home_frame_large_image_label = customtkinter.CTkLabel(self, text="",
-                                                                   image=self.large_test_image)
+                                                                   image=self.any_grabber_logo)
         self.home_frame_large_image_label.grid(row=0, column=0, padx=20, pady=10)
