@@ -49,7 +49,7 @@ class App(customtkinter.CTk):
         self.navigation_frame.grid_rowconfigure(4, weight=1)
 
         self.navigation_frame_label = customtkinter.CTkLabel(self.navigation_frame, text_color=("#333", "#ccc"),
-                                                             text="AnyGrabber",
+                                                             text=" AnyGrabber",
                                                              image=self.logo_image,
                                                              compound="left",
                                                              font=customtkinter.CTkFont(size=15, weight="bold"))
