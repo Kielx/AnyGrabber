@@ -48,7 +48,8 @@ class App(customtkinter.CTk):
         self.navigation_frame.grid(row=0, column=0, sticky="nsew")
         self.navigation_frame.grid_rowconfigure(4, weight=1)
 
-        self.navigation_frame_label = customtkinter.CTkLabel(self.navigation_frame, text="  AnyGrabber",
+        self.navigation_frame_label = customtkinter.CTkLabel(self.navigation_frame, text_color=("#333", "#ccc"),
+                                                             text="AnyGrabber",
                                                              image=self.logo_image,
                                                              compound="left",
                                                              font=customtkinter.CTkFont(size=15, weight="bold"))
@@ -56,20 +57,21 @@ class App(customtkinter.CTk):
 
         self.home_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40, border_spacing=10,
                                                    text="Home",
-                                                   fg_color="transparent", text_color=("gray10", "gray90"),
+                                                   fg_color="transparent", text_color=("#333", "#ccc"),
                                                    hover_color=("gray70", "gray30"),
                                                    image=self.home_image, anchor="w", command=self.home_button_event)
         self.home_button.grid(row=1, column=0, sticky="ew")
 
         self.frame_2_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40,
                                                       border_spacing=10, text="AnyDesk",
-                                                      fg_color="transparent", text_color=("gray10", "gray90"),
+                                                      fg_color="transparent", text_color=("#333", "#ccc"),
                                                       hover_color=("gray70", "gray30"),
                                                       image=self.anydesk_image, anchor="w",
                                                       command=self.frame_2_button_event)
         self.frame_2_button.grid(row=2, column=0, sticky="ew")
 
         self.appearance_mode_menu = customtkinter.CTkOptionMenu(self.navigation_frame,
+                                                                text_color=("#eee", "#ccc"),
                                                                 values=["Light", "Dark", "System"],
                                                                 command=change_appearance_mode_event)
         self.appearance_mode_menu.grid(row=6, column=0, padx=20, pady=20, sticky="s")
