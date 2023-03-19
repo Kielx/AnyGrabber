@@ -2,10 +2,10 @@ import customtkinter
 import tkinter
 import os
 import threading
-import time
 from collections import deque
 
-from utils.file_operations import get_anydesk_logs
+from utils.file_operations import get_anydesk_logs, create_timestamped_directory, copy_and_generate_checksum, \
+    create_folders_from_path
 
 # Define paths to AnyDesk log files (ad.trace and ad_svc.trace)
 app_data_path = os.getenv('APPDATA')
@@ -16,6 +16,8 @@ program_data_filename = f'{program_data_path}/AnyDesk/ad_svc.trace'
 # Means of communication, between the gui & update threads:
 message_queue = deque()
 search_finished = False
+
+report_folder_path: str = ""
 
 
 def find_files(filename: str | list, search_path):
@@ -90,10 +92,16 @@ class AnydeskFrame(customtkinter.CTkFrame):
         Clears texbox contents after it gets invoked, and disables textbox editing after fetching data"""
         self.textbox.configure(state="normal")
         self.textbox.delete("0.0", "end")  # delete all text
+        global report_folder_path
+        report_folder_path = create_timestamped_directory()
         if self.fetch_appdata_logs_switch.get():
             self.print_logs(log_filename_with_path=app_data_filename)
+            destination_path = create_folders_from_path(app_data_filename, report_folder_path)
+            copy_and_generate_checksum(app_data_filename, destination_path)
         if self.fetch_programdata_logs_switch.get():
             self.print_logs(log_filename_with_path=program_data_filename)
+            destination_path = create_folders_from_path(program_data_filename, report_folder_path)
+            copy_and_generate_checksum(program_data_filename, destination_path)
         if self.checkbox_find_logs.get():
             threading.Thread(target=self.search_filesystem_callback, daemon=True).start()
 
@@ -136,7 +144,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         progressbar.grid(row=4, column=0, pady=20, padx=20, sticky="ew")
         progressbar.start()
         search_finished = False
-        self.update_textbox()
+        self.generate_and_present_search_results()
         find_files(["ad.trace", "ad_svc.trace"], search_location)
         search_finished = True
         progressbar.stop()
@@ -145,7 +153,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         self.checkbox_find_logs.configure(state="normal")
         self.textbox.insert("insert", "---- Searching for files finished! ----\n\n")
 
-    def update_textbox(self):
+    def generate_and_present_search_results(self):
         """A function that updates the textbox with new logs found by the search function
 
         It is called recursively every 2 seconds by the gui thread, and it checks if the search function has finished
@@ -153,11 +161,14 @@ class AnydeskFrame(customtkinter.CTkFrame):
         """
 
         try:
-            self.print_logs(message_queue.popleft())
+            found_file = message_queue.popleft()
+            destination_path = create_folders_from_path(found_file, report_folder_path)
+            copy_and_generate_checksum(found_file, destination_path)
+            self.print_logs(found_file)
         except IndexError:
             pass
         if not search_finished:
-            self.after(1000, func=self.update_textbox)
+            self.after(1000, func=self.generate_and_present_search_results)
 
     def toggle_checkboxes(self):
         """A function that disables checkboxes if "Search filesystem for logs" checkbox is selected"""
