@@ -35,6 +35,7 @@ def find_files(filename: str | list, search_path) -> int:
                 number_of_found_files += 1
     return number_of_found_files
 
+
 class AnydeskFrame(customtkinter.CTkFrame):
     """A frame that contains widgets for fetching AnyDesk logs and displaying them in a textbox.
     """
@@ -115,7 +116,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         """
         log_entries = get_anydesk_logs(log_filename_with_path)
         if log_entries is not None:
-            self.textbox.insert("insert", f'Fetching logs from {log_filename_with_path}: \n')
+            self.textbox.insert("insert", f'Fetching logs from {log_filename_with_path}: \n\n')
             if len(log_entries) < 1:
                 self.textbox.insert("insert", "No IP logs found inside file!")
             else:
@@ -153,9 +154,10 @@ class AnydeskFrame(customtkinter.CTkFrame):
         self.checkbox_fetch_programdata_logs.configure(state="normal")
         self.checkbox_find_logs.configure(state="normal")
         if number_of_found_files == 0:
-            self.textbox.insert("insert", f'---- No files were found in {search_location}! ----\n\n')
+            self.after(500,
+                       func=self.textbox.insert("insert", f'\n---- No files were found in {search_location}! ----\n\n'))
         else:
-            self.textbox.insert("insert", "---- Searching for files finished! ----\n\n")
+            self.after(500, self.textbox.insert("insert", "\n---- Searching for files finished! ----\n\n"))
 
     def generate_and_present_search_results(self):
         """A function that updates the textbox with new logs found by the search function
@@ -172,7 +174,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         except IndexError:
             pass
         if not search_finished:
-            self.after(1000, func=self.generate_and_present_search_results)
+            self.after(500, func=self.generate_and_present_search_results)
 
     def toggle_checkboxes(self):
         """A function that disables checkboxes if "Search filesystem for logs" checkbox is selected"""
