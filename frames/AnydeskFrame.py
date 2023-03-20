@@ -144,7 +144,6 @@ class AnydeskFrame(customtkinter.CTkFrame):
         progressbar.start()
         search_finished = False
         self.generate_and_present_search_results()
-        print(search_location)
         number_of_found_files = find_files(["ad.trace", "ad_svc.trace"], search_location)
         search_finished = True
         progressbar.stop()
