@@ -68,5 +68,8 @@ def create_folders_from_path(s, folder_path):
 
 def copy_and_generate_checksum(source_file: str, destination_folder_path: str) -> str:
     """A function that copies a file to a destination folder and generates a checksum for it"""
+    try:
+        shutil.copy2(source_file, destination_folder_path)
+    except IOError:
+        print("Error occurred when trying to copy")
 
-    shutil.copy2(source_file, destination_folder_path)
