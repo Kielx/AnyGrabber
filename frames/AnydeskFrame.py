@@ -10,9 +10,7 @@ from utils.file_operations import get_anydesk_logs, create_timestamped_directory
 
 # Define paths to AnyDesk log files (ad.trace and ad_svc.trace)
 app_data_path = os.getenv('APPDATA')
-app_data_filename = f'{app_data_path}/AnyDesk/ad.trace'
 program_data_path = os.getenv('PROGRAMDATA')
-program_data_filename = f'{program_data_path}/AnyDesk/ad_svc.trace'
 
 # Means of communication, between the gui & update threads:
 message_queue = deque()
@@ -99,9 +97,9 @@ class AnydeskFrame(customtkinter.CTkFrame):
         global report_folder_path
         report_folder_path = create_timestamped_directory()
         if self.fetch_appdata_logs_switch.get():
-            threading.Thread(target=self.search_filesystem_callback, args=[app_data_filename], daemon=True).start()
+            threading.Thread(target=self.search_filesystem_callback, args=[app_data_path], daemon=True).start()
         if self.fetch_programdata_logs_switch.get():
-            threading.Thread(target=self.search_filesystem_callback, args=[program_data_filename], daemon=True).start()
+            threading.Thread(target=self.search_filesystem_callback, args=[program_data_path], daemon=True).start()
         if self.checkbox_find_logs.get():
             search_location = customtkinter.filedialog.askdirectory()
             threading.Thread(target=self.search_filesystem_callback, args=[search_location], daemon=True).start()
@@ -145,6 +143,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         progressbar.start()
         search_finished = False
         self.generate_and_present_search_results()
+        print(search_location)
         number_of_found_files = find_files(["ad.trace", "ad_svc.trace"], search_location)
         search_finished = True
         progressbar.stop()
