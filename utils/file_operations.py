@@ -1,3 +1,4 @@
+import hashlib
 from datetime import datetime
 import shutil
 
@@ -66,10 +67,23 @@ def create_folders_from_path(s, folder_path):
     return path
 
 
+def generate_md5_file_checksum(filename: str):
+    with open(filename, "rb") as f:
+        file_hash = hashlib.md5()
+        while chunk := f.read(8192):
+            file_hash.update(chunk)
+    # print(file_hash.digest())
+    # print(file_hash.hexdigest())  # to get a printable str instead of bytes
+    return file_hash.hexdigest()
+
+
 def copy_and_generate_checksum(source_file: str, destination_folder_path: str) -> str:
     """A function that copies a file to a destination folder and generates a checksum for it"""
     try:
         shutil.copy2(source_file, destination_folder_path)
+        md5_checksum = generate_md5_file_checksum(source_file)
+        f = open(destination_folder_path + "\\checksum.txt", "w")
+        f.write(md5_checksum)
+        f.close()
     except IOError:
         print("Error occurred when trying to copy")
-
