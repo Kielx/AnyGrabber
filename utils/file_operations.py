@@ -67,7 +67,7 @@ def create_folders_from_path(s, folder_path):
     return path
 
 
-def generate_md5_file_checksum(filename: str):
+def generate_md5_file_checksum(filename: str) -> str:
     with open(filename, "rb") as f:
         file_hash = hashlib.md5()
         while chunk := f.read(8192):
@@ -77,7 +77,7 @@ def generate_md5_file_checksum(filename: str):
     return file_hash.hexdigest()
 
 
-def copy_and_generate_checksum(source_file: str, destination_folder_path: str) -> str:
+def copy_and_generate_checksum(source_file: str, destination_folder_path: str) -> None:
     """A function that copies a file to a destination folder and generates a checksum for it"""
     try:
         shutil.copy2(source_file, destination_folder_path)
@@ -87,3 +87,20 @@ def copy_and_generate_checksum(source_file: str, destination_folder_path: str) -
         f.close()
     except IOError:
         print("Error occurred when trying to copy")
+
+
+def generate_report(report_directory_path: str, anydesk_logs_list: list[str] | None = None) -> None:
+    """A function that generates a report in the specified directory"""
+    computer_name = os.environ['COMPUTERNAME']
+
+    current_datetime = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
+
+    with open(report_directory_path + "\\report.txt", "w") as f:
+        f.write(f"Report for {computer_name} generated on {current_datetime} \r\n")
+        f.write("-------------------------------------------------- \r\n")
+        if anydesk_logs_list == None:
+            f.write("No Anydesk logs found \r\n")
+        else:
+            f.write("Anydesk logs: \r\n")
+            for entry in anydesk_logs_list:
+                f.write(entry + "\r\n")
