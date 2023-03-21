@@ -89,18 +89,21 @@ def copy_and_generate_checksum(source_file: str, destination_folder_path: str) -
         print("Error occurred when trying to copy")
 
 
-def generate_report(report_directory_path: str, anydesk_logs_list: list[str] | None = None) -> None:
+def generate_report(report_directory_path: str, write_header: bool = True, anydesk_logs_list: list[str] | None =
+None, filename: str | None = None
+                    ) -> None:
     """A function that generates a report in the specified directory"""
     computer_name = os.environ['COMPUTERNAME']
 
     current_datetime = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
 
-    with open(report_directory_path + "\\report.txt", "w") as f:
-        f.write(f"Report for {computer_name} generated on {current_datetime} \r\n")
-        f.write("-------------------------------------------------- \r\n")
-        if anydesk_logs_list == None:
+    with open(report_directory_path + "\\report.txt", "a") as f:
+        if write_header:
+            f.write(f"Report for {computer_name} generated on {current_datetime} \r\n")
+            f.write("-------------------------------------------------- \r\n")
+        if anydesk_logs_list is None:
             f.write("No Anydesk logs found \r\n")
         else:
-            f.write("Anydesk logs: \r\n")
+            f.write(f'Anydesk logs from file {filename} : \r\n')
             for entry in anydesk_logs_list:
                 f.write(entry + "\r\n")

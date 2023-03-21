@@ -158,7 +158,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         else:
             self.after(500, self.textbox.insert("insert", "\n---- Searching for files finished! ----\n\n"))
 
-    def generate_and_present_search_results(self):
+    def generate_and_present_search_results(self, write_header=True):
         """A function that updates the textbox with new logs found by the search function
 
         It is called recursively every 2 seconds by the gui thread, and it checks if the search function has finished
@@ -171,11 +171,11 @@ class AnydeskFrame(customtkinter.CTkFrame):
             copy_and_generate_checksum(found_file, destination_path)
             self.print_logs(found_file)
             log_entries = get_anydesk_logs(found_file)
-            generate_report(report_folder_path, log_entries)
+            generate_report(report_folder_path, write_header, log_entries, found_file)
         except IndexError:
             pass
         if not search_finished:
-            self.after(500, func=self.generate_and_present_search_results)
+            self.after(500, self.generate_and_present_search_results, False)
 
     def toggle_checkboxes(self):
         """A function that disables checkboxes if "Search filesystem for logs" checkbox is selected"""
