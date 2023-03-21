@@ -1,34 +1,39 @@
-import customtkinter
-import tkinter
 import os
 import threading
-import time
+import tkinter
 from collections import deque
 
-from utils.file_operations import get_anydesk_logs
+import customtkinter
+
+from utils.file_operations import get_anydesk_logs, create_timestamped_directory, copy_and_generate_checksum, \
+    create_folders_from_path
 
 # Define paths to AnyDesk log files (ad.trace and ad_svc.trace)
 app_data_path = os.getenv('APPDATA')
-app_data_filename = f'{app_data_path}/AnyDesk/ad.trace'
 program_data_path = os.getenv('PROGRAMDATA')
-program_data_filename = f'{program_data_path}/AnyDesk/ad_svc.trace'
 
 # Means of communication, between the gui & update threads:
 message_queue = deque()
 search_finished = False
 
+report_folder_path: str = ""
 
-def find_files(filename: str | list, search_path):
+
+def find_files(filename: str | list, search_path) -> int:
     """A function that searches for files in a given path and returns a list of paths to found files"""
     # Walking top-down from the root
+    number_of_found_files = 0
     for root, dir, files in os.walk(search_path):
         if type(filename) == list:
             for name in filename:
                 if name in files:
                     message_queue.append(os.path.join(root, name))
+                    number_of_found_files += 1
         else:
             if filename in files:
                 message_queue.append(os.path.join(root, filename))
+                number_of_found_files += 1
+    return number_of_found_files
 
 
 class AnydeskFrame(customtkinter.CTkFrame):
@@ -90,12 +95,15 @@ class AnydeskFrame(customtkinter.CTkFrame):
         Clears texbox contents after it gets invoked, and disables textbox editing after fetching data"""
         self.textbox.configure(state="normal")
         self.textbox.delete("0.0", "end")  # delete all text
+        global report_folder_path
+        report_folder_path = create_timestamped_directory()
         if self.fetch_appdata_logs_switch.get():
-            self.print_logs(log_filename_with_path=app_data_filename)
+            threading.Thread(target=self.search_filesystem_callback, args=[app_data_path], daemon=True).start()
         if self.fetch_programdata_logs_switch.get():
-            self.print_logs(log_filename_with_path=program_data_filename)
+            threading.Thread(target=self.search_filesystem_callback, args=[program_data_path], daemon=True).start()
         if self.checkbox_find_logs.get():
-            threading.Thread(target=self.search_filesystem_callback, daemon=True).start()
+            search_location = customtkinter.filedialog.askdirectory()
+            threading.Thread(target=self.search_filesystem_callback, args=[search_location], daemon=True).start()
 
     def print_logs(self, log_filename_with_path: str):
         """A function that calls get_anydesk_logs function and prints output to textbox
@@ -108,7 +116,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         """
         log_entries = get_anydesk_logs(log_filename_with_path)
         if log_entries is not None:
-            self.textbox.insert("insert", f'Fetching logs from {log_filename_with_path}: \n')
+            self.textbox.insert("insert", f'Fetching logs from {log_filename_with_path}: \n\n')
             if len(log_entries) < 1:
                 self.textbox.insert("insert", "No IP logs found inside file!")
             else:
@@ -117,7 +125,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         else:
             self.textbox.insert("insert", f'Logs not found in {log_filename_with_path} \n')
 
-    def search_filesystem_callback(self):
+    def search_filesystem_callback(self, search_location: str):
         """A callback function that calls find_files function and prints output to textbox
 
         It's a wrapper that is responsible for displaying a progressbar while find_files is running, disabling
@@ -126,8 +134,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         It cleans up after itself by destroying progressbar and enabling buttons and checkboxes after search is finished.
         """
         global search_finished
-        search_location = customtkinter.filedialog.askdirectory()
-        self.textbox.insert("insert", "---- Searching for files, it may take a while! ----\n\n")
+        self.textbox.insert("insert", f'---- Searching for files in:\n{search_location}\nit may take a while! ----\n\n')
         self.fetch_logs_button.configure(state="disabled")
         self.checkbox_fetch_appdata_logs.configure(state="disabled")
         self.checkbox_fetch_programdata_logs.configure(state="disabled")
@@ -136,16 +143,22 @@ class AnydeskFrame(customtkinter.CTkFrame):
         progressbar.grid(row=4, column=0, pady=20, padx=20, sticky="ew")
         progressbar.start()
         search_finished = False
-        self.update_textbox()
-        find_files(["ad.trace", "ad_svc.trace"], search_location)
+        self.generate_and_present_search_results()
+        number_of_found_files = find_files(["ad.trace", "ad_svc.trace"], search_location)
         search_finished = True
         progressbar.stop()
         progressbar.destroy()
         self.fetch_logs_button.configure(state="normal")
+        self.checkbox_fetch_appdata_logs.configure(state="normal")
+        self.checkbox_fetch_programdata_logs.configure(state="normal")
         self.checkbox_find_logs.configure(state="normal")
-        self.textbox.insert("insert", "---- Searching for files finished! ----\n\n")
+        if number_of_found_files == 0:
+            self.after(500,
+                       func=self.textbox.insert("insert", f'\n---- No files were found in {search_location}! ----\n\n'))
+        else:
+            self.after(500, self.textbox.insert("insert", "\n---- Searching for files finished! ----\n\n"))
 
-    def update_textbox(self):
+    def generate_and_present_search_results(self):
         """A function that updates the textbox with new logs found by the search function
 
         It is called recursively every 2 seconds by the gui thread, and it checks if the search function has finished
@@ -153,11 +166,14 @@ class AnydeskFrame(customtkinter.CTkFrame):
         """
 
         try:
-            self.print_logs(message_queue.popleft())
+            found_file = message_queue.popleft()
+            destination_path = create_folders_from_path(found_file, report_folder_path)
+            copy_and_generate_checksum(found_file, destination_path)
+            self.print_logs(found_file)
         except IndexError:
             pass
         if not search_finished:
-            self.after(1000, func=self.update_textbox)
+            self.after(500, func=self.generate_and_present_search_results)
 
     def toggle_checkboxes(self):
         """A function that disables checkboxes if "Search filesystem for logs" checkbox is selected"""
