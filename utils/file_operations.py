@@ -10,24 +10,23 @@ import re
 search_string = 'Logged in from '
 
 
-def get_anydesk_logs(filepath: str) -> list[str] | None:
+def get_anydesk_logs(filepath: str) -> dict[str, str] | None:
     """A function that reads a file and returns a list of strings that contain login information
 
     :param filepath: a path to a file that contains Anydesk logs
-    :return: a list of strings that contain login information or None if file doesn't exist
+    :return: a dict with dates as keys and IP's as values that contain login information or None if file doesn't exist
     """
     try:
         with open(filepath, 'r') as f:
-            log_entries = []
+            log_entries = {}
             for l_no, line in enumerate(f):
-                # search string
                 if search_string in line:
                     before_keyword, keyword, after_keyword = line.partition(search_string)
                     last_dot = after_keyword.rfind(' on relay')
                     after_keyword = after_keyword[0: last_dot]
                     date_of_login = dparser.parse(before_keyword[0:30], fuzzy=True)
                     date_of_login = date_of_login.strftime("%d/%m/%Y, %H:%M:%S")
-                    log_entries.append(date_of_login + "  -  " + after_keyword)
+                    log_entries[date_of_login] = after_keyword
         return log_entries
     except IOError:
         return None
@@ -89,7 +88,7 @@ def copy_and_generate_checksum(source_file: str, destination_folder_path: str) -
         print("Error occurred when trying to copy")
 
 
-def generate_report(report_directory_path: str, write_header: bool = True, anydesk_logs_list: list[str] | None =
+def generate_report(report_directory_path: str, write_header: bool = True, anydesk_logs_dict: dict[str, str] | None =
 None, filename: str | None = None
                     ) -> None:
     """A function that generates a report in the specified directory"""
@@ -101,9 +100,9 @@ None, filename: str | None = None
         if write_header:
             f.write(f"Report for {computer_name} generated on {current_datetime} \r\n")
             f.write("-------------------------------------------------- \r\n")
-        if anydesk_logs_list is None:
+        if anydesk_logs_dict is None:
             f.write("No Anydesk logs found \r\n")
         else:
             f.write(f'Anydesk logs from file {filename} : \r\n')
-            for entry in anydesk_logs_list:
-                f.write(entry + "\r\n")
+            for entry in anydesk_logs_dict:
+                f.write(entry + " - " + anydesk_logs_dict[entry] + "\r\n")

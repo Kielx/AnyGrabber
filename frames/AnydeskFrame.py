@@ -121,7 +121,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
                 self.textbox.insert("insert", "No IP logs found inside file!")
             else:
                 for entry in log_entries:
-                    self.textbox.insert("insert", entry + "\n\n")
+                    self.textbox.insert("insert", entry + " - " + log_entries[entry] + "\n\n")
         else:
             self.textbox.insert("insert", f'Logs not found in {log_filename_with_path} \n')
 
