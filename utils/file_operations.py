@@ -1,10 +1,10 @@
 import hashlib
-from datetime import datetime
-import shutil
-
-import dateutil.parser as dparser
 import os
 import re
+import shutil
+from datetime import datetime
+
+import dateutil.parser as dparser
 
 # Search string in the log file that is used to identify the line that contains the login information
 search_string = 'Logged in from '
