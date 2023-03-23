@@ -114,7 +114,6 @@ def generate_csv_report(report_directory_path: str, write_header: bool = True, a
 str] | None = None, filename: str | None = None
                         ) -> None:
     """A function that generates a report in the specified directory"""
-    print(anydesk_logs_dict)
     with open(report_directory_path + "\\report.csv", "a", newline='') as f:
         writer = csv.writer(f, delimiter=',')
         if anydesk_logs_dict is None:
