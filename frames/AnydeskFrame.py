@@ -6,7 +6,7 @@ from collections import deque
 import customtkinter
 
 from utils.file_operations import get_anydesk_logs, create_timestamped_directory, copy_and_generate_checksum, \
-    create_folders_from_path, generate_report
+    create_folders_from_path, generate_txt_report, generate_csv_report
 
 # Define paths to AnyDesk log files (ad.trace and ad_svc.trace)
 app_data_path = os.getenv('APPDATA')
@@ -171,7 +171,8 @@ class AnydeskFrame(customtkinter.CTkFrame):
             copy_and_generate_checksum(found_file, destination_path)
             self.print_logs(found_file)
             log_entries = get_anydesk_logs(found_file)
-            generate_report(report_folder_path, write_header, log_entries, found_file)
+            generate_txt_report(report_folder_path, write_header, log_entries, found_file)
+            generate_csv_report(report_folder_path, write_header, log_entries, found_file)
         except IndexError:
             pass
         if not search_finished:

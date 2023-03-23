@@ -1,3 +1,4 @@
+import csv
 import hashlib
 import os
 import re
@@ -88,9 +89,10 @@ def copy_and_generate_checksum(source_file: str, destination_folder_path: str) -
         print("Error occurred when trying to copy")
 
 
-def generate_report(report_directory_path: str, write_header: bool = True, anydesk_logs_dict: dict[str, str] | None =
-None, filename: str | None = None
-                    ) -> None:
+def generate_txt_report(report_directory_path: str, write_header: bool = True,
+                        anydesk_logs_dict: dict[str, str] | None =
+                        None, filename: str | None = None
+                        ) -> None:
     """A function that generates a report in the specified directory"""
     computer_name = os.environ['COMPUTERNAME']
 
@@ -106,3 +108,18 @@ None, filename: str | None = None
             f.write(f'Anydesk logs from file {filename} : \r\n')
             for entry in anydesk_logs_dict:
                 f.write(entry + " - " + anydesk_logs_dict[entry] + "\r\n")
+
+
+def generate_csv_report(report_directory_path: str, write_header: bool = True, anydesk_logs_dict: dict[str,
+str] | None = None, filename: str | None = None
+                        ) -> None:
+    """A function that generates a report in the specified directory"""
+    with open(report_directory_path + "\\report.csv", "a", newline='') as f:
+        writer = csv.writer(f, delimiter=',')
+        if anydesk_logs_dict is None:
+            writer.writerow("No Anydesk logs found!")
+        elif write_header:
+            writer.writerow(['Date', 'IP', 'File'])
+        else:
+            for entry in anydesk_logs_dict:
+                writer.writerow([entry, anydesk_logs_dict[entry], filename])
