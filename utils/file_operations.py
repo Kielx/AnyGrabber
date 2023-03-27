@@ -125,11 +125,12 @@ def generate_txt_report(report_directory_path: str, write_header: bool = True,
                         None, filename: str | None = None
                         ) -> None:
     """A function that generates a report in the specified directory"""
+
     computer_name = get_computer_name()
-
     current_datetime = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
-
-    with open(report_directory_path + "\\report.txt", "a") as f:
+    actual_path = os.path.join(report_directory_path, 'report.txt')
+    
+    with open(actual_path, "a") as f:
         if write_header:
             f.write(f"Report for {computer_name} generated on {current_datetime} \r\n")
             f.write("-------------------------------------------------- \r\n")

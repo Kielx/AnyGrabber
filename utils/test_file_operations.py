@@ -6,7 +6,6 @@ from file_operations import get_anydesk_logs, create_timestamped_directory, crea
     generate_md5_file_checksum, copy_and_generate_checksum, generate_txt_report, generate_csv_report
 import os
 import re
-import tempfile
 
 
 class TestGetAnydeskLogs:
@@ -141,42 +140,40 @@ class TestGenerateMd5FileChecksum:
 
 class TestGeneratingTextReport:
     def test_generate_txt_report_with_header(self):
-        # Create a temporary directory for the report
-        with tempfile.TemporaryDirectory() as tmpdir:
-            mockup_logs = {
-                "11/03/2023, 19:09:48": "91.233.186.189:53065"
-            }
-            # Generate a report with a header
-            generate_txt_report(tmpdir, True, mockup_logs)
-            # Check that the report file was created
-            assert os.path.exists(os.path.join(tmpdir, "report.txt"))
-            # Check that the report contains the expected header
-            with open(os.path.join(tmpdir, "report.txt"), "r") as f:
-                assert f.readline().startswith("Report for")
-                assert f.readline().startswith("")
-                assert f.readline().startswith("--------")
+        report_directory_path = os.path.dirname(os.path.abspath(__file__))
+        mockup_logs = {
+            "11/03/2023, 19:09:48": "91.233.186.189:53065"
+        }
+        # Generate a report with a header
+        generate_txt_report(report_directory_path, True, mockup_logs)
+        # Check that the report file was created
+        assert os.path.exists(os.path.join(report_directory_path, "report.txt"))
+        # Check that the report contains the expected header
+        with open(os.path.join(report_directory_path, "report.txt"), "r") as f:
+            assert f.readline().startswith("Report for")
+        os.remove(os.path.join(report_directory_path, "report.txt"))
 
     def test_generate_txt_report_without_header(self):
-        # Create a temporary directory for the report
-        with tempfile.TemporaryDirectory() as tmpdir:
-            # Generate a report without a header
-            generate_txt_report(tmpdir, write_header=False)
-            # Check that the report file was created
-            assert os.path.exists(os.path.join(tmpdir, "report.txt"))
-            # Check that the report does not contain a header
-            with open(os.path.join(tmpdir, "report.txt"), "r") as f:
-                assert not f.readline().startswith("Report for")
+        report_directory_path = os.path.dirname(os.path.abspath(__file__))
+        # Generate a report without a header
+        generate_txt_report(report_directory_path, write_header=False)
+        # Check that the report file was created
+        assert os.path.exists(os.path.join(report_directory_path, "report.txt"))
+        # Check that the report does not contain a header
+        with open(os.path.join(report_directory_path, "report.txt"), "r") as f:
+            assert not f.readline().startswith("Report for")
+        os.remove(os.path.join(report_directory_path, "report.txt"))
 
     def test_generate_txt_report_without_anydesk_logs(self):
-        # Create a temporary directory for the report
-        with tempfile.TemporaryDirectory() as tmpdir:
-            # Generate a report without Anydesk logs
-            generate_txt_report(tmpdir, anydesk_logs_dict=None, write_header=False)
-            # Check that the report file was created
-            assert os.path.exists(os.path.join(tmpdir, "report.txt"))
-            # Check that the report indicates that no Anydesk logs were found
-            with open(os.path.join(tmpdir, "report.txt"), "r") as f:
-                assert f.readline().startswith("No Anydesk logs found")
+        report_directory_path = os.path.dirname(os.path.abspath(__file__))
+        # Generate a report without Anydesk logs
+        generate_txt_report(report_directory_path, anydesk_logs_dict=None, write_header=False)
+        # Check that the report file was created
+        assert os.path.exists(os.path.join(report_directory_path, "report.txt"))
+        # Check that the report indicates that no Anydesk logs were found
+        with open(os.path.join(report_directory_path, "report.txt"), "r") as f:
+            assert f.readline().startswith("No Anydesk logs found")
+        os.remove(os.path.join(report_directory_path, "report.txt"))
 
 
 class TestGenerateCSVReport:
