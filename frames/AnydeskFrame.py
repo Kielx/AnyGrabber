@@ -15,7 +15,7 @@ program_data_path = os.getenv('PROGRAMDATA')
 # Means of communication, between the gui & update threads:
 message_queue = deque()
 search_finished = False
-
+write_header = True
 report_folder_path: str = ""
 
 
@@ -158,13 +158,13 @@ class AnydeskFrame(customtkinter.CTkFrame):
         else:
             self.after(500, self.textbox.insert("insert", "\n---- Searching for files finished! ----\n\n"))
 
-    def generate_and_present_search_results(self, write_header=True):
+    def generate_and_present_search_results(self):
         """A function that updates the textbox with new logs found by the search function
 
         It is called recursively every 2 seconds by the gui thread, and it checks if the search function has finished
         searching
         """
-
+        global write_header
         try:
             found_file = message_queue.popleft()
             destination_path = create_folders_from_path(found_file, report_folder_path)
@@ -173,10 +173,11 @@ class AnydeskFrame(customtkinter.CTkFrame):
             log_entries = get_anydesk_logs(found_file)
             generate_txt_report(report_folder_path, write_header, log_entries, found_file)
             generate_csv_report(report_folder_path, write_header, log_entries, found_file)
+            write_header = False
         except IndexError:
             pass
         if not search_finished:
-            self.after(500, self.generate_and_present_search_results, False)
+            self.after(500, self.generate_and_present_search_results)
 
     def toggle_checkboxes(self):
         """A function that disables checkboxes if "Search filesystem for logs" checkbox is selected"""
