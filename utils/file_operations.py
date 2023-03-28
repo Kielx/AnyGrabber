@@ -20,7 +20,6 @@ def get_computer_name():
         computer_name = os.environ['COMPUTERNAME']
     elif system_name == 'Linux':
         # Get the computer name on Linux
-        hostname = socket.gethostname()
         fqdn = socket.getfqdn()
         computer_name = fqdn.split('.')[0]
     elif system_name == 'Darwin':
@@ -129,13 +128,13 @@ def generate_txt_report(report_directory_path: str, write_header: bool = True,
     computer_name = get_computer_name()
     current_datetime = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
     actual_path = os.path.join(report_directory_path, 'report.txt')
-    
+
     with open(actual_path, "a") as f:
         if write_header:
             f.write(f"Report for {computer_name} generated on {current_datetime} \r\n")
             f.write("-------------------------------------------------- \r\n")
-        if anydesk_logs_dict is None:
-            f.write("No Anydesk logs found \r\n")
+        if anydesk_logs_dict == {} or anydesk_logs_dict is None:
+            f.write(f'No Anydesk logs found in file {filename} \r\n')
         else:
             f.write(f'Anydesk logs from file {filename} : \r\n')
             for entry in anydesk_logs_dict:
@@ -151,8 +150,8 @@ str] | None = None, filename: str | None = None
         writer = csv.writer(f, delimiter=',')
         if write_header:
             writer.writerow(['Date', 'IP', 'File'])
-        if anydesk_logs_dict is None:
-            writer.writerow(["No Anydesk logs found!"])
+        if anydesk_logs_dict == {} or anydesk_logs_dict is None:
+            writer.writerow(["No Anydesk logs found!", "", filename])
         else:
             for entry in anydesk_logs_dict:
                 writer.writerow([entry, anydesk_logs_dict[entry], filename])
