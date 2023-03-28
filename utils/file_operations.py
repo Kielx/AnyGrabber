@@ -1,6 +1,8 @@
 import csv
 import hashlib
 import os
+import platform
+import socket
 import re
 import shutil
 from datetime import datetime
@@ -9,6 +11,27 @@ import dateutil.parser as dparser
 
 # Search string in the log file that is used to identify the line that contains the login information
 search_string = 'Logged in from '
+
+
+def get_computer_name():
+    system_name = platform.system()
+    if system_name == 'Windows':
+        # Get the computer name on Windows
+        computer_name = os.environ['COMPUTERNAME']
+    elif system_name == 'Linux':
+        # Get the computer name on Linux
+        hostname = socket.gethostname()
+        fqdn = socket.getfqdn()
+        computer_name = fqdn.split('.')[0]
+    elif system_name == 'Darwin':
+        # Get the computer name on macOS
+        hostname = socket.gethostname()
+        computer_name = hostname.split('.')[0]
+    else:
+        # Unsupported operating system
+        raise NotImplementedError("Operating system not supported")
+
+    return computer_name
 
 
 def get_anydesk_logs(filepath: str) -> dict[str, str] | None:
@@ -43,7 +66,7 @@ def create_timestamped_directory() -> str:
     cwd = os.getcwd()
 
     # Get the computer name
-    computer_name = os.environ['COMPUTERNAME']
+    computer_name = get_computer_name()
 
     folder_path = f'{cwd}\\REPORTS\\{computer_name}_{datetime.now().strftime("%d-%m-%Y_%H-%M-%S")}'
 
@@ -54,8 +77,15 @@ def create_timestamped_directory() -> str:
 
 
 def create_folders_from_path(s, folder_path):
+    """A function that creates folders and subfolders from a path
+
+    :param s: a path to a file
+    :param folder_path: a path to a folder where the folders will be created
+    :return: a path to the last folder created
+    """
+
     # Use regular expression to match folder names
-    pattern = r"[\\/]?([^\\/]+)[\\/]"
+    pattern = r"(?:[A-Za-z]:[\\/])?([^\\/]+)[\\/]"
     matches = re.findall(pattern, s)
     # Create folders and subfolders in the specified directory
     path = folder_path
@@ -82,7 +112,8 @@ def copy_and_generate_checksum(source_file: str, destination_folder_path: str) -
     try:
         shutil.copy2(source_file, destination_folder_path)
         md5_checksum = generate_md5_file_checksum(source_file)
-        f = open(destination_folder_path + "\\checksum.txt", "w")
+        file_path = os.path.join(destination_folder_path, 'checksum.txt')
+        f = open(file_path, "w")
         f.write(md5_checksum)
         f.close()
     except IOError:
@@ -94,11 +125,12 @@ def generate_txt_report(report_directory_path: str, write_header: bool = True,
                         None, filename: str | None = None
                         ) -> None:
     """A function that generates a report in the specified directory"""
-    computer_name = os.environ['COMPUTERNAME']
 
+    computer_name = get_computer_name()
     current_datetime = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
-
-    with open(report_directory_path + "\\report.txt", "a") as f:
+    actual_path = os.path.join(report_directory_path, 'report.txt')
+    
+    with open(actual_path, "a") as f:
         if write_header:
             f.write(f"Report for {computer_name} generated on {current_datetime} \r\n")
             f.write("-------------------------------------------------- \r\n")
@@ -114,12 +146,13 @@ def generate_csv_report(report_directory_path: str, write_header: bool = True, a
 str] | None = None, filename: str | None = None
                         ) -> None:
     """A function that generates a report in the specified directory"""
-    with open(report_directory_path + "\\report.csv", "a", newline='') as f:
+    report_path = os.path.join(report_directory_path, 'report.csv')
+    with open(report_path, "a", newline='') as f:
         writer = csv.writer(f, delimiter=',')
-        if anydesk_logs_dict is None:
-            writer.writerow("No Anydesk logs found!")
-        elif write_header:
+        if write_header:
             writer.writerow(['Date', 'IP', 'File'])
+        if anydesk_logs_dict is None:
+            writer.writerow(["No Anydesk logs found!"])
         else:
             for entry in anydesk_logs_dict:
                 writer.writerow([entry, anydesk_logs_dict[entry], filename])
