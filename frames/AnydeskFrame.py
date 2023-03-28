@@ -93,6 +93,8 @@ class AnydeskFrame(customtkinter.CTkFrame):
         when appropriate switch is selected
 
         Clears texbox contents after it gets invoked, and disables textbox editing after fetching data"""
+        global write_header
+        write_header = True
         self.textbox.configure(state="normal")
         self.textbox.delete("0.0", "end")  # delete all text
         global report_folder_path
@@ -156,9 +158,8 @@ class AnydeskFrame(customtkinter.CTkFrame):
             self.after(500,
                        func=self.textbox.insert("insert", f'\n---- No files were found in {search_location}! ----\n\n'))
         else:
-            write_header = True
-            self.after(500, self.textbox.insert("insert", "\n---- Searching for files finished! ----\n\n"))
 
+            self.after(500, self.textbox.insert("insert", "\n---- Searching for files finished! ----\n\n"))
 
     def generate_and_present_search_results(self):
         """A function that updates the textbox with new logs found by the search function
