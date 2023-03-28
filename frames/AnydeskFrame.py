@@ -14,8 +14,8 @@ program_data_path = os.getenv('PROGRAMDATA')
 
 # Means of communication, between the gui & update threads:
 message_queue = deque()
-search_finished = False
-write_header = True
+search_finished: bool = False
+write_header: bool = True
 report_folder_path: str = ""
 
 
@@ -133,7 +133,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         It calls update_textbox function to update textbox contents while find_files is running.
         It cleans up after itself by destroying progressbar and enabling buttons and checkboxes after search is finished.
         """
-        global search_finished
+        global search_finished, write_header
         self.textbox.insert("insert", f'---- Searching for files in:\n{search_location}\nit may take a while! ----\n\n')
         self.fetch_logs_button.configure(state="disabled")
         self.checkbox_fetch_appdata_logs.configure(state="disabled")
@@ -156,7 +156,9 @@ class AnydeskFrame(customtkinter.CTkFrame):
             self.after(500,
                        func=self.textbox.insert("insert", f'\n---- No files were found in {search_location}! ----\n\n'))
         else:
+            write_header = True
             self.after(500, self.textbox.insert("insert", "\n---- Searching for files finished! ----\n\n"))
+
 
     def generate_and_present_search_results(self):
         """A function that updates the textbox with new logs found by the search function
