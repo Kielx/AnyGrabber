@@ -157,6 +157,8 @@ class AnydeskFrame(customtkinter.CTkFrame):
         if number_of_found_files == 0:
             self.after(500,
                        func=self.textbox.insert("insert", f'\n---- No files were found in {search_location}! ----\n\n'))
+            with open(os.path.join(report_folder_path, "report.txt"), "a") as report_file:
+                report_file.write(f'---- No files were found in {search_location} ----\n\n')
         else:
 
             self.after(500, self.textbox.insert("insert", "\n---- Searching for files finished! ----\n\n"))
