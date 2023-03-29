@@ -14,8 +14,8 @@ program_data_path = os.getenv('PROGRAMDATA')
 
 # Means of communication, between the gui & update threads:
 message_queue = deque()
-search_finished = False
-
+search_finished: bool = False
+write_header: bool = True
 report_folder_path: str = ""
 
 
@@ -93,6 +93,8 @@ class AnydeskFrame(customtkinter.CTkFrame):
         when appropriate switch is selected
 
         Clears texbox contents after it gets invoked, and disables textbox editing after fetching data"""
+        global write_header
+        write_header = True
         self.textbox.configure(state="normal")
         self.textbox.delete("0.0", "end")  # delete all text
         global report_folder_path
@@ -133,7 +135,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         It calls update_textbox function to update textbox contents while find_files is running.
         It cleans up after itself by destroying progressbar and enabling buttons and checkboxes after search is finished.
         """
-        global search_finished
+        global search_finished, write_header
         self.textbox.insert("insert", f'---- Searching for files in:\n{search_location}\nit may take a while! ----\n\n')
         self.fetch_logs_button.configure(state="disabled")
         self.checkbox_fetch_appdata_logs.configure(state="disabled")
@@ -156,15 +158,16 @@ class AnydeskFrame(customtkinter.CTkFrame):
             self.after(500,
                        func=self.textbox.insert("insert", f'\n---- No files were found in {search_location}! ----\n\n'))
         else:
+
             self.after(500, self.textbox.insert("insert", "\n---- Searching for files finished! ----\n\n"))
 
-    def generate_and_present_search_results(self, write_header=True):
+    def generate_and_present_search_results(self):
         """A function that updates the textbox with new logs found by the search function
 
         It is called recursively every 2 seconds by the gui thread, and it checks if the search function has finished
         searching
         """
-
+        global write_header
         try:
             found_file = message_queue.popleft()
             destination_path = create_folders_from_path(found_file, report_folder_path)
@@ -173,10 +176,11 @@ class AnydeskFrame(customtkinter.CTkFrame):
             log_entries = get_anydesk_logs(found_file)
             generate_txt_report(report_folder_path, write_header, log_entries, found_file)
             generate_csv_report(report_folder_path, write_header, log_entries, found_file)
+            write_header = False
         except IndexError:
             pass
         if not search_finished:
-            self.after(500, self.generate_and_present_search_results, False)
+            self.after(500, self.generate_and_present_search_results)
 
     def toggle_checkboxes(self):
         """A function that disables checkboxes if "Search filesystem for logs" checkbox is selected"""

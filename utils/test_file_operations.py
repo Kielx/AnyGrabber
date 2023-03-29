@@ -100,8 +100,7 @@ class TestCreateTimestampedDirectory:
         os.rmdir(directory_name)
         try:
             os.rmdir('REPORTS')
-        except OSError as error:
-            print(error)
+        except OSError:
             print("Directory can not be removed")
 
 
@@ -219,7 +218,7 @@ class TestGenerateCSVReport:
         report_directory_path = os.path.dirname(os.path.abspath(__file__))
         filename = 'test.txt'
         # arrange
-        expected_output = [['No Anydesk logs found!']]
+        expected_output = [['No Anydesk logs found!', '', 'test.txt']]
         # act
         generate_csv_report(report_directory_path, False, None, filename)
         with open(os.path.join(report_directory_path, 'report.csv'), "r") as f:
