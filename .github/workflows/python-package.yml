@@ -24,8 +24,12 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Set PYTHONPATH
-        run: export PYTHONPATH="${PYTHONPATH}:$(pwd)"
+      - name: Install Xvfb
+        run: sudo apt-get install xvfb
+      - name: Start virtual display
+        run: Xvfb :99 &
+      - name: Set DISPLAY environment variable
+        run: export DISPLAY=:99
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
