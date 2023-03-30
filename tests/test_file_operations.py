@@ -2,10 +2,13 @@ import csv
 import hashlib
 import shutil
 from datetime import datetime
-from file_operations import get_anydesk_logs, create_timestamped_directory, create_folders_from_path, \
+from utils.file_operations import get_anydesk_logs, create_timestamped_directory, create_folders_from_path, \
     generate_md5_file_checksum, copy_and_generate_checksum, generate_txt_report, generate_csv_report
 import os
 import re
+import sys
+
+sys.path.append('../')
 
 
 class TestGetAnydeskLogs:
