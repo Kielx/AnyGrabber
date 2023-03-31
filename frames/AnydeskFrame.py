@@ -36,8 +36,7 @@ def find_files(filename: str | list, search_path) -> int:
 
 
 class AnydeskFrame(customtkinter.CTkFrame):
-    """A frame that contains widgets for fetching AnyDesk logs and displaying them in a textbox.
-    """
+    """A frame that contains widgets for fetching AnyDesk logs and displaying them in a textbox."""
 
     def __init__(self, master, **kwargs):
         """Initialize the frame and its widgets."""
@@ -107,12 +106,13 @@ class AnydeskFrame(customtkinter.CTkFrame):
 
         self.fetch_logs_button.grid(row=1, column=0, columnspan=2, padx=20, pady=(20, 0), sticky="ew")
 
-
+        # Button that opens a folder with report
         self.open_report_button = customtkinter.CTkButton(self,
                                                           command=self.open_report_folder,
                                                           text_color=("#eee", "#ccc"),
                                                           text="Open report folder")
         self.open_report_button.grid(row=3, column=0, columnspan=2, padx=20, pady=20, sticky="ew")
+        # Hide the button until logs are fetched
         self.open_report_button.grid_remove()
 
     def fetch_logs_button_callback(self):
@@ -170,12 +170,6 @@ class AnydeskFrame(customtkinter.CTkFrame):
         global search_finished, write_header
         self.open_report_button.grid_remove()
         self.textbox.insert("insert", f'---- Searching for files in:\n{search_location}\nit may take a while! ----\n\n')
-        self.fetch_logs_button.configure(state="disabled")
-        self.checkbox_fetch_appdata_logs.configure(state="disabled")
-        self.checkbox_fetch_programdata_logs.configure(state="disabled")
-        self.checkbox_find_logs.configure(state="disabled")
-
-        self.textbox.insert("insert", f'---- Searching for files in: {search_location} it may take a while! ----\n\n')
 
         # Disable buttons and checkboxes while searching for files
         self.toggle_checkboxes_and_buttons_state([
@@ -249,10 +243,11 @@ class AnydeskFrame(customtkinter.CTkFrame):
     def turn_off_switches(switches_list: list):
         """A function that turns off switches passed as a parameter
 
-        It is needed because switches that correspond to checkboxes responsible for searching default location should be turned off when user selects a custom location to search for logs
-        This prevents the program from searching for logs in default locations when user selects a custom location to search for logs
-        Without this the program would search default location twice - once for default location search and second
-        time when doing a full location search. This would result in duplicate entries in the report file.
+        It is needed because switches that correspond to checkboxes responsible for searching default location should
+        be turned off when user selects a custom location to search for logs This prevents the program from searching
+        for logs in default locations when user selects a custom location to search for logs Without this the program
+        would search default location twice - once for default location search and second time when doing a full
+        location search. This would result in duplicate entries in the report file.
 
         :param switches_list: a list of switches that should be turned off
         """
@@ -271,7 +266,8 @@ class AnydeskFrame(customtkinter.CTkFrame):
             else:
                 checkbox_or_button.configure(state="normal")
 
-    def open_report_folder(self):
+    @staticmethod
+    def open_report_folder():
         """A function that opens the folder where the report file is located"""
         try:
             os.startfile(report_folder_path)
