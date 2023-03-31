@@ -61,20 +61,26 @@ class AnydeskFrame(customtkinter.CTkFrame):
         self.checkbox_fetch_appdata_logs = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame,
                                                                      variable=self.fetch_appdata_logs_switch,
                                                                      text_color=("#333", "#ccc"),
-                                                                     onvalue=True, offvalue=False, text="AppData")
+                                                                     onvalue=True, offvalue=False, text="AppData",
+                                                                     command=lambda: self.turn_off_switches([
+                                                                         self.find_files_switch]))
         self.checkbox_fetch_appdata_logs.grid(row=1, column=0, pady=(20, 0), padx=20, sticky="n")
         self.checkbox_fetch_programdata_logs = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame,
                                                                          variable=self.fetch_programdata_logs_switch,
                                                                          onvalue=True, offvalue=False,
                                                                          text_color=("#333", "#ccc"),
-                                                                         text="ProgramData")
+                                                                         text="ProgramData",
+                                                                         command=lambda: self.turn_off_switches([
+                                                                self.find_files_switch]))
         self.checkbox_fetch_programdata_logs.grid(row=1, column=1, pady=(20, 0), padx=20, sticky="n")
         self.checkbox_find_logs = customtkinter.CTkCheckBox(master=self.checkbox_slider_frame,
                                                             variable=self.find_files_switch,
                                                             text_color=("#333", "#ccc"),
                                                             onvalue=True, offvalue=False, text="Search custom location "
                                                                                                "for logs",
-                                                            command=self.toggle_checkboxes)
+                                                            command=lambda: self.turn_off_switches([
+                                                                self.fetch_programdata_logs_switch,
+                                                                self.fetch_appdata_logs_switch]))
         self.checkbox_find_logs.grid(row=1, column=2, pady=20, padx=20, sticky="n")
 
         self.textbox = customtkinter.CTkTextbox(self)
@@ -184,13 +190,16 @@ class AnydeskFrame(customtkinter.CTkFrame):
         if not search_finished:
             self.after(500, self.generate_and_present_search_results)
 
-    def toggle_checkboxes(self):
-        """A function that disables checkboxes if "Search filesystem for logs" checkbox is selected"""
-        if self.checkbox_find_logs.get():
-            self.fetch_appdata_logs_switch.set(False)
-            self.fetch_programdata_logs_switch.set(False)
-            self.checkbox_fetch_appdata_logs.configure(state="disabled")
-            self.checkbox_fetch_programdata_logs.configure(state="disabled")
-        else:
-            self.checkbox_fetch_appdata_logs.configure(state="normal")
-            self.checkbox_fetch_programdata_logs.configure(state="normal")
+    @staticmethod
+    def turn_off_switches(switches_list: list):
+        """A function that turns off switches passed as a parameter
+
+        It is needed because switches that correspond to checkboxes responsible for searching default location should be turned off when user selects a custom location to search for logs
+        This prevents the program from searching for logs in default locations when user selects a custom location to search for logs
+        Without this the program would search default location twice - once for default location search and second
+        time when doing a full location search. This would result in duplicate entries in the report file.
+
+        :param switches_list: a list of switches that should be turned off
+        """
+        for switch in switches_list:
+            switch.set(False)
