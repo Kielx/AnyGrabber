@@ -240,7 +240,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
             self.after(500, self.generate_and_present_search_results)
 
     @staticmethod
-    def turn_off_switches(switches_list: list):
+    def turn_off_switches(switches_list: list[tkinter.BooleanVar]):
         """A function that turns off switches passed as a parameter
 
         It is needed because switches that correspond to checkboxes responsible for searching default location should
@@ -255,7 +255,8 @@ class AnydeskFrame(customtkinter.CTkFrame):
             switch.set(False)
 
     @staticmethod
-    def toggle_checkboxes_and_buttons_state(checkboxes_and_buttons_list: list):
+    def toggle_checkboxes_and_buttons_state(
+            checkboxes_and_buttons_list: list[customtkinter.CTkCheckBox | customtkinter.CTkButton]):
         """A function that enables or disables checkboxes and buttons passed as a parameter
 
         :param checkboxes_and_buttons_list: a list of checkboxes and buttons that should be enabled or disabled

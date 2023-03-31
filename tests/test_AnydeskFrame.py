@@ -49,4 +49,40 @@ def test_if_open_report_button_shows_after_search():
     os.remove('report.txt')
 
 
+def test_toggle_checkboxes_and_buttons_state():
+    # Arrange
+    anydesk_frame = AnydeskFrame(master=None)
 
+    # Test toggling checkboxes
+    anydesk_frame.switch_search_for_logs_in_location.set(True)
+    anydesk_frame.switch_fetch_programdata_logs.set(True)
+    anydesk_frame.switch_fetch_appdata_logs.set(True)
+
+    anydesk_frame.toggle_checkboxes_and_buttons_state([
+        anydesk_frame.checkbox_search_for_logs_in_location,
+        anydesk_frame.checkbox_fetch_programdata_logs,
+        anydesk_frame.checkbox_fetch_appdata_logs,
+        anydesk_frame.fetch_logs_button,
+        anydesk_frame.open_report_button
+
+    ])
+
+    assert anydesk_frame.checkbox_search_for_logs_in_location.cget('state') == 'disabled'
+    assert anydesk_frame.checkbox_fetch_programdata_logs.cget('state') == 'disabled'
+    assert anydesk_frame.checkbox_fetch_appdata_logs.cget('state') == 'disabled'
+    assert anydesk_frame.fetch_logs_button.cget('state') == 'disabled'
+    assert anydesk_frame.open_report_button.cget('state') == 'disabled'
+
+    anydesk_frame.toggle_checkboxes_and_buttons_state([
+        anydesk_frame.checkbox_search_for_logs_in_location,
+        anydesk_frame.checkbox_fetch_programdata_logs,
+        anydesk_frame.checkbox_fetch_appdata_logs,
+        anydesk_frame.fetch_logs_button,
+        anydesk_frame.open_report_button
+    ])
+
+    assert anydesk_frame.checkbox_search_for_logs_in_location.cget('state') == 'normal'
+    assert anydesk_frame.checkbox_fetch_programdata_logs.cget('state') == 'normal'
+    assert anydesk_frame.checkbox_fetch_appdata_logs.cget('state') == 'normal'
+    assert anydesk_frame.fetch_logs_button.cget('state') == 'normal'
+    assert anydesk_frame.open_report_button.cget('state') == 'normal'
