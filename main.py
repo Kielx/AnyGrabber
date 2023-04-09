@@ -3,6 +3,7 @@ import customtkinter
 from PIL import Image
 
 from frames.AnydeskFrame import AnydeskFrame
+from frames.BrowseReportsFrame import BrowseReportsFrame
 from frames.HomeFrame import HomeFrame
 
 customtkinter.set_appearance_mode("System")
@@ -43,6 +44,11 @@ class App(customtkinter.CTk):
             dark_image=Image.open(os.path.join(image_path, "anydesk_dark.png")),
             size=(20, 20))
 
+        self.browse_reports_image = customtkinter.CTkImage(
+            light_image=Image.open(os.path.join(image_path, "browse_reports_light.png")),
+            dark_image=Image.open(os.path.join(image_path, "browse_reports_dark.png")),
+            size=(20, 20))
+
         # create navigation frame
         self.navigation_frame = customtkinter.CTkFrame(self, corner_radius=0)
         self.navigation_frame.grid(row=0, column=0, sticky="nsew")
@@ -70,6 +76,14 @@ class App(customtkinter.CTk):
                                                       command=self.frame_2_button_event)
         self.frame_2_button.grid(row=2, column=0, sticky="ew")
 
+        self.browse_reports_frame_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40,
+                                                                   border_spacing=10, text="Browse Reports",
+                                                                   fg_color="transparent", text_color=("#333", "#ccc"),
+                                                                   hover_color=("gray70", "gray30"),
+                                                                   image=self.browse_reports_image, anchor="w",
+                                                                   command=self.browse_reports_frame_button_event)
+        self.browse_reports_frame_button.grid(row=5, column=0, sticky="ew")
+
         self.appearance_mode_menu = customtkinter.CTkOptionMenu(self.navigation_frame,
                                                                 text_color=("#eee", "#ccc"),
                                                                 values=["Light", "Dark", "System"],
@@ -83,6 +97,9 @@ class App(customtkinter.CTk):
         # create anydesk frame
         self.anydesk_frame = AnydeskFrame(self, corner_radius=0, fg_color="transparent")
 
+        # create browse reports frame
+        self.browse_reports_frame = BrowseReportsFrame(self, corner_radius=0, fg_color="transparent")
+
         # select default frame
         self.select_frame_by_name("home")
 
@@ -91,6 +108,8 @@ class App(customtkinter.CTk):
         # set button color for selected button
         self.home_button.configure(fg_color=("gray75", "gray25") if name == "home" else "transparent")
         self.frame_2_button.configure(fg_color=("gray75", "gray25") if name == "anydesk_frame" else "transparent")
+        self.browse_reports_frame_button.configure(
+            fg_color=("gray75", "gray25") if name == "browse_reports_frame" else "transparent")
 
         # show selected frame
         if name == "home":
@@ -101,6 +120,10 @@ class App(customtkinter.CTk):
             self.anydesk_frame.grid(row=0, column=1, sticky="nsew")
         else:
             self.anydesk_frame.grid_forget()
+        if name == "browse_reports_frame":
+            self.browse_reports_frame.grid(row=0, column=1, sticky="nsew")
+        else:
+            self.browse_reports_frame.grid_forget()
 
     def home_button_event(self):
         """Home button event handler."""
@@ -109,6 +132,10 @@ class App(customtkinter.CTk):
     def frame_2_button_event(self):
         """Frame 2 button event handler."""
         self.select_frame_by_name("anydesk_frame")
+
+    def browse_reports_frame_button_event(self):
+        """Browse Reports button event handler."""
+        self.select_frame_by_name("browse_reports_frame")
 
 
 if __name__ == "__main__":
