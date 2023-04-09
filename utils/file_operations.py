@@ -155,3 +155,12 @@ str] | None = None, filename: str | None = None
         else:
             for entry in anydesk_logs_dict:
                 writer.writerow([entry, anydesk_logs_dict[entry], filename])
+
+
+def split_filename(filename):
+    result = re.search(r"(.*)_(\d{2}-\d{2}-\d{4})_(\d{2}-\d{2}-\d{2}$)", filename)
+    return {
+        "computer_name": result.group(1),
+        "date": result.group(2),
+        "time": result.group(3)
+    }

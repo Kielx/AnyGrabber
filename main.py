@@ -3,7 +3,7 @@ import customtkinter
 from PIL import Image
 
 from frames.AnydeskFrame import AnydeskFrame
-from frames.BrowseReportsFrame import BrowseReportsFrame
+from frames.BrowseReportsFrame import BrowseReportsFrame, refresh
 from frames.HomeFrame import HomeFrame
 
 customtkinter.set_appearance_mode("System")
@@ -136,6 +136,7 @@ class App(customtkinter.CTk):
     def browse_reports_frame_button_event(self):
         """Browse Reports button event handler."""
         self.select_frame_by_name("browse_reports_frame")
+        refresh(self=self.browse_reports_frame.navigation_panel)
 
 
 if __name__ == "__main__":
