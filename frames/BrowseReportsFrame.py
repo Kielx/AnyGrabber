@@ -1,16 +1,8 @@
 import os
 import customtkinter
-from typing import Literal
 import csv
-from utils.file_operations import split_filename
-
-
-def get_reports_folder_list():
-    try:
-        return os.listdir(os.path.join(os.getcwd(), "reports"))
-    except FileNotFoundError:
-        os.mkdir(os.path.join(os.getcwd(), "reports"))
-        return os.listdir(os.path.join(os.getcwd(), "reports"))
+from utils.file_operations import split_computer_datetime_filename, get_reports_folder_list
+from utils.widget_utils import add_widgets
 
 
 def refresh(self):
@@ -50,7 +42,7 @@ class Report_Frame(customtkinter.CTkFrame):
         super().__init__(master)
         self.report_name = kwargs.get("report_name")
         self.report_path = kwargs.get("report_path")
-        report_name_details = split_filename(self.report_name)
+        report_name_details = split_computer_datetime_filename(self.report_name)
         report_details = get_report_details(report_path=self.report_path)
         self.grid_columnconfigure(0, weight=1)
 
@@ -83,15 +75,6 @@ class Report_Button(customtkinter.CTkButton):
 
     def open_report(self):
         os.startfile(self.report_path)
-
-
-def add_widgets(d, rowstart: int = 0, columnstart: int = 0, orientation: Literal["vertical", "horizontal"] =
-"vertical"):
-    for i, (key, value) in enumerate(d.items()):
-        if orientation == "vertical":
-            value.grid(row=rowstart + i, column=columnstart, sticky="ew", padx=20, pady=10)
-        elif orientation == "horizontal":
-            value.grid(row=rowstart + i, column=columnstart + i, sticky="ew", padx=20, pady=10)
 
 
 class Reports_List(customtkinter.CTkScrollableFrame):
