@@ -157,8 +157,9 @@ str] | None = None, filename: str | None = None
                 writer.writerow([entry, anydesk_logs_dict[entry], filename])
 
 
-def split_computer_datetime_filename(filename):
-    result = re.search(r"(.*)_(\d{2}-\d{2}-\d{4})_(\d{2}-\d{2}-\d{2}$)", filename)
+def split_computer_datetime_filename(dirname):
+    """A function that splits a generated directory name into computer name, date and time"""
+    result = re.search(r"(.*)_(\d{2}-\d{2}-\d{4})_(\d{2}-\d{2}-\d{2}$)", dirname)
     return {
         "computer_name": result.group(1),
         "date": result.group(2),
@@ -167,6 +168,9 @@ def split_computer_datetime_filename(filename):
 
 
 def get_reports_folder_list():
+    """A function that returns a list of all directories in the REPORTS folder
+    Each directory name is a computer name and a timestamp and contains a report files, checksum and found logs
+    """
     try:
         return os.listdir(os.path.join(os.getcwd(), "REPORTS"))
     except FileNotFoundError:

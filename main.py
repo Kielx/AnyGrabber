@@ -136,7 +136,7 @@ class App(customtkinter.CTk):
     def browse_reports_frame_button_event(self):
         """Browse Reports button event handler."""
         self.select_frame_by_name("browse_reports_frame")
-        refresh(self=self.browse_reports_frame.navigation_panel)
+        refresh(browse_reports_frame_instance=self.browse_reports_frame)
 
 
 if __name__ == "__main__":
