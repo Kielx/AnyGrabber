@@ -2,7 +2,7 @@ import csv
 import os
 import customtkinter
 
-from utils.file_operations import split_computer_datetime_filename, get_reports_folder_list
+from utils.file_operations import split_computer_datetime_dirname, get_reports_folder_list
 from utils.widget_utils import add_widgets
 
 
@@ -29,7 +29,7 @@ class Report_Frame(customtkinter.CTkFrame):
         super().__init__(master)
         self.report_name = kwargs.get("report_name")
         self.report_path = kwargs.get("report_path")
-        report_name_details = split_computer_datetime_filename(self.report_name)
+        report_name_details = split_computer_datetime_dirname(self.report_name)
         report_details = get_report_file_and_ip_numbers(report_path=self.report_path)
         self.grid_columnconfigure(0, weight=1)
 

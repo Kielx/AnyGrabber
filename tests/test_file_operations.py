@@ -3,7 +3,8 @@ import hashlib
 import shutil
 from datetime import datetime
 from utils.file_operations import get_anydesk_logs, create_timestamped_directory, create_folders_from_path, \
-    generate_md5_file_checksum, copy_and_generate_checksum, generate_txt_report, generate_csv_report
+    generate_md5_file_checksum, copy_and_generate_checksum, generate_txt_report, generate_csv_report, \
+    split_computer_datetime_dirname
 import os
 import re
 import sys
@@ -230,3 +231,19 @@ class TestGenerateCSVReport:
         # assert
         assert actual_output == expected_output
         os.remove(os.path.join(report_directory_path, 'report.csv'))
+
+
+def test_split_computer_datetime_dirname():
+    assert split_computer_datetime_dirname('computer_11-03-2023_19-09-48') == {'computer_name': 'computer',
+                                                                               'date': '11-03-2023', 'time': '19:09:48'}
+
+    assert split_computer_datetime_dirname('test_computer--203;lk;asdfj_11-03-2023_19-09-48') == {
+        'computer_name': 'test_computer--203;lk;asdfj',
+        'date': '11-03-2023', 'time': '19:09:48'}
+
+    assert split_computer_datetime_dirname('1234567890_11-03-2023_19-09-48') == {
+        'computer_name': '1234567890',
+        'date': '11-03-2023', 'time': '19:09:48'}
+
+    assert split_computer_datetime_dirname('__11-03-2023_19-09-48') == {'computer_name': '_',
+                                                                        'date': '11-03-2023', 'time': '19:09:48'}

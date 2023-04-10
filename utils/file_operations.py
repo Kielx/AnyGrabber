@@ -157,7 +157,7 @@ str] | None = None, filename: str | None = None
                 writer.writerow([entry, anydesk_logs_dict[entry], filename])
 
 
-def split_computer_datetime_filename(dirname):
+def split_computer_datetime_dirname(dirname):
     """A function that splits a generated directory name into computer name, date and time"""
     result = re.search(r"(.*)_(\d{2}-\d{2}-\d{4})_(\d{2}-\d{2}-\d{2}$)", dirname)
     return {
