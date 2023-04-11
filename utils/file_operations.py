@@ -160,11 +160,14 @@ str] | None = None, filename: str | None = None
 def split_computer_datetime_dirname(dirname):
     """A function that splits a generated directory name into computer name, date and time"""
     result = re.search(r"(.*)_(\d{2}-\d{2}-\d{4})_(\d{2}-\d{2}-\d{2}$)", dirname)
-    return {
-        "computer_name": result.group(1),
-        "date": result.group(2),
-        "time": result.group(3).replace("-", ":")
-    }
+    if result:
+        return {
+            "computer_name": result.group(1),
+            "date": result.group(2),
+            "time": result.group(3).replace("-", ":")
+        }
+    else:
+        return None
 
 
 def get_reports_folder_list():

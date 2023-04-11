@@ -33,11 +33,16 @@ class Report_Frame(customtkinter.CTkFrame):
         report_details = get_report_file_and_ip_numbers(report_path=self.report_path)
         self.grid_columnconfigure(0, weight=1)
 
-        self.label = customtkinter.CTkLabel(self, text=report_name_details["date"] + " - " +
-                                                       report_name_details["time"] + " - " + report_name_details[
-                                                           "computer_name"],
-                                            text_color=("#333", "#ccc")
-                                            )
+        if report_name_details:
+            self.label = customtkinter.CTkLabel(self, text=report_name_details["date"] + " - " +
+                                                           report_name_details["time"] + " - " + report_name_details[
+                                                               "computer_name"],
+                                                text_color=("#333", "#ccc")
+                                                )
+        else:
+            self.label = customtkinter.CTkLabel(self, text=self.report_name,
+                                                text_color=("#333", "#ccc")
+                                                )
         self.label.grid(row=0, column=0, sticky="ew", padx=20, pady=[10, 0])
         self.label2 = customtkinter.CTkLabel(self, text="Files: " + str(report_details["number_of_files"]) + " - " +
                                                         "IP Addresses: " + str(

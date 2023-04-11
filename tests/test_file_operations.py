@@ -247,3 +247,7 @@ def test_split_computer_datetime_dirname():
 
     assert split_computer_datetime_dirname('__11-03-2023_19-09-48') == {'computer_name': '_',
                                                                         'date': '11-03-2023', 'time': '19:09:48'}
+
+    assert split_computer_datetime_dirname('asfdfasd') is None
+    assert split_computer_datetime_dirname('asfdfasd_11-03-2023_12-dd-22') is None
+    assert split_computer_datetime_dirname('asfdfasd_11-03-2023_bb-dd-ee') is None
