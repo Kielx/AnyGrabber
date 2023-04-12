@@ -101,8 +101,6 @@ def generate_md5_file_checksum(filename: str) -> str:
         file_hash = hashlib.md5()
         while chunk := f.read(8192):
             file_hash.update(chunk)
-    # print(file_hash.digest())
-    # print(file_hash.hexdigest())  # to get a printable str instead of bytes
     return file_hash.hexdigest()
 
 

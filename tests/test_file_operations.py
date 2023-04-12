@@ -127,7 +127,7 @@ class TestGenerateMd5FileChecksum:
         assert generate_md5_file_checksum(test_file) == test_file_hash
         os.remove('test_file.txt')
 
-    def test_copy_and_generate_checksum(self):
+    def test_copy_and_generate_checksum(self, capsys):
         test_file = TestGetAnydeskLogs.create_empty_file('test_file.txt')
         test_file_hash = hashlib.md5(open('test_file.txt', 'rb').read()).hexdigest()
         cwd = os.getcwd()
@@ -139,6 +139,13 @@ class TestGenerateMd5FileChecksum:
         assert test_file_hash == open(os.path.join(os.getcwd(), 'REPORTS', 'abc', 'daf', 'checksum.txt'), 'r').read()
         shutil.rmtree(os.path.join(os.getcwd(), 'REPORTS'))
         os.remove('test_file.txt')
+
+        # Test IOError
+        nonexistent_file = 'nonexistent_file.txt'
+        path_to_nonexistent_file = os.path.join(os.getcwd(), nonexistent_file)
+        copy_and_generate_checksum(path_to_nonexistent_file, os.getcwd())
+        captured_error_print = capsys.readouterr()
+        assert captured_error_print.out == 'Error occurred when trying to copy\n'
 
 
 class TestGeneratingTextReport:
