@@ -170,12 +170,13 @@ def split_computer_datetime_dirname(dirname):
         return None
 
 
-def get_reports_folder_list():
-    """A function that returns a list of all directories in the REPORTS folder
-    Each directory name is a computer name and a timestamp and contains a report files, checksum and found logs
+def get_reports_folder_list(reports_directory='REPORTS'):
+    """A function that returns a list of all directories in the current working directory/reports_directory folder
+    If the folder does not exist, it will be created
+    :param reports_directory: a name of reports folder inside current working directory
     """
     try:
-        return os.listdir(os.path.join(os.getcwd(), "REPORTS"))
+        return os.listdir(os.path.join(os.getcwd(), reports_directory))
     except FileNotFoundError:
-        os.mkdir(os.path.join(os.getcwd(), "REPORTS"))
-        return os.listdir(os.path.join(os.getcwd(), "REPORTS"))
+        os.mkdir(os.path.join(os.getcwd(), reports_directory))
+        return os.listdir(os.path.join(os.getcwd(), reports_directory))

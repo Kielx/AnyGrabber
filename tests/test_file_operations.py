@@ -4,7 +4,7 @@ import shutil
 from datetime import datetime
 from utils.file_operations import get_anydesk_logs, create_timestamped_directory, create_folders_from_path, \
     generate_md5_file_checksum, copy_and_generate_checksum, generate_txt_report, generate_csv_report, \
-    split_computer_datetime_dirname
+    split_computer_datetime_dirname, get_reports_folder_list
 import os
 import re
 import sys
@@ -251,3 +251,20 @@ def test_split_computer_datetime_dirname():
     assert split_computer_datetime_dirname('asfdfasd') is None
     assert split_computer_datetime_dirname('asfdfasd_11-03-2023_12-dd-22') is None
     assert split_computer_datetime_dirname('asfdfasd_11-03-2023_bb-dd-ee') is None
+
+
+def test_get_reports_folder_list(tmp_path):
+    reports_folder = os.path.join(tmp_path, 'REPORTS')
+    # Assert that the reports folder does not exist
+    assert not os.path.isdir(reports_folder)
+    # Assert that after running the function the reports folder is created and is empty
+    assert get_reports_folder_list(reports_folder) == []
+    # Assert that the reports folder exists
+    assert os.path.isdir(reports_folder)
+    assert os.path.exists(os.path.join(tmp_path, 'REPORTS'))
+    os.mkdir(os.path.join(reports_folder, 'computer_11-03-2023_19-09-48'))
+    os.mkdir(os.path.join(reports_folder, 'computer_11-03-2023_19-09-49'))
+    os.mkdir(os.path.join(reports_folder, 'computer_11-03-2023_19-09-50'))
+    assert get_reports_folder_list(reports_folder) == ['computer_11-03-2023_19-09-48',
+                                                       'computer_11-03-2023_19-09-49',
+                                                       'computer_11-03-2023_19-09-50']
