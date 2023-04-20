@@ -273,10 +273,6 @@ def test_get_reports_folder_list(tmp_path):
     os.mkdir(os.path.join(reports_folder, 'computer_11-03-2023_19-09-48'))
     os.mkdir(os.path.join(reports_folder, 'computer_11-03-2023_19-09-49'))
     os.mkdir(os.path.join(reports_folder, 'computer_11-03-2023_19-09-50'))
-    assert get_reports_folder_list(reports_folder) == ['computer_11-03-2023_19-09-48',
-                                                       'computer_11-03-2023_19-09-49',
-                                                       'computer_11-03-2023_19-09-50'] \
-           or get_reports_folder_list(
-        reports_folder) == ['computer_11-03-2023_19-09-50',
-                            'computer_11-03-2023_19-09-49',
-                            'computer_11-03-2023_19-09-48']
+    assert sorted(get_reports_folder_list(reports_folder)) == sorted(['computer_11-03-2023_19-09-48',
+                                                                      'computer_11-03-2023_19-09-49',
+                                                                      'computer_11-03-2023_19-09-50'])
