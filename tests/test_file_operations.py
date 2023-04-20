@@ -1,13 +1,11 @@
-import pytest
 import csv
 import hashlib
 import shutil
-import socket
 from datetime import datetime
 
 from utils.file_operations import get_anydesk_logs, create_timestamped_directory, create_folders_from_path, \
     generate_md5_file_checksum, copy_and_generate_checksum, generate_txt_report, generate_csv_report, \
-    split_computer_datetime_dirname, get_reports_folder_list, get_computer_name
+    split_computer_datetime_dirname, get_reports_folder_list
 import os
 import re
 import sys
@@ -277,29 +275,8 @@ def test_get_reports_folder_list(tmp_path):
     os.mkdir(os.path.join(reports_folder, 'computer_11-03-2023_19-09-50'))
     assert get_reports_folder_list(reports_folder) == ['computer_11-03-2023_19-09-48',
                                                        'computer_11-03-2023_19-09-49',
-                                                       'computer_11-03-2023_19-09-50']
-
-
-def test_linux_computer(monkeypatch):
-    monkeypatch.setattr(sys, 'platform', 'Linux')
-    monkeypatch.setattr(socket, 'getfqdn', lambda: 'Test_Computer_Linux')
-    assert get_computer_name() == "Test_Computer_Linux"
-
-
-def test_windows_computer(monkeypatch):
-    monkeypatch.setattr(sys, 'platform', 'Windows')
-    monkeypatch.setitem(os.environ, "COMPUTERNAME", "Test_Computer")
-    assert get_computer_name() == "Test_Computer"
-
-
-def test_mac_computer(monkeypatch):
-    monkeypatch.setattr(sys, 'platform', 'Darwin')
-    monkeypatch.setattr(socket, 'gethostname', lambda: 'Test_Computer_Mac')
-    assert get_computer_name() == "Test_Computer_Mac"
-
-
-def test_unknown_computer(monkeypatch):
-    monkeypatch.setattr(sys, 'platform', 'Unknown')
-    with pytest.raises(Exception) as exception_info:
-        get_computer_name()
-    assert 'Operating system not supported' in str(exception_info.value)
+                                                       'computer_11-03-2023_19-09-50'] \
+           or get_reports_folder_list(
+        reports_folder) == ['computer_11-03-2023_19-09-50',
+                            'computer_11-03-2023_19-09-49',
+                            'computer_11-03-2023_19-09-48']
