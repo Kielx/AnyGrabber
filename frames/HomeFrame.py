@@ -36,5 +36,3 @@ class HomeFrame(customtkinter.CTkFrame):
         self.textbox.grid(row=1, column=0, sticky="nsew", padx=20, pady=10)
         self.textbox.insert("0.0", _(home_screen_description))
         self.textbox.configure(state="disabled", fg_color='transparent', text_color=("#333", "#ccc"))
-        self.my_button = customtkinter.CTkButton(self, text="Click me!", command= lambda: self.change_locale(self))
-        self.my_button.grid(row=2, column=0, padx=20, pady=10)
