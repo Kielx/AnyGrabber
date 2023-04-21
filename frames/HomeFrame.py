@@ -1,3 +1,5 @@
+import gettext
+
 import customtkinter
 import os
 from PIL import Image
@@ -7,20 +9,16 @@ from utils.locale_utils import change_frame_locale
 image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../assets")
 
 home_screen_description = "welcome screen\n"
-
-_ = change_frame_locale("HomeFrame", "pl-PL")
-
-
-def change_locale(master):
-    _ = change_frame_locale("HomeFrame", "en-US")
-    master.textbox.configure(state="normal")
-    master.textbox.delete("0.0", "end")
-    master.textbox.insert("0.0", _(home_screen_description))
-    master.textbox.configure(state="disabled")
-
-
+_ = change_frame_locale("HomeFrame", "en-US")
 class HomeFrame(customtkinter.CTkFrame):
     """Home frame class."""
+
+    def change_locale(self, master, locale):
+        _ = change_frame_locale("HomeFrame", locale)
+        master.textbox.configure(state="normal")
+        master.textbox.delete("0.0", "end")
+        master.textbox.insert("0.0", _(home_screen_description))
+        master.textbox.configure(state="disabled")
 
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
@@ -38,5 +36,5 @@ class HomeFrame(customtkinter.CTkFrame):
         self.textbox.grid(row=1, column=0, sticky="nsew", padx=20, pady=10)
         self.textbox.insert("0.0", _(home_screen_description))
         self.textbox.configure(state="disabled", fg_color='transparent', text_color=("#333", "#ccc"))
-        self.my_button = customtkinter.CTkButton(self, text="Click me!", command= lambda: change_locale(self))
+        self.my_button = customtkinter.CTkButton(self, text="Click me!", command= lambda: self.change_locale(self))
         self.my_button.grid(row=2, column=0, padx=20, pady=10)
