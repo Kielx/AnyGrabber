@@ -33,7 +33,7 @@ class App(customtkinter.CTk):
     def change_locale(self, language):
         _ = change_frame_locale("HomeFrame", language)
         self.language_menu.configure(values=[_("English"), _("Polish")])
-        print(language)
+        self.browse_reports_frame_button.configure(text=_("Browse Reports"))
         if language == "Angielski":
             self.language_menu.set(_("English"))
         elif language == "Polish":
@@ -99,7 +99,7 @@ class App(customtkinter.CTk):
         self.frame_2_button.grid(row=2, column=0, sticky="ew")
 
         self.browse_reports_frame_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40,
-                                                                   border_spacing=10, text="Browse Reports",
+                                                                   border_spacing=10, text=_("Browse Reports"),
                                                                    fg_color="transparent", text_color=("#333", "#ccc"),
                                                                    hover_color=("gray70", "gray30"),
                                                                    image=self.browse_reports_image, anchor="w",

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AnyGrabber\n"
-"POT-Creation-Date: 2023-04-21 23:43+0200\n"
-"PO-Revision-Date: 2023-04-21 23:44+0200\n"
+"POT-Creation-Date: 2023-04-21 23:54+0200\n"
+"PO-Revision-Date: 2023-04-21 23:57+0200\n"
 "Last-Translator: Krzysztof Pańtak <kielx.dev@gmail.com>\n"
 "Language-Team: Krzysztof Pańtak\n"
 "Language: pl\n"
@@ -41,14 +41,18 @@ msgstr ""
 "sumy kontrolne dla znalezionych plików, a także precyzyjne raporty z "
 "wynikami.\n"
 
-#: main.py:22 main.py:35 main.py:113 main.py:116
+#: main.py:22 main.py:35 main.py:38 main.py:118 main.py:121
 msgid "English"
 msgstr "Angielski"
 
-#: main.py:24 main.py:35 main.py:113
+#: main.py:24 main.py:35 main.py:40 main.py:118
 msgid "Polish"
 msgstr "Polski"
 
-#: main.py:82
+#: main.py:41 main.py:87
 msgid "Home"
 msgstr "Start"
+
+#: main.py:102
+msgid "Browse Reports"
+msgstr "Przeglądaj raporty"
