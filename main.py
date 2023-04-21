@@ -5,7 +5,7 @@ from PIL import Image
 from frames.AnydeskFrame import AnydeskFrame
 from frames.BrowseReportsFrame import BrowseReportsFrame, refresh
 from frames.HomeFrame import HomeFrame
-
+from utils.locale_utils import change_frame_locale
 
 customtkinter.set_appearance_mode("System")
 
@@ -14,6 +14,13 @@ def change_appearance_mode_event(new_appearance_mode):
     """Change appearance mode event handler for appearance mode menu."""
     customtkinter.set_appearance_mode(new_appearance_mode)
 
+def change_language_event(new_language):
+    """Change appearance mode event handler for appearance mode menu."""
+    if new_language == 'English':
+        change_frame_locale('HomeFrame', 'en-US')
+    elif new_language == 'Polish':
+        change_frame_locale('HomeFrame', 'pl-PL')
+    HomeFrame.change_locale(app.home_frame, app.home_frame, new_language)
 
 
 
@@ -93,6 +100,13 @@ class App(customtkinter.CTk):
                                                                 command=change_appearance_mode_event)
         self.appearance_mode_menu.grid(row=6, column=0, padx=20, pady=20, sticky="s")
         self.appearance_mode_menu.set("System")
+
+        self.language_menu = customtkinter.CTkOptionMenu(self.navigation_frame,
+                                                                text_color=("#eee", "#ccc"),
+                                                                values=["English", "Polish"],
+                                                                command=change_language_event)
+        self.language_menu.grid(row=7, column=0, padx=20, pady=20, sticky="s")
+        self.language_menu.set("English")
 
         # create home frame
         self.home_frame = HomeFrame(self, corner_radius=0, fg_color="transparent")

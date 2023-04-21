@@ -1,4 +1,5 @@
 import gettext
+from tkinter import *
 
 _ = gettext.gettext
 
@@ -13,4 +14,6 @@ def change_frame_locale(frame_name, locale_str):
     elif locale_str == "pl-PL":
         pl.install()
         _ = pl.gettext
+    print(_)
     return _
+
