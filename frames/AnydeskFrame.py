@@ -152,7 +152,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         if log_entries is not None:
             self.textbox.insert("insert", f'Fetching logs from {log_filename_with_path}: \n\n')
             if len(log_entries) < 1:
-                self.textbox.insert("insert", "No IP logs found inside file!")
+                self.textbox.insert("insert", "No IP logs found inside file! \n\n")
             else:
                 for entry in log_entries:
                     self.textbox.insert("insert", entry + " - " + log_entries[entry] + "\n\n")
@@ -207,16 +207,14 @@ class AnydeskFrame(customtkinter.CTkFrame):
         # Display a message if no files were found in search location
         # Generate a report with a message if no files were found in search location
         if number_of_found_files == 0:
-            self.after(500,
-                       func=self.textbox.insert("insert", f'\n---- No files were found in {search_location}! ----\n\n'))
+            self.open_report_button.grid()
+            self.textbox.insert("insert", f'\n---- No files were found in {search_location}! ----\n\n')
             with open(os.path.join(report_folder_path, "report.txt"), "a") as report_file:
                 report_file.write(f'---- No files were found in {search_location} ----\n\n')
-
         # Display a message if search is finished
         else:
-            self.after(500, self.textbox.insert("insert", "\n---- Searching for files finished! ----\n\n"))
-
-        self.open_report_button.grid()
+            self.open_report_button.grid()
+            self.textbox.insert("insert", "\n---- Searching for files finished! ----\n\n")
 
     def generate_and_present_search_results(self):
         """A function that updates the textbox with new logs found by the search function
@@ -237,7 +235,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         except IndexError:
             pass
         if not search_finished:
-            self.after(500, self.generate_and_present_search_results)
+            self.after(200, self.generate_and_present_search_results)
 
     @staticmethod
     def turn_off_switches(switches_list: list[tkinter.BooleanVar]):

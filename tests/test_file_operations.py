@@ -2,8 +2,10 @@ import csv
 import hashlib
 import shutil
 from datetime import datetime
+
 from utils.file_operations import get_anydesk_logs, create_timestamped_directory, create_folders_from_path, \
-    generate_md5_file_checksum, copy_and_generate_checksum, generate_txt_report, generate_csv_report
+    generate_md5_file_checksum, copy_and_generate_checksum, generate_txt_report, generate_csv_report, \
+    split_computer_datetime_dirname, get_reports_folder_list
 import os
 import re
 import sys
@@ -126,7 +128,7 @@ class TestGenerateMd5FileChecksum:
         assert generate_md5_file_checksum(test_file) == test_file_hash
         os.remove('test_file.txt')
 
-    def test_copy_and_generate_checksum(self):
+    def test_copy_and_generate_checksum(self, capsys):
         test_file = TestGetAnydeskLogs.create_empty_file('test_file.txt')
         test_file_hash = hashlib.md5(open('test_file.txt', 'rb').read()).hexdigest()
         cwd = os.getcwd()
@@ -138,6 +140,13 @@ class TestGenerateMd5FileChecksum:
         assert test_file_hash == open(os.path.join(os.getcwd(), 'REPORTS', 'abc', 'daf', 'checksum.txt'), 'r').read()
         shutil.rmtree(os.path.join(os.getcwd(), 'REPORTS'))
         os.remove('test_file.txt')
+
+        # Test IOError
+        nonexistent_file = 'nonexistent_file.txt'
+        path_to_nonexistent_file = os.path.join(os.getcwd(), nonexistent_file)
+        copy_and_generate_checksum(path_to_nonexistent_file, os.getcwd())
+        captured_error_print = capsys.readouterr()
+        assert captured_error_print.out == 'Error occurred when trying to copy\n'
 
 
 class TestGeneratingTextReport:
@@ -230,3 +239,40 @@ class TestGenerateCSVReport:
         # assert
         assert actual_output == expected_output
         os.remove(os.path.join(report_directory_path, 'report.csv'))
+
+
+def test_split_computer_datetime_dirname():
+    assert split_computer_datetime_dirname('computer_11-03-2023_19-09-48') == {'computer_name': 'computer',
+                                                                               'date': '11-03-2023', 'time': '19:09:48'}
+
+    assert split_computer_datetime_dirname('test_computer--203;lk;asdfj_11-03-2023_19-09-48') == {
+        'computer_name': 'test_computer--203;lk;asdfj',
+        'date': '11-03-2023', 'time': '19:09:48'}
+
+    assert split_computer_datetime_dirname('1234567890_11-03-2023_19-09-48') == {
+        'computer_name': '1234567890',
+        'date': '11-03-2023', 'time': '19:09:48'}
+
+    assert split_computer_datetime_dirname('__11-03-2023_19-09-48') == {'computer_name': '_',
+                                                                        'date': '11-03-2023', 'time': '19:09:48'}
+
+    assert split_computer_datetime_dirname('asfdfasd') is None
+    assert split_computer_datetime_dirname('asfdfasd_11-03-2023_12-dd-22') is None
+    assert split_computer_datetime_dirname('asfdfasd_11-03-2023_bb-dd-ee') is None
+
+
+def test_get_reports_folder_list(tmp_path):
+    reports_folder = os.path.join(tmp_path, 'REPORTS')
+    # Assert that the reports folder does not exist
+    assert not os.path.isdir(reports_folder)
+    # Assert that after running the function the reports folder is created and is empty
+    assert get_reports_folder_list(reports_folder) == []
+    # Assert that the reports folder exists
+    assert os.path.isdir(reports_folder)
+    assert os.path.exists(os.path.join(tmp_path, 'REPORTS'))
+    os.mkdir(os.path.join(reports_folder, 'computer_11-03-2023_19-09-48'))
+    os.mkdir(os.path.join(reports_folder, 'computer_11-03-2023_19-09-49'))
+    os.mkdir(os.path.join(reports_folder, 'computer_11-03-2023_19-09-50'))
+    assert sorted(get_reports_folder_list(reports_folder)) == sorted(['computer_11-03-2023_19-09-48',
+                                                                      'computer_11-03-2023_19-09-49',
+                                                                      'computer_11-03-2023_19-09-50'])

@@ -101,8 +101,6 @@ def generate_md5_file_checksum(filename: str) -> str:
         file_hash = hashlib.md5()
         while chunk := f.read(8192):
             file_hash.update(chunk)
-    # print(file_hash.digest())
-    # print(file_hash.hexdigest())  # to get a printable str instead of bytes
     return file_hash.hexdigest()
 
 
@@ -155,3 +153,28 @@ str] | None = None, filename: str | None = None
         else:
             for entry in anydesk_logs_dict:
                 writer.writerow([entry, anydesk_logs_dict[entry], filename])
+
+
+def split_computer_datetime_dirname(dirname):
+    """A function that splits a generated directory name into computer name, date and time"""
+    result = re.search(r"(.*)_(\d{2}-\d{2}-\d{4})_(\d{2}-\d{2}-\d{2}$)", dirname)
+    if result:
+        return {
+            "computer_name": result.group(1),
+            "date": result.group(2),
+            "time": result.group(3).replace("-", ":")
+        }
+    else:
+        return None
+
+
+def get_reports_folder_list(reports_directory='REPORTS'):
+    """A function that returns a list of all directories in the current working directory/reports_directory folder
+    If the folder does not exist, it will be created
+    :param reports_directory: a name of reports folder inside current working directory
+    """
+    try:
+        return os.listdir(os.path.join(os.getcwd(), reports_directory))
+    except FileNotFoundError:
+        os.mkdir(os.path.join(os.getcwd(), reports_directory))
+        return os.listdir(os.path.join(os.getcwd(), reports_directory))
