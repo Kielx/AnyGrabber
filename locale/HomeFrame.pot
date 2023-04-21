@@ -1,0 +1,29 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2023-04-21 13:52+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=cp1250\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: c:\projects\AnyGrabber\frames\HomeFrame.py:11
+msgid "welcome screen\n"
+msgstr ""
+"Welcome to AnyGrabber - the program designed to help you extract, secure and present AnyDesk logs from system with ease. \n"
+"\n"
+"Whether you're dealing with cases of fraud or just need to keep track of AnyDesk activity on your computer, AnyGrabber provides a simple and intuitive solution for all your logging needs.\n"
+"\n"
+"To get started, simply select the AnyDesk option from the main menu. Then pick default locations for your AnyDesk logs, or select the 'Browse' option to specify a custom location. \n"
+"\n"
+"AnyGrabber will automatically search your system for AnyDesk logs and extract date, time and IP address of each session. \n"
+"\n"
