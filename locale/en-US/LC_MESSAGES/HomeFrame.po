@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-04-21 13:52+0200\n"
-"PO-Revision-Date: 2023-04-21 13:52+0200\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2023-04-21 23:43+0200\n"
+"PO-Revision-Date: 2023-04-21 23:43+0200\n"
+"Last-Translator: Krzysztof Pańtak <kielx.dev@gmail.com>\n"
 "Language-Team: \n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: c:\projects\AnyGrabber\frames\HomeFrame.py:11
+#: frames/HomeFrame.py:19
 msgid "welcome screen\n"
 msgstr ""
 "Welcome to AnyGrabber - the program designed to help you extract, secure and "
@@ -34,3 +34,15 @@ msgstr ""
 "AnyGrabber will automatically search your system for AnyDesk logs and "
 "extract date, time and IP address of each session. \n"
 "\n"
+
+#: main.py:22 main.py:35 main.py:113 main.py:116
+msgid "English"
+msgstr "English"
+
+#: main.py:24 main.py:35 main.py:113
+msgid "Polish"
+msgstr "Polish"
+
+#: main.py:82
+msgid "Home"
+msgstr "Home"

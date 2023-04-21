@@ -8,28 +8,40 @@ from frames.HomeFrame import HomeFrame
 from utils.locale_utils import change_frame_locale
 
 customtkinter.set_appearance_mode("System")
+_ = change_frame_locale('HomeFrame', 'en-US')
 
 
 def change_appearance_mode_event(new_appearance_mode):
     """Change appearance mode event handler for appearance mode menu."""
     customtkinter.set_appearance_mode(new_appearance_mode)
 
+
 def change_language_event(new_language):
     """Change appearance mode event handler for appearance mode menu."""
-    if new_language == 'English':
-        change_frame_locale('HomeFrame', 'en-US')
-    elif new_language == 'Polish':
-        change_frame_locale('HomeFrame', 'pl-PL')
+    global _
+    if new_language == _('English'):
+        _ = change_frame_locale('HomeFrame', 'en-US')
+    elif new_language == _('Polish'):
+        _ = change_frame_locale('HomeFrame', 'pl-PL')
     HomeFrame.change_locale(app.home_frame, app.home_frame, new_language)
-
+    App.change_locale(app, new_language)
 
 
 class App(customtkinter.CTk):
     """Main application class."""
 
+    def change_locale(self, language):
+        _ = change_frame_locale("HomeFrame", language)
+        self.language_menu.configure(values=[_("English"), _("Polish")])
+        print(language)
+        if language == "Angielski":
+            self.language_menu.set(_("English"))
+        elif language == "Polish":
+            self.language_menu.set(_("Polish"))
+        self.home_button.configure(text=_("Home"))
+
     def __init__(self):
         super().__init__()
-
         self.geometry("750x450+0+0")
         self.title("AnyGrabber - Grabber for AnyDesk logs")
         self.iconbitmap(os.path.join(os.path.dirname(os.path.realpath(__file__)), "assets", "AnyGrabberIcon.ico"))
@@ -72,7 +84,7 @@ class App(customtkinter.CTk):
         self.navigation_frame_label.grid(row=0, column=0, padx=20, pady=20)
 
         self.home_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40, border_spacing=10,
-                                                   text="Home",
+                                                   text=_("Home"),
                                                    fg_color="transparent", text_color=("#333", "#ccc"),
                                                    hover_color=("gray70", "gray30"),
                                                    image=self.home_image, anchor="w", command=self.home_button_event)
@@ -102,11 +114,11 @@ class App(customtkinter.CTk):
         self.appearance_mode_menu.set("System")
 
         self.language_menu = customtkinter.CTkOptionMenu(self.navigation_frame,
-                                                                text_color=("#eee", "#ccc"),
-                                                                values=["English", "Polish"],
-                                                                command=change_language_event)
+                                                         text_color=("#eee", "#ccc"),
+                                                         values=[_("English"), _("Polish")],
+                                                         command=change_language_event)
         self.language_menu.grid(row=7, column=0, padx=20, pady=20, sticky="s")
-        self.language_menu.set("English")
+        self.language_menu.set(_("English"))
 
         # create home frame
         self.home_frame = HomeFrame(self, corner_radius=0, fg_color="transparent")
