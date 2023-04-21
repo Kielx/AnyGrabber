@@ -8,8 +8,7 @@ from utils.locale_utils import change_frame_locale
 # load images with light and dark mode image
 image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../assets")
 
-home_screen_description = "welcome screen\n"
-_ = change_frame_locale("HomeFrame", "en-US")
+
 class HomeFrame(customtkinter.CTkFrame):
     """Home frame class."""
 
@@ -17,7 +16,7 @@ class HomeFrame(customtkinter.CTkFrame):
         _ = change_frame_locale("HomeFrame", locale)
         master.textbox.configure(state="normal")
         master.textbox.delete("0.0", "end")
-        master.textbox.insert("0.0", _(home_screen_description))
+        master.textbox.insert("0.0", _("welcome screen\n"))
         master.textbox.configure(state="disabled")
 
     def __init__(self, master, **kwargs):
@@ -34,5 +33,5 @@ class HomeFrame(customtkinter.CTkFrame):
 
         self.textbox = customtkinter.CTkTextbox(master=self, width=200, corner_radius=0, wrap="word")
         self.textbox.grid(row=1, column=0, sticky="nsew", padx=20, pady=10)
-        self.textbox.insert("0.0", _(home_screen_description))
+        self.change_locale(self, "en-US")
         self.textbox.configure(state="disabled", fg_color='transparent', text_color=("#333", "#ccc"))
