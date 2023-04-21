@@ -6,12 +6,15 @@ from frames.AnydeskFrame import AnydeskFrame
 from frames.BrowseReportsFrame import BrowseReportsFrame, refresh
 from frames.HomeFrame import HomeFrame
 
+
 customtkinter.set_appearance_mode("System")
 
 
 def change_appearance_mode_event(new_appearance_mode):
     """Change appearance mode event handler for appearance mode menu."""
     customtkinter.set_appearance_mode(new_appearance_mode)
+
+
 
 
 class App(customtkinter.CTk):
