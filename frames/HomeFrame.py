@@ -3,10 +3,12 @@ import gettext
 import customtkinter
 import os
 from PIL import Image
-from utils.locale_utils import change_frame_locale
+from utils.locale_utils import change_frame_locale, default_locale
 
 # load images with light and dark mode image
 image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../assets")
+
+_ = change_frame_locale('HomeFrame')
 
 
 class HomeFrame(customtkinter.CTkFrame):
@@ -33,5 +35,5 @@ class HomeFrame(customtkinter.CTkFrame):
 
         self.textbox = customtkinter.CTkTextbox(master=self, width=200, corner_radius=0, wrap="word")
         self.textbox.grid(row=1, column=0, sticky="nsew", padx=20, pady=10)
-        self.change_locale(self, "en-US")
+        self.change_locale(self, default_locale)
         self.textbox.configure(state="disabled", fg_color='transparent', text_color=("#333", "#ccc"))

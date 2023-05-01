@@ -5,10 +5,10 @@ from PIL import Image
 from frames.AnydeskFrame import AnydeskFrame
 from frames.BrowseReportsFrame import BrowseReportsFrame, refresh
 from frames.HomeFrame import HomeFrame
-from utils.locale_utils import change_frame_locale
+from utils.locale_utils import change_frame_locale, set_default_locale, default_locale
 
 customtkinter.set_appearance_mode("System")
-_ = change_frame_locale('HomeFrame', 'en-US')
+_ = change_frame_locale('HomeFrame')
 
 
 def change_appearance_mode_event(new_appearance_mode):
@@ -21,8 +21,10 @@ def change_language_event(new_language):
     global _
     if new_language == _('English'):
         _ = change_frame_locale('HomeFrame', 'en-US')
+        set_default_locale('en-US')
     elif new_language == _('Polish'):
         _ = change_frame_locale('HomeFrame', 'pl-PL')
+        set_default_locale('pl-PL')
     HomeFrame.change_locale(app.home_frame, app.home_frame, new_language)
     App.change_locale(app, new_language)
     AnydeskFrame.change_locale(app.anydesk_frame, app.anydesk_frame, new_language)
@@ -119,7 +121,11 @@ class App(customtkinter.CTk):
                                                          values=[_("English"), _("Polish")],
                                                          command=change_language_event)
         self.language_menu.grid(row=7, column=0, padx=20, pady=20, sticky="s")
-        self.language_menu.set(_("English"))
+
+        if default_locale == 'pl-PL':
+            self.language_menu.set(_("Polish"))
+        else:
+            self.language_menu.set(_("English"))
 
         # create home frame
         self.home_frame = HomeFrame(self, corner_radius=0, fg_color="transparent")
