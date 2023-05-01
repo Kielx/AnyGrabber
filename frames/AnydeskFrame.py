@@ -3,9 +3,12 @@ import threading
 import tkinter
 import customtkinter
 from collections import deque
+from utils.locale_utils import change_frame_locale
 
 from utils.file_operations import get_anydesk_logs, create_timestamped_directory, copy_and_generate_checksum, \
     create_folders_from_path, generate_txt_report, generate_csv_report
+
+_ = change_frame_locale('HomeFrame', 'en-US')
 
 # Define paths to AnyDesk log files (ad.trace and ad_svc.trace)
 app_data_path = os.getenv('APPDATA')
@@ -38,6 +41,15 @@ def find_files(filename: str | list, search_path) -> int:
 class AnydeskFrame(customtkinter.CTkFrame):
     """A frame that contains widgets for fetching AnyDesk logs and displaying them in a textbox."""
 
+    def change_locale(self, master, locale):
+        global _
+        _ = change_frame_locale("HomeFrame", locale)
+        self.checkbox_frame_label.configure(text=_("Choose where to search for logs:"))
+        self.checkbox_search_for_logs_in_location.configure(text=_("Search custom location "
+                                                                   "for logs"))
+        self.fetch_logs_button.configure(text=_("Fetch logs"))
+        self.open_report_button.configure(text=_("Open report"))
+
     def __init__(self, master, **kwargs):
         """Initialize the frame and its widgets."""
         super().__init__(master, **kwargs)
@@ -57,7 +69,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         self.checkbox_frame.grid(row=0, column=0, padx=(20, 20), pady=(20, 0), sticky="nsew")
         self.checkbox_frame_label = customtkinter.CTkLabel(master=self.checkbox_frame,
                                                            text_color=("#333", "#ccc"),
-                                                           text="Choose where to search for logs:",
+                                                           text=_("Choose where to search for logs:"),
                                                            font=customtkinter.CTkFont(size=15, weight="bold"))
         self.checkbox_frame_label.grid(row=0, column=0, columnspan=3, sticky="n")
 
@@ -86,8 +98,8 @@ class AnydeskFrame(customtkinter.CTkFrame):
                                                                               variable=self.switch_search_for_logs_in_location,
                                                                               text_color=("#333", "#ccc"),
                                                                               onvalue=True, offvalue=False,
-                                                                              text="Search custom location "
-                                                                                   "for logs",
+                                                                              text=_("Search custom location "
+                                                                                     "for logs"),
                                                                               command=lambda: self.turn_off_switches([
                                                                                   self.switch_fetch_programdata_logs,
                                                                                   self.switch_fetch_appdata_logs]))
@@ -102,7 +114,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         self.fetch_logs_button = customtkinter.CTkButton(self,
                                                          command=self.fetch_logs_button_callback,
                                                          text_color=("#eee", "#ccc"),
-                                                         text="Fetch logs")
+                                                         text=_("Fetch logs"))
 
         self.fetch_logs_button.grid(row=1, column=0, columnspan=2, padx=20, pady=(20, 0), sticky="ew")
 
@@ -110,7 +122,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         self.open_report_button = customtkinter.CTkButton(self,
                                                           command=self.open_report_folder,
                                                           text_color=("#eee", "#ccc"),
-                                                          text="Open report folder")
+                                                          text=_("Open report"))
         self.open_report_button.grid(row=3, column=0, columnspan=2, padx=20, pady=20, sticky="ew")
         # Hide the button until logs are fetched
         self.open_report_button.grid_remove()
@@ -150,14 +162,16 @@ class AnydeskFrame(customtkinter.CTkFrame):
         """
         log_entries = get_anydesk_logs(log_filename_with_path)
         if log_entries is not None:
-            self.textbox.insert("insert", f'Fetching logs from {log_filename_with_path}: \n\n')
+            self.textbox.insert("insert", '{} {}: \n\n'.format(_('Fetching logs from'), log_filename_with_path))
             if len(log_entries) < 1:
-                self.textbox.insert("insert", "No IP logs found inside file! \n\n")
+                self.textbox.insert("insert", '{} \n\n'.format(_('No IP logs found inside file!'))
+                                    )
             else:
                 for entry in log_entries:
                     self.textbox.insert("insert", entry + " - " + log_entries[entry] + "\n\n")
         else:
-            self.textbox.insert("insert", f'Logs not found in {log_filename_with_path} \n')
+            self.textbox.insert("insert", '{} {} \n'.format(_('Logs not found in'), log_filename_with_path)
+                                )
 
     def search_filesystem_callback(self, search_location: str):
         """A callback function that calls find_files function and prints output to textbox
@@ -169,7 +183,10 @@ class AnydeskFrame(customtkinter.CTkFrame):
         """
         global search_finished, write_header
         self.open_report_button.grid_remove()
-        self.textbox.insert("insert", f'---- Searching for files in:\n{search_location}\nit may take a while! ----\n\n')
+        self.textbox.insert("insert",
+                            '---- {}: \n\n{}\n\n{}! ----\n\n\n'.format(_('Searching for files in'), search_location,
+                                                                       _('it may take a while'))
+                            )
 
         # Disable buttons and checkboxes while searching for files
         self.toggle_checkboxes_and_buttons_state([
@@ -208,13 +225,13 @@ class AnydeskFrame(customtkinter.CTkFrame):
         # Generate a report with a message if no files were found in search location
         if number_of_found_files == 0:
             self.open_report_button.grid()
-            self.textbox.insert("insert", f'\n---- No files were found in {search_location}! ----\n\n')
+            self.textbox.insert("insert", '\n---- {} {}! ----\n\n'.format(_('No files were found in'), search_location))
             with open(os.path.join(report_folder_path, "report.txt"), "a") as report_file:
-                report_file.write(f'---- No files were found in {search_location} ----\n\n')
+                report_file.write('---- {} {} ----\n\n'.format(_('No files were found in'), search_location))
         # Display a message if search is finished
         else:
             self.open_report_button.grid()
-            self.textbox.insert("insert", "\n---- Searching for files finished! ----\n\n")
+            self.textbox.insert("insert", '---- {}! ----'.format(_('Searching for files finished')))
 
     def generate_and_present_search_results(self):
         """A function that updates the textbox with new logs found by the search function
@@ -271,4 +288,4 @@ class AnydeskFrame(customtkinter.CTkFrame):
         try:
             os.startfile(report_folder_path)
         except FileNotFoundError:
-            print("Report folder not found!")
+            print(_("Report folder not found!"))
