@@ -25,6 +25,7 @@ def change_language_event(new_language):
         _ = change_frame_locale('HomeFrame', 'pl-PL')
     HomeFrame.change_locale(app.home_frame, app.home_frame, new_language)
     App.change_locale(app, new_language)
+    AnydeskFrame.change_locale(app.anydesk_frame, app.anydesk_frame, new_language)
 
 
 class App(customtkinter.CTk):
@@ -42,8 +43,8 @@ class App(customtkinter.CTk):
 
     def __init__(self):
         super().__init__()
-        self.geometry("750x450+0+0")
-        self.title("AnyGrabber - Grabber for AnyDesk logs")
+        self.geometry("800x600+0+0")
+        self.title(_("AnyGrabber - Grabber for AnyDesk logs"))
         self.iconbitmap(os.path.join(os.path.dirname(os.path.realpath(__file__)), "assets", "AnyGrabberIcon.ico"))
 
         self.minsize(720, 450)

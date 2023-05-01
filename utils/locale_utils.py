@@ -3,6 +3,7 @@ from tkinter import *
 
 _ = gettext.gettext
 
+
 def change_frame_locale(frame_name, locale_str):
     """Function that changes locale of selected frame."""
     en = gettext.translation(frame_name, localedir='locale', languages=['en-US'])
@@ -14,6 +15,4 @@ def change_frame_locale(frame_name, locale_str):
     elif locale_str == "pl-PL":
         pl.install()
         _ = pl.gettext
-    print(_)
     return _
-

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AnyGrabber\n"
-"POT-Creation-Date: 2023-04-21 23:54+0200\n"
-"PO-Revision-Date: 2023-04-21 23:57+0200\n"
+"POT-Creation-Date: 2023-05-01 22:25+0200\n"
+"PO-Revision-Date: 2023-05-01 22:38+0200\n"
 "Last-Translator: Krzysztof Pańtak <kielx.dev@gmail.com>\n"
 "Language-Team: Krzysztof Pańtak\n"
 "Language: pl\n"
@@ -18,6 +18,54 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 "X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Basepath: .\n"
+
+#: frames/AnydeskFrame.py:46 frames/AnydeskFrame.py:71
+msgid "Choose where to search for logs:"
+msgstr "Wybierz miejsce, w którym chcesz szukać logów programu:"
+
+#: frames/AnydeskFrame.py:47 frames/AnydeskFrame.py:100
+msgid "Search custom location for logs"
+msgstr "Wyszukaj w niestandardowej lokalizacji"
+
+#: frames/AnydeskFrame.py:49 frames/AnydeskFrame.py:116
+msgid "Fetch logs"
+msgstr "Znajdź i pobierz logi"
+
+#: frames/AnydeskFrame.py:50 frames/AnydeskFrame.py:124
+msgid "Open report"
+msgstr "Otwórz raport"
+
+#: frames/AnydeskFrame.py:164
+msgid "Fetching logs from"
+msgstr "Przeszukiwanie logów w pliku"
+
+#: frames/AnydeskFrame.py:166
+msgid "No IP logs found inside file!"
+msgstr "Nie znaleziono adresów IP w pliku!"
+
+#: frames/AnydeskFrame.py:172
+msgid "Logs not found in"
+msgstr "Nie znaleziono żadnych logów programu w"
+
+#: frames/AnydeskFrame.py:186
+msgid "Searching for files in"
+msgstr "Szukanie plików w"
+
+#: frames/AnydeskFrame.py:187
+msgid "it may take a while"
+msgstr "to może chwile potrwać"
+
+#: frames/AnydeskFrame.py:227 frames/AnydeskFrame.py:229
+msgid "No files were found in"
+msgstr "Nie znaleziono plików w"
+
+#: frames/AnydeskFrame.py:233
+msgid "Searching for files finished"
+msgstr "Szukanie plików zakończone"
+
+#: frames/AnydeskFrame.py:290
+msgid "Report folder not found!"
+msgstr "Folder z raportem nie został znaleziony!"
 
 #: frames/HomeFrame.py:19
 msgid "welcome screen\n"
@@ -41,18 +89,22 @@ msgstr ""
 "sumy kontrolne dla znalezionych plików, a także precyzyjne raporty z "
 "wynikami.\n"
 
-#: main.py:22 main.py:35 main.py:38 main.py:118 main.py:121
+#: main.py:22 main.py:36 main.py:39 main.py:119 main.py:122
 msgid "English"
 msgstr "Angielski"
 
-#: main.py:24 main.py:35 main.py:40 main.py:118
+#: main.py:24 main.py:36 main.py:41 main.py:119
 msgid "Polish"
 msgstr "Polski"
 
-#: main.py:41 main.py:87
+#: main.py:37 main.py:103
+msgid "Browse Reports"
+msgstr "Przeglądaj raporty"
+
+#: main.py:42 main.py:88
 msgid "Home"
 msgstr "Start"
 
-#: main.py:102
-msgid "Browse Reports"
-msgstr "Przeglądaj raporty"
+#: main.py:47
+msgid "AnyGrabber - Grabber for AnyDesk logs"
+msgstr "AnyGrabber - Grabber dla logów AnyDesk"
