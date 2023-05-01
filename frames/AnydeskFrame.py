@@ -8,7 +8,7 @@ from utils.locale_utils import change_frame_locale
 from utils.file_operations import get_anydesk_logs, create_timestamped_directory, copy_and_generate_checksum, \
     create_folders_from_path, generate_txt_report, generate_csv_report
 
-_ = change_frame_locale('HomeFrame', 'en-US')
+_ = change_frame_locale('HomeFrame')
 
 # Define paths to AnyDesk log files (ad.trace and ad_svc.trace)
 app_data_path = os.getenv('APPDATA')
