@@ -28,6 +28,7 @@ def change_language_event(new_language):
     HomeFrame.change_locale(app.home_frame, app.home_frame, new_language)
     App.change_locale(app, new_language)
     AnydeskFrame.change_locale(app.anydesk_frame, app.anydesk_frame, new_language)
+    BrowseReportsFrame.change_locale(app.browse_reports_frame, new_language)
 
 
 class App(customtkinter.CTk):

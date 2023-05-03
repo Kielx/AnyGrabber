@@ -4,10 +4,18 @@ import customtkinter
 
 from utils.file_operations import split_computer_datetime_dirname, get_reports_folder_list
 from utils.widget_utils import add_widgets
+from utils.locale_utils import change_frame_locale
+
+_ = change_frame_locale('HomeFrame')
 
 
 class BrowseReportsFrame(customtkinter.CTkScrollableFrame):
     """Browse Reports frame class holding the list of generated reports."""
+
+    def change_locale(self, language):
+        global _
+        _ = change_frame_locale("HomeFrame", language)
+        refresh(self)
 
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
@@ -44,8 +52,8 @@ class Report_Frame(customtkinter.CTkFrame):
                                                 text_color=("#333", "#ccc")
                                                 )
         self.label.grid(row=0, column=0, sticky="ew", padx=20, pady=[10, 0])
-        self.label2 = customtkinter.CTkLabel(self, text="Files: " + str(report_details["number_of_files"]) + " - " +
-                                                        "IP Addresses: " + str(
+        self.label2 = customtkinter.CTkLabel(self, text=_("Files: ") + str(report_details["number_of_files"]) + " - " +
+                                                        _("IP Addresses: ") + str(
             report_details["number_of_ip_addresses"]),
                                              text_color=("#333", "#ccc")
                                              )
@@ -64,8 +72,9 @@ class Report_Button(customtkinter.CTkButton):
         self.report_name = kwargs.get("report_name")
         self.report_path = kwargs.get("report_path")
 
-        self.configure(text='Open Report folder', command=self.open_report, fg_color=("gray75", "gray25"), text_color=(
-            "#333", "#ccc"), hover_color=("#6ca9d4", "#1c3b50"))
+        self.configure(text=_('Open Report folder'), command=self.open_report, fg_color=("gray75", "gray25"),
+                       text_color=(
+                           "#333", "#ccc"), hover_color=("#6ca9d4", "#1c3b50"))
         self.grid(row=1, column=0, columnspan=2, sticky="ew", padx=20, pady=10)
 
     def open_report(self):
@@ -79,7 +88,6 @@ def refresh(browse_reports_frame_instance: customtkinter.CTkScrollableFrame):
 
     :param browse_reports_frame_instance: browse reports frame instance that will be refreshed with new data
     """
-
     # delete all widgets from frame
     for widget in browse_reports_frame_instance.winfo_children():
         widget.destroy()
@@ -92,7 +100,7 @@ def refresh(browse_reports_frame_instance: customtkinter.CTkScrollableFrame):
                                             report_path=os.path.join(os.getcwd(), "REPORTS", report))
 
     # Add a top label to the list of reports
-    browse_reports_frame_instance.label = customtkinter.CTkLabel(browse_reports_frame_instance, text="Reports List",
+    browse_reports_frame_instance.label = customtkinter.CTkLabel(browse_reports_frame_instance, text=_("Reports List"),
                                                                  text_color=("#333", "#ccc"),
                                                                  font=customtkinter.CTkFont(size=15, weight="bold"))
     browse_reports_frame_instance.label.grid(row=0, column=0, padx=20)
