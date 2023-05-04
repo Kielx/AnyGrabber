@@ -6,6 +6,7 @@ from frames.AnydeskFrame import AnydeskFrame
 from frames.BrowseReportsFrame import BrowseReportsFrame, refresh
 from frames.HomeFrame import HomeFrame
 from utils.locale_utils import change_frame_locale, set_default_locale, default_locale
+import utils.file_operations
 
 customtkinter.set_appearance_mode("System")
 _ = change_frame_locale('HomeFrame')
@@ -29,6 +30,8 @@ def change_language_event(new_language):
     App.change_locale(app, new_language)
     AnydeskFrame.change_locale(app.anydesk_frame, app.anydesk_frame, new_language)
     BrowseReportsFrame.change_locale(app.browse_reports_frame, new_language)
+    utils.file_operations.change_locale(new_language)
+
 
 
 class App(customtkinter.CTk):
