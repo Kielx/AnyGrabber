@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AnyGrabber\n"
-"POT-Creation-Date: 2023-05-04 14:38+0200\n"
-"PO-Revision-Date: 2023-05-04 14:39+0200\n"
+"POT-Creation-Date: 2023-05-04 21:52+0200\n"
+"PO-Revision-Date: 2023-05-04 22:10+0200\n"
 "Last-Translator: Krzysztof Pańtak <kielx.dev@gmail.com>\n"
 "Language-Team: Krzysztof Pańtak\n"
 "Language: pl\n"
@@ -105,25 +105,37 @@ msgstr ""
 "sumy kontrolne dla znalezionych plików, a także precyzyjne raporty z "
 "wynikami.\n"
 
-#: main.py:23 main.py:42 main.py:45 main.py:125 main.py:132
+#: main.py:10 main.py:115 main.py:118
+msgid "System"
+msgstr "Systemowy"
+
+#: main.py:22 main.py:39 main.py:42 main.py:122 main.py:129
 msgid "English"
 msgstr "Angielski"
 
-#: main.py:26 main.py:42 main.py:47 main.py:125 main.py:130
+#: main.py:25 main.py:38 main.py:43 main.py:121 main.py:126
 msgid "Polish"
 msgstr "Polski"
 
-#: main.py:43 main.py:109
+#: main.py:39 main.py:105
 msgid "Browse Reports"
 msgstr "Przeglądaj raporty"
 
-#: main.py:48 main.py:94
+#: main.py:44 main.py:90
 msgid "Home"
 msgstr "Start"
 
-#: main.py:53
+#: main.py:49
 msgid "AnyGrabber - Grabber for AnyDesk logs"
 msgstr "AnyGrabber - Grabber dla logów AnyDesk"
+
+#: main.py:115
+msgid "Light"
+msgstr "Jasny"
+
+#: main.py:115
+msgid "Dark"
+msgstr "Ciemny"
 
 #: utils/file_operations.py:136
 msgid "Report for"

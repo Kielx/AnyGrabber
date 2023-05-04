@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-05-01 21:42+0200\n"
-"PO-Revision-Date: 2023-05-01 21:44+0200\n"
+"POT-Creation-Date: 2023-05-04 21:52+0200\n"
+"PO-Revision-Date: 2023-05-04 22:10+0200\n"
 "Last-Translator: Krzysztof Pańtak <kielx.dev@gmail.com>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -17,7 +17,71 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: frames/HomeFrame.py:19
+#: frames/AnydeskFrame.py:47 frames/AnydeskFrame.py:72
+msgid "Choose where to search for logs:"
+msgstr ""
+
+#: frames/AnydeskFrame.py:48 frames/AnydeskFrame.py:101
+msgid "Search custom location for logs"
+msgstr ""
+
+#: frames/AnydeskFrame.py:50 frames/AnydeskFrame.py:117
+msgid "Fetch logs"
+msgstr ""
+
+#: frames/AnydeskFrame.py:51 frames/AnydeskFrame.py:125
+msgid "Open report"
+msgstr ""
+
+#: frames/AnydeskFrame.py:165
+msgid "Fetching logs from"
+msgstr ""
+
+#: frames/AnydeskFrame.py:167
+msgid "No IP logs found inside file!"
+msgstr ""
+
+#: frames/AnydeskFrame.py:173
+msgid "Logs not found in"
+msgstr ""
+
+#: frames/AnydeskFrame.py:187
+msgid "Searching for files in"
+msgstr ""
+
+#: frames/AnydeskFrame.py:188
+msgid "it may take a while"
+msgstr ""
+
+#: frames/AnydeskFrame.py:228 frames/AnydeskFrame.py:230
+msgid "No files were found in"
+msgstr ""
+
+#: frames/AnydeskFrame.py:234
+msgid "Searching for files finished"
+msgstr ""
+
+#: frames/AnydeskFrame.py:291
+msgid "Report folder not found!"
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:55
+msgid "Files: "
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:56
+msgid "IP Addresses: "
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:75
+msgid "Open Report folder"
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:103
+msgid "Reports List"
+msgstr ""
+
+#: frames/HomeFrame.py:21
 msgid "welcome screen\n"
 msgstr ""
 "Welcome to AnyGrabber - the program designed to help you extract, secure and "
@@ -35,22 +99,34 @@ msgstr ""
 "extract date, time and IP address of each session. \n"
 "\n"
 
-#: main.py:22 main.py:35 main.py:38 main.py:118 main.py:121
+#: main.py:10 main.py:115 main.py:118
+msgid "System"
+msgstr "System"
+
+#: main.py:22 main.py:39 main.py:42 main.py:122 main.py:129
 msgid "English"
 msgstr "English"
 
-#: main.py:24 main.py:35 main.py:40 main.py:118
+#: main.py:25 main.py:39 main.py:44 main.py:122 main.py:127
 msgid "Polish"
 msgstr "Polish"
 
-#: main.py:36 main.py:102
+#: main.py:40 main.py:106
 msgid "Browse Reports"
 msgstr "Browse Reports"
 
-#: main.py:41 main.py:87
+#: main.py:45 main.py:91
 msgid "Home"
 msgstr "Home"
 
-#: main.py:46
+#: main.py:50
 msgid "AnyGrabber - Grabber for AnyDesk logs"
 msgstr "AnyGrabber - Grabber for AnyDesk logs"
+
+#: main.py:115
+msgid "Light"
+msgstr "Light"
+
+#: main.py:115
+msgid "Dark"
+msgstr "Dark"

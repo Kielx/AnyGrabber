@@ -8,13 +8,16 @@ from frames.HomeFrame import HomeFrame
 from utils.locale_utils import change_frame_locale, set_default_locale, default_locale
 import utils.file_operations
 
-customtkinter.set_appearance_mode("System")
+customtkinter.set_appearance_mode(_("System"))
 _ = change_frame_locale('HomeFrame')
 
 
 def change_appearance_mode_event(new_appearance_mode):
     """Change appearance mode event handler for appearance mode menu."""
-    customtkinter.set_appearance_mode(new_appearance_mode)
+
+    appearance_dict = {"Ciemny": "Dark", "Jasny": "Light", "Systemowy": "System",
+                       "Dark": "Dark", "Light": "Light", "System": "System"}
+    customtkinter.set_appearance_mode(appearance_dict[new_appearance_mode])
 
 
 def change_language_event(new_language):
@@ -26,6 +29,7 @@ def change_language_event(new_language):
     elif new_language == _('Polish'):
         _ = change_frame_locale('HomeFrame', 'pl-PL')
         set_default_locale('pl-PL')
+    app.appearance_mode_menu.configure(values=[_("System"), _("Light"), _("Dark")])
     HomeFrame.change_locale(app.home_frame, app.home_frame, new_language)
     App.change_locale(app, new_language)
     AnydeskFrame.change_locale(app.anydesk_frame, app.anydesk_frame, new_language)
@@ -115,10 +119,10 @@ class App(customtkinter.CTk):
 
         self.appearance_mode_menu = customtkinter.CTkOptionMenu(self.navigation_frame,
                                                                 text_color=("#eee", "#ccc"),
-                                                                values=["Light", "Dark", "System"],
+                                                                values=[_("Light"), _("Dark"), _("System")],
                                                                 command=change_appearance_mode_event)
         self.appearance_mode_menu.grid(row=6, column=0, padx=20, pady=20, sticky="s")
-        self.appearance_mode_menu.set("System")
+        self.appearance_mode_menu.set(_("System"))
 
         self.language_menu = customtkinter.CTkOptionMenu(self.navigation_frame,
                                                          text_color=("#eee", "#ccc"),
