@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AnyGrabber\n"
-"POT-Creation-Date: 2023-05-04 14:21+0200\n"
+"POT-Creation-Date: 2023-05-04 14:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Krzysztof Pañtak, kielx.dev@gmail.com\n"
@@ -91,30 +91,42 @@ msgstr ""
 msgid "welcome screen\n"
 msgstr ""
 
-#: main.py:22 main.py:39 main.py:42 main.py:122 main.py:129
+#: main.py:23 main.py:42 main.py:45 main.py:125 main.py:132
 msgid "English"
 msgstr ""
 
-#: main.py:25 main.py:39 main.py:44 main.py:122 main.py:127
+#: main.py:26 main.py:42 main.py:47 main.py:125 main.py:130
 msgid "Polish"
 msgstr ""
 
-#: main.py:40 main.py:106
+#: main.py:43 main.py:109
 msgid "Browse Reports"
 msgstr ""
 
-#: main.py:45 main.py:91
+#: main.py:48 main.py:94
 msgid "Home"
 msgstr ""
 
-#: main.py:50
+#: main.py:53
 msgid "AnyGrabber - Grabber for AnyDesk logs"
 msgstr ""
 
-#: utils/file_operations.py:133
+#: utils/file_operations.py:136
 msgid "Report for"
 msgstr ""
 
-#: utils/file_operations.py:133
+#: utils/file_operations.py:136
 msgid "generated on"
+msgstr ""
+
+#: utils/file_operations.py:139
+msgid "No Anydesk logs from file"
+msgstr ""
+
+#: utils/file_operations.py:141
+msgid "Anydesk logs from file"
+msgstr ""
+
+#: utils/file_operations.py:156
+msgid "No Anydesk logs found!"
 msgstr ""
