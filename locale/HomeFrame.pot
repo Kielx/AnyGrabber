@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AnyGrabber\n"
-"POT-Creation-Date: 2023-05-03 21:54+0200\n"
+"POT-Creation-Date: 2023-05-04 14:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Krzysztof Pañtak, kielx.dev@gmail.com\n"
@@ -21,6 +21,7 @@ msgstr ""
 "X-Poedit-SearchPath-1: main.py\n"
 "X-Poedit-SearchPath-2: frames/AnydeskFrame.py\n"
 "X-Poedit-SearchPath-3: frames\n"
+"X-Poedit-SearchPath-4: utils\n"
 
 #: frames/AnydeskFrame.py:47 frames/AnydeskFrame.py:72
 msgid "Choose where to search for logs:"
@@ -70,15 +71,15 @@ msgstr ""
 msgid "Report folder not found!"
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:54
+#: frames/BrowseReportsFrame.py:55
 msgid "Files: "
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:55
+#: frames/BrowseReportsFrame.py:56
 msgid "IP Addresses: "
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:74
+#: frames/BrowseReportsFrame.py:75
 msgid "Open Report folder"
 msgstr ""
 
@@ -90,22 +91,30 @@ msgstr ""
 msgid "welcome screen\n"
 msgstr ""
 
-#: main.py:22 main.py:38 main.py:41 main.py:121 main.py:128
+#: main.py:22 main.py:39 main.py:42 main.py:122 main.py:129
 msgid "English"
 msgstr ""
 
-#: main.py:25 main.py:38 main.py:43 main.py:121 main.py:126
+#: main.py:25 main.py:39 main.py:44 main.py:122 main.py:127
 msgid "Polish"
 msgstr ""
 
-#: main.py:39 main.py:105
+#: main.py:40 main.py:106
 msgid "Browse Reports"
 msgstr ""
 
-#: main.py:44 main.py:90
+#: main.py:45 main.py:91
 msgid "Home"
 msgstr ""
 
-#: main.py:49
+#: main.py:50
 msgid "AnyGrabber - Grabber for AnyDesk logs"
+msgstr ""
+
+#: utils/file_operations.py:133
+msgid "Report for"
+msgstr ""
+
+#: utils/file_operations.py:133
+msgid "generated on"
 msgstr ""

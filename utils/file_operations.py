@@ -6,12 +6,16 @@ import socket
 import re
 import shutil
 from datetime import datetime
-
 import dateutil.parser as dparser
+from utils.locale_utils import change_frame_locale
 
 # Search string in the log file that is used to identify the line that contains the login information
 search_string = 'Logged in from '
 
+_ = change_frame_locale('HomeFrame')
+def change_locale(new_locale):
+    global _
+    _ = change_frame_locale("HomeFrame", new_locale)
 
 def get_computer_name():
     system_name = platform.system()
@@ -129,7 +133,7 @@ def generate_txt_report(report_directory_path: str, write_header: bool = True,
 
     with open(actual_path, "a") as f:
         if write_header:
-            f.write(f"Report for {computer_name} generated on {current_datetime} \r\n")
+            f.write('{} {} {} {} \r\n'.format(_("Report for"), computer_name, _("generated on"), current_datetime))
             f.write("-------------------------------------------------- \r\n")
         if anydesk_logs_dict == {} or anydesk_logs_dict is None:
             f.write(f'No Anydesk logs found in file {filename} \r\n')
