@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AnyGrabber\n"
-"POT-Creation-Date: 2023-05-03 21:54+0200\n"
-"PO-Revision-Date: 2023-05-05 10:19+0200\n"
+"POT-Creation-Date: 2023-05-05 14:51+0200\n"
+"PO-Revision-Date: 2023-05-05 14:54+0200\n"
 "Last-Translator: Krzysztof Pańtak <kielx.dev@gmail.com>\n"
 "Language-Team: Krzysztof Pańtak\n"
 "Language: pl\n"
@@ -23,59 +23,63 @@ msgstr ""
 msgid "Choose where to search for logs:"
 msgstr "Wybierz miejsce, w którym chcesz szukać logów programu:"
 
-#: frames/AnydeskFrame.py:48 frames/AnydeskFrame.py:101
+#: frames/AnydeskFrame.py:48
 msgid "Search custom location for logs"
 msgstr "Wyszukaj w niestandardowej lokalizacji"
 
-#: frames/AnydeskFrame.py:50 frames/AnydeskFrame.py:117
+#: frames/AnydeskFrame.py:50 frames/AnydeskFrame.py:116
 msgid "Fetch logs"
 msgstr "Znajdź i pobierz logi"
 
-#: frames/AnydeskFrame.py:51 frames/AnydeskFrame.py:125
+#: frames/AnydeskFrame.py:51 frames/AnydeskFrame.py:124
 msgid "Open report"
 msgstr "Otwórz raport"
 
-#: frames/AnydeskFrame.py:165
+#: frames/AnydeskFrame.py:101
+msgid "Custom location"
+msgstr "Niestandardowa lokalizacja"
+
+#: frames/AnydeskFrame.py:164
 msgid "Fetching logs from"
 msgstr "Przeszukiwanie logów w pliku"
 
-#: frames/AnydeskFrame.py:167
+#: frames/AnydeskFrame.py:166
 msgid "No IP logs found inside file!"
 msgstr "Nie znaleziono adresów IP w pliku!"
 
-#: frames/AnydeskFrame.py:173
+#: frames/AnydeskFrame.py:172
 msgid "Logs not found in"
 msgstr "Nie znaleziono żadnych logów programu w"
 
-#: frames/AnydeskFrame.py:187
+#: frames/AnydeskFrame.py:186
 msgid "Searching for files in"
 msgstr "Szukanie plików w"
 
-#: frames/AnydeskFrame.py:188
+#: frames/AnydeskFrame.py:187
 msgid "it may take a while"
 msgstr "to może chwile potrwać"
 
-#: frames/AnydeskFrame.py:228 frames/AnydeskFrame.py:230
+#: frames/AnydeskFrame.py:227 frames/AnydeskFrame.py:229
 msgid "No files were found in"
 msgstr "Nie znaleziono plików w"
 
-#: frames/AnydeskFrame.py:234
+#: frames/AnydeskFrame.py:233
 msgid "Searching for files finished"
 msgstr "Szukanie plików zakończone"
 
-#: frames/AnydeskFrame.py:291
+#: frames/AnydeskFrame.py:290
 msgid "Report folder not found!"
 msgstr "Folder z raportem nie został znaleziony!"
 
-#: frames/BrowseReportsFrame.py:54
+#: frames/BrowseReportsFrame.py:55
 msgid "Files: "
 msgstr "Pliki: "
 
-#: frames/BrowseReportsFrame.py:55
+#: frames/BrowseReportsFrame.py:56
 msgid "IP Addresses: "
 msgstr "Adresy IP: "
 
-#: frames/BrowseReportsFrame.py:74
+#: frames/BrowseReportsFrame.py:75
 msgid "Open Report folder"
 msgstr "Otwórz raport"
 
@@ -105,37 +109,51 @@ msgstr ""
 "sumy kontrolne dla znalezionych plików, a także precyzyjne raporty z "
 "wynikami.\n"
 
-#: main.py:10 main.py:115 main.py:118
-msgid "System"
-msgstr "Systemowy"
-
-#: main.py:22 main.py:39 main.py:42 main.py:122 main.py:129
+#: main.py:25 main.py:46 main.py:49 main.py:147 main.py:154
 msgid "English"
 msgstr "Angielski"
 
-#: main.py:25 main.py:39 main.py:44 main.py:122 main.py:127
+#: main.py:28 main.py:46 main.py:59 main.py:147 main.py:152
 msgid "Polish"
 msgstr "Polski"
 
-#: main.py:40 main.py:106
-msgid "Browse Reports"
-msgstr "Przeglądaj raporty"
+#: main.py:32 main.py:56 main.py:72 main.py:139
+msgid "System"
+msgstr "Systemowy"
 
-#: main.py:45 main.py:91
-msgid "Home"
-msgstr "Start"
-
-#: main.py:50
-msgid "AnyGrabber - Grabber for AnyDesk logs"
-msgstr "AnyGrabber - Grabber dla logów AnyDesk"
-
-#: main.py:115
+#: main.py:32 main.py:54 main.py:139
 msgid "Light"
 msgstr "Jasny"
 
-#: main.py:115
+#: main.py:32 main.py:52 main.py:139
 msgid "Dark"
 msgstr "Ciemny"
+
+#: main.py:47 main.py:130
+msgid "Browse Reports"
+msgstr "Przeglądaj raporty"
+
+#: main.py:62
+msgid "Ciemny"
+msgstr ""
+
+#: main.py:64
+msgid "Jasny"
+msgstr ""
+
+#: main.py:66
+#, fuzzy
+#| msgid "System"
+msgid "Systemowy"
+msgstr "Systemowy"
+
+#: main.py:68 main.py:115
+msgid "Home"
+msgstr "Start"
+
+#: main.py:74
+msgid "AnyGrabber - Grabber for AnyDesk logs"
+msgstr "AnyGrabber - Grabber dla logów AnyDesk"
 
 #: utils/file_operations.py:136
 msgid "Report for"

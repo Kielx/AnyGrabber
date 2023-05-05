@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2023-05-04 21:52+0200\n"
-"PO-Revision-Date: 2023-05-05 14:24+0200\n"
+"POT-Creation-Date: 2023-05-05 14:51+0200\n"
+"PO-Revision-Date: 2023-05-05 14:52+0200\n"
 "Last-Translator: Krzysztof Pańtak <kielx.dev@gmail.com>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -21,47 +21,51 @@ msgstr ""
 msgid "Choose where to search for logs:"
 msgstr ""
 
-#: frames/AnydeskFrame.py:48 frames/AnydeskFrame.py:101
+#: frames/AnydeskFrame.py:48
 msgid "Search custom location for logs"
 msgstr ""
 
-#: frames/AnydeskFrame.py:50 frames/AnydeskFrame.py:117
+#: frames/AnydeskFrame.py:50 frames/AnydeskFrame.py:116
 msgid "Fetch logs"
 msgstr ""
 
-#: frames/AnydeskFrame.py:51 frames/AnydeskFrame.py:125
+#: frames/AnydeskFrame.py:51 frames/AnydeskFrame.py:124
 msgid "Open report"
 msgstr ""
 
-#: frames/AnydeskFrame.py:165
+#: frames/AnydeskFrame.py:101
+msgid "Custom location"
+msgstr ""
+
+#: frames/AnydeskFrame.py:164
 msgid "Fetching logs from"
 msgstr ""
 
-#: frames/AnydeskFrame.py:167
+#: frames/AnydeskFrame.py:166
 msgid "No IP logs found inside file!"
 msgstr ""
 
-#: frames/AnydeskFrame.py:173
+#: frames/AnydeskFrame.py:172
 msgid "Logs not found in"
 msgstr ""
 
-#: frames/AnydeskFrame.py:187
+#: frames/AnydeskFrame.py:186
 msgid "Searching for files in"
 msgstr ""
 
-#: frames/AnydeskFrame.py:188
+#: frames/AnydeskFrame.py:187
 msgid "it may take a while"
 msgstr ""
 
-#: frames/AnydeskFrame.py:228 frames/AnydeskFrame.py:230
+#: frames/AnydeskFrame.py:227 frames/AnydeskFrame.py:229
 msgid "No files were found in"
 msgstr ""
 
-#: frames/AnydeskFrame.py:234
+#: frames/AnydeskFrame.py:233
 msgid "Searching for files finished"
 msgstr ""
 
-#: frames/AnydeskFrame.py:291
+#: frames/AnydeskFrame.py:290
 msgid "Report folder not found!"
 msgstr ""
 
@@ -99,34 +103,68 @@ msgstr ""
 "extract date, time and IP address of each session. \n"
 "\n"
 
-#: main.py:10 main.py:115 main.py:118
-msgid "System"
-msgstr "System"
-
-#: main.py:22 main.py:39 main.py:42 main.py:122 main.py:129
+#: main.py:25 main.py:46 main.py:49 main.py:147 main.py:154
 msgid "English"
 msgstr "English"
 
-#: main.py:25 main.py:39 main.py:44 main.py:122 main.py:127
+#: main.py:28 main.py:46 main.py:59 main.py:147 main.py:152
 msgid "Polish"
 msgstr "Polish"
 
-#: main.py:40 main.py:106
-msgid "Browse Reports"
-msgstr "Browse Reports"
+#: main.py:32 main.py:56 main.py:72 main.py:139
+msgid "System"
+msgstr "System"
 
-#: main.py:45 main.py:91
-msgid "Home"
-msgstr "Home"
-
-#: main.py:50
-msgid "AnyGrabber - Grabber for AnyDesk logs"
-msgstr "AnyGrabber - Grabber for AnyDesk logs"
-
-#: main.py:115
+#: main.py:32 main.py:54 main.py:139
 msgid "Light"
 msgstr "Light"
 
-#: main.py:115
+#: main.py:32 main.py:52 main.py:139
 msgid "Dark"
 msgstr "Dark"
+
+#: main.py:47 main.py:130
+msgid "Browse Reports"
+msgstr "Browse Reports"
+
+#: main.py:62
+msgid "Ciemny"
+msgstr ""
+
+#: main.py:64
+msgid "Jasny"
+msgstr ""
+
+#: main.py:66
+#, fuzzy
+#| msgid "System"
+msgid "Systemowy"
+msgstr "System"
+
+#: main.py:68 main.py:115
+msgid "Home"
+msgstr "Home"
+
+#: main.py:74
+msgid "AnyGrabber - Grabber for AnyDesk logs"
+msgstr "AnyGrabber - Grabber for AnyDesk logs"
+
+#: utils/file_operations.py:136
+msgid "Report for"
+msgstr ""
+
+#: utils/file_operations.py:136
+msgid "generated on"
+msgstr ""
+
+#: utils/file_operations.py:139
+msgid "No Anydesk logs from file"
+msgstr ""
+
+#: utils/file_operations.py:141
+msgid "Anydesk logs from file"
+msgstr ""
+
+#: utils/file_operations.py:156
+msgid "No Anydesk logs found!"
+msgstr ""
