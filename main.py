@@ -8,7 +8,6 @@ from frames.HomeFrame import HomeFrame
 from utils.locale_utils import change_frame_locale, set_default_locale, default_locale
 import utils.file_operations
 
-customtkinter.set_appearance_mode(_("System"))
 _ = change_frame_locale('HomeFrame')
 
 
@@ -29,7 +28,8 @@ def change_language_event(new_language):
     elif new_language == _('Polish'):
         _ = change_frame_locale('HomeFrame', 'pl-PL')
         set_default_locale('pl-PL')
-    app.appearance_mode_menu.configure(values=[_("System"), _("Light"), _("Dark")])
+
+    app.appearance_mode_menu.configure(values=[_("System"), _("Light"), _("Dark")], variable=app.appearance_mode_variable)
     HomeFrame.change_locale(app.home_frame, app.home_frame, new_language)
     App.change_locale(app, new_language)
     AnydeskFrame.change_locale(app.anydesk_frame, app.anydesk_frame, new_language)
@@ -47,13 +47,30 @@ class App(customtkinter.CTk):
         self.browse_reports_frame_button.configure(text=_("Browse Reports"))
         if language == "Angielski":
             self.language_menu.set(_("English"))
+            curr_appeareance_mode = self.appearance_mode_variable.get()
+            if curr_appeareance_mode == "Ciemny":
+                self.appearance_mode_menu.set(_("Dark"))
+            elif curr_appeareance_mode == "Jasny":
+                self.appearance_mode_menu.set(_("Light"))
+            elif curr_appeareance_mode == "Systemowy":
+                self.appearance_mode_menu.set(_("System"))
+
         elif language == "Polish":
             self.language_menu.set(_("Polish"))
+            curr_appeareance_mode = self.appearance_mode_variable.get()
+            if curr_appeareance_mode == "Dark":
+                self.appearance_mode_menu.set(_("Ciemny"))
+            elif curr_appeareance_mode == "Light":
+                self.appearance_mode_menu.set(_("Jasny"))
+            elif curr_appeareance_mode == "System":
+                self.appearance_mode_menu.set(_("Systemowy"))
+
         self.home_button.configure(text=_("Home"))
 
     def __init__(self):
         super().__init__()
-        self.geometry("800x600+0+0")
+        self.appearance_mode_variable = customtkinter.StringVar(value=_("System"))
+        self.geometry("780x520+0+0")
         self.title(_("AnyGrabber - Grabber for AnyDesk logs"))
         self.iconbitmap(os.path.join(os.path.dirname(os.path.realpath(__file__)), "assets", "AnyGrabberIcon.ico"))
 
@@ -120,9 +137,10 @@ class App(customtkinter.CTk):
         self.appearance_mode_menu = customtkinter.CTkOptionMenu(self.navigation_frame,
                                                                 text_color=("#eee", "#ccc"),
                                                                 values=[_("Light"), _("Dark"), _("System")],
-                                                                command=change_appearance_mode_event)
+                                                                command=change_appearance_mode_event,
+                                                                variable=self.appearance_mode_variable)
         self.appearance_mode_menu.grid(row=6, column=0, padx=20, pady=20, sticky="s")
-        self.appearance_mode_menu.set(_("System"))
+
 
         self.language_menu = customtkinter.CTkOptionMenu(self.navigation_frame,
                                                          text_color=("#eee", "#ccc"),
@@ -186,3 +204,4 @@ class App(customtkinter.CTk):
 if __name__ == "__main__":
     app = App()
     app.mainloop()
+
