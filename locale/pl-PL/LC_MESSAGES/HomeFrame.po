@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AnyGrabber\n"
-"POT-Creation-Date: 2023-05-04 21:52+0200\n"
-"PO-Revision-Date: 2023-05-04 22:10+0200\n"
+"POT-Creation-Date: 2023-05-03 21:54+0200\n"
+"PO-Revision-Date: 2023-05-05 10:19+0200\n"
 "Last-Translator: Krzysztof Pańtak <kielx.dev@gmail.com>\n"
 "Language-Team: Krzysztof Pańtak\n"
 "Language: pl\n"
@@ -67,15 +67,15 @@ msgstr "Szukanie plików zakończone"
 msgid "Report folder not found!"
 msgstr "Folder z raportem nie został znaleziony!"
 
-#: frames/BrowseReportsFrame.py:55
+#: frames/BrowseReportsFrame.py:54
 msgid "Files: "
 msgstr "Pliki: "
 
-#: frames/BrowseReportsFrame.py:56
+#: frames/BrowseReportsFrame.py:55
 msgid "IP Addresses: "
 msgstr "Adresy IP: "
 
-#: frames/BrowseReportsFrame.py:75
+#: frames/BrowseReportsFrame.py:74
 msgid "Open Report folder"
 msgstr "Otwórz raport"
 
@@ -113,19 +113,19 @@ msgstr "Systemowy"
 msgid "English"
 msgstr "Angielski"
 
-#: main.py:25 main.py:38 main.py:43 main.py:121 main.py:126
+#: main.py:25 main.py:39 main.py:44 main.py:122 main.py:127
 msgid "Polish"
 msgstr "Polski"
 
-#: main.py:39 main.py:105
+#: main.py:40 main.py:106
 msgid "Browse Reports"
 msgstr "Przeglądaj raporty"
 
-#: main.py:44 main.py:90
+#: main.py:45 main.py:91
 msgid "Home"
 msgstr "Start"
 
-#: main.py:49
+#: main.py:50
 msgid "AnyGrabber - Grabber for AnyDesk logs"
 msgstr "AnyGrabber - Grabber dla logów AnyDesk"
 
