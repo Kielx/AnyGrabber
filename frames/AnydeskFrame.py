@@ -45,8 +45,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         global _
         _ = change_frame_locale("HomeFrame", locale)
         self.checkbox_frame_label.configure(text=_("Choose where to search for logs:"))
-        self.checkbox_search_for_logs_in_location.configure(text=_("Search custom location "
-                                                                   "for logs"))
+        self.checkbox_search_for_logs_in_location.configure(text=_("Custom location"))
         self.fetch_logs_button.configure(text=_("Fetch logs"))
         self.open_report_button.configure(text=_("Open report"))
 
@@ -98,8 +97,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
                                                                               variable=self.switch_search_for_logs_in_location,
                                                                               text_color=("#333", "#ccc"),
                                                                               onvalue=True, offvalue=False,
-                                                                              text=_("Search custom location "
-                                                                                     "for logs"),
+                                                                              text=_("Custom location"),
                                                                               command=lambda: self.turn_off_switches([
                                                                                   self.switch_fetch_programdata_logs,
                                                                                   self.switch_fetch_appdata_logs]))

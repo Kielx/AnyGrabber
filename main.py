@@ -70,7 +70,7 @@ class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
         self.appearance_mode_variable = customtkinter.StringVar(value=_("System"))
-        self.geometry("780x520+0+0")
+        self.geometry("720x490+0+0")
         self.title(_("AnyGrabber - Grabber for AnyDesk logs"))
         self.iconbitmap(os.path.join(os.path.dirname(os.path.realpath(__file__)), "assets", "AnyGrabberIcon.ico"))
 
