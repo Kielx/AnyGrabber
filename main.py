@@ -29,13 +29,13 @@ def change_language_event(new_language):
         _ = change_frame_locale('HomeFrame', 'pl-PL')
         set_default_locale('pl-PL')
 
-    app.appearance_mode_menu.configure(values=[_("System"), _("Light"), _("Dark")], variable=app.appearance_mode_variable)
+    app.appearance_mode_menu.configure(values=[_("System"), _("Light"), _("Dark")],
+                                       variable=app.appearance_mode_variable)
     HomeFrame.change_locale(app.home_frame, app.home_frame, new_language)
     App.change_locale(app, new_language)
     AnydeskFrame.change_locale(app.anydesk_frame, app.anydesk_frame, new_language)
     BrowseReportsFrame.change_locale(app.browse_reports_frame, new_language)
     utils.file_operations.change_locale(new_language)
-
 
 
 class App(customtkinter.CTk):
@@ -45,6 +45,8 @@ class App(customtkinter.CTk):
         _ = change_frame_locale("HomeFrame", language)
         self.language_menu.configure(values=[_("English"), _("Polish")])
         self.browse_reports_frame_button.configure(text=_("Browse Reports"))
+        self.lanuage_label.configure(text=_("Language"))
+        self.appearance_mode_label.configure(text=_("Theme"))
         if language == "Angielski":
             self.language_menu.set(_("English"))
             curr_appeareance_mode = self.appearance_mode_variable.get()
@@ -134,19 +136,25 @@ class App(customtkinter.CTk):
                                                                    command=self.browse_reports_frame_button_event)
         self.browse_reports_frame_button.grid(row=5, column=0, sticky="ew")
 
+        self.appearance_mode_label = customtkinter.CTkLabel(self.navigation_frame, text_color=("#333", "#ccc"),
+                                                            text=_("Theme"))
+        self.appearance_mode_label.grid(row=6, column=0, padx=20, pady=[5, 0], sticky="n")
+
         self.appearance_mode_menu = customtkinter.CTkOptionMenu(self.navigation_frame,
                                                                 text_color=("#eee", "#ccc"),
                                                                 values=[_("Light"), _("Dark"), _("System")],
                                                                 command=change_appearance_mode_event,
                                                                 variable=self.appearance_mode_variable)
-        self.appearance_mode_menu.grid(row=6, column=0, padx=20, pady=20, sticky="s")
+        self.appearance_mode_menu.grid(row=7, column=0, padx=20, pady=[0, 10], sticky="s")
 
-
+        self.lanuage_label = customtkinter.CTkLabel(self.navigation_frame, text_color=("#333", "#ccc"),
+                                                    text=_("Language"))
+        self.lanuage_label.grid(row=8, column=0, padx=20, pady=0, sticky="n")
         self.language_menu = customtkinter.CTkOptionMenu(self.navigation_frame,
                                                          text_color=("#eee", "#ccc"),
                                                          values=[_("English"), _("Polish")],
                                                          command=change_language_event)
-        self.language_menu.grid(row=7, column=0, padx=20, pady=20, sticky="s")
+        self.language_menu.grid(row=9, column=0, padx=20, pady=[0, 20], sticky="s")
 
         if default_locale == 'pl-PL':
             self.language_menu.set(_("Polish"))
@@ -204,4 +212,3 @@ class App(customtkinter.CTk):
 if __name__ == "__main__":
     app = App()
     app.mainloop()
-
