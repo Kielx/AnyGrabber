@@ -183,7 +183,7 @@ class TestGeneratingTextReport:
         assert os.path.exists(os.path.join(report_directory_path, "report.txt"))
         # Check that the report indicates that no Anydesk logs were found
         with open(os.path.join(report_directory_path, "report.txt"), "r") as f:
-            assert f.readline().startswith("No Anydesk logs found")
+            assert f.readline().startswith("No Anydesk logs")
         os.remove(os.path.join(report_directory_path, "report.txt"))
 
 

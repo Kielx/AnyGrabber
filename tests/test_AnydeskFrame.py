@@ -46,7 +46,10 @@ def test_if_open_report_button_shows_after_search():
     anydesk_frame.search_filesystem_callback(search_location=os.getcwd())
     assert anydesk_frame.open_report_button.grid_info() != {}
     assert anydesk_frame.open_report_button.grid_info()["in"] == anydesk_frame
-    os.remove('report.txt')
+    try:
+        os.remove('./tests/report.txt')
+    except FileNotFoundError:
+        pass
 
 
 def test_toggle_checkboxes_and_buttons_state():
