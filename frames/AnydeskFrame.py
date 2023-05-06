@@ -66,6 +66,9 @@ class AnydeskFrame(customtkinter.CTkFrame):
         # Checkbox frame responsible for selecting where to search for logs
         self.checkbox_frame = customtkinter.CTkFrame(master=self)
         self.checkbox_frame.grid(row=0, column=0, padx=(20, 20), pady=(20, 0), sticky="nsew")
+        self.checkbox_frame.grid_columnconfigure(0, weight=1)
+        self.checkbox_frame.grid_columnconfigure(1, weight=1)
+        self.checkbox_frame.grid_columnconfigure(2, weight=1)
         self.checkbox_frame_label = customtkinter.CTkLabel(master=self.checkbox_frame,
                                                            text_color=("#333", "#ccc"),
                                                            text=_("Choose where to search for logs:"),
