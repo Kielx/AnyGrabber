@@ -3,12 +3,13 @@
 AnyGrabber enables rapid searching for AnyDesk logs, extracting relevant data concerning IP addresses used for logging
 in, along with corresponding dates. This application further provides the capacity to generate comprehensive .txt and
 .csv reports based on the data retrieved. The application's straightforward graphical user interface and localization
-features facilitate ease of use for non-technical users.
+features facilitate ease of use for non-technical users. It is portable, and works on Windows machines without the need for prior installation process.
 
 ![App screenshot](./assets/README/screenshot1.png)
 
 ## Key Features:
 
+- Portable
 - Search for logs in default and custom locations
 - Extraction of login date and IP address/es for specific computer
 - Generation of checksums for retrieved files
