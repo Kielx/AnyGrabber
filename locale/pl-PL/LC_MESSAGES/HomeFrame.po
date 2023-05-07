@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AnyGrabber\n"
-"POT-Creation-Date: 2023-05-06 17:25+0200\n"
-"PO-Revision-Date: 2023-05-06 17:25+0200\n"
+"POT-Creation-Date: 2023-05-07 21:14+0200\n"
+"PO-Revision-Date: 2023-05-07 21:15+0200\n"
 "Last-Translator: Krzysztof Pańtak <kielx.dev@gmail.com>\n"
 "Language-Team: Krzysztof Pańtak\n"
 "Language: pl\n"
@@ -19,51 +19,51 @@ msgstr ""
 "X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Basepath: .\n"
 
-#: frames/AnydeskFrame.py:47 frames/AnydeskFrame.py:71
+#: frames/AnydeskFrame.py:56 frames/AnydeskFrame.py:83
 msgid "Choose where to search for logs:"
 msgstr "Wybierz miejsce, w którym chcesz szukać logów programu:"
 
-#: frames/AnydeskFrame.py:48 frames/AnydeskFrame.py:100
+#: frames/AnydeskFrame.py:57 frames/AnydeskFrame.py:112
 msgid "Custom location"
 msgstr "Niestandardowa lokalizacja"
 
-#: frames/AnydeskFrame.py:49 frames/AnydeskFrame.py:115
+#: frames/AnydeskFrame.py:58 frames/AnydeskFrame.py:127
 msgid "Fetch logs"
 msgstr "Znajdź i pobierz logi"
 
-#: frames/AnydeskFrame.py:50 frames/AnydeskFrame.py:123
+#: frames/AnydeskFrame.py:59 frames/AnydeskFrame.py:135
 msgid "Open report"
 msgstr "Otwórz raport"
 
-#: frames/AnydeskFrame.py:163
+#: frames/AnydeskFrame.py:184
 msgid "Fetching logs from"
 msgstr "Przeszukiwanie logów w pliku"
 
-#: frames/AnydeskFrame.py:165
+#: frames/AnydeskFrame.py:186
 msgid "No IP logs found inside file!"
 msgstr "Nie znaleziono adresów IP w pliku!"
 
-#: frames/AnydeskFrame.py:171
+#: frames/AnydeskFrame.py:192
 msgid "Logs not found in"
 msgstr "Nie znaleziono żadnych logów programu w"
 
-#: frames/AnydeskFrame.py:185
+#: frames/AnydeskFrame.py:206
 msgid "Searching for files in"
 msgstr "Szukanie plików w"
 
-#: frames/AnydeskFrame.py:186
+#: frames/AnydeskFrame.py:207
 msgid "it may take a while"
 msgstr "to może chwile potrwać"
 
-#: frames/AnydeskFrame.py:226 frames/AnydeskFrame.py:228
+#: frames/AnydeskFrame.py:242 frames/AnydeskFrame.py:244
 msgid "No files were found in"
 msgstr "Nie znaleziono plików w"
 
-#: frames/AnydeskFrame.py:232
+#: frames/AnydeskFrame.py:270
 msgid "Searching for files finished"
 msgstr "Szukanie plików zakończone"
 
-#: frames/AnydeskFrame.py:289
+#: frames/AnydeskFrame.py:314
 msgid "Report folder not found!"
 msgstr "Folder z raportem nie został znaleziony!"
 
@@ -105,59 +105,55 @@ msgstr ""
 "sumy kontrolne dla znalezionych plików, a także precyzyjne raporty z "
 "wynikami.\n"
 
-#: main.py:25 main.py:46 main.py:49 main.py:153 main.py:160
+#: main.py:25 main.py:46 main.py:51 main.py:155 main.py:162
 msgid "English"
 msgstr "Angielski"
 
-#: main.py:28 main.py:46 main.py:59 main.py:153 main.py:158
+#: main.py:28 main.py:46 main.py:61 main.py:155 main.py:160
 msgid "Polish"
 msgstr "Polski"
 
-#: main.py:32 main.py:56 main.py:72 main.py:143
+#: main.py:32 main.py:58 main.py:74 main.py:145
 msgid "System"
 msgstr "Systemowy"
 
-#: main.py:32 main.py:54 main.py:143
+#: main.py:32 main.py:56 main.py:145
 msgid "Light"
 msgstr "Jasny"
 
-#: main.py:32 main.py:52 main.py:143
+#: main.py:32 main.py:54 main.py:145
 msgid "Dark"
 msgstr "Ciemny"
 
-#: main.py:47 main.py:130
+#: main.py:47 main.py:132
 msgid "Browse Reports"
 msgstr "Przeglądaj raporty"
 
-#: main.py:62
+#: main.py:48 main.py:151
+msgid "Language"
+msgstr "Język"
+
+#: main.py:49 main.py:140
+msgid "Theme"
+msgstr "Motyw"
+
+#: main.py:64
 msgid "Ciemny"
 msgstr ""
 
-#: main.py:64
+#: main.py:66
 msgid "Jasny"
 msgstr ""
 
-#: main.py:66
+#: main.py:68
 #, fuzzy
 #| msgid "System"
 msgid "Systemowy"
 msgstr "Systemowy"
 
-#: main.py:68 main.py:115
+#: main.py:70 main.py:117
 msgid "Home"
 msgstr "Start"
-
-#: main.py:74
-msgid "AnyGrabber - Grabber for AnyDesk logs"
-msgstr "AnyGrabber - Grabber dla logów AnyDesk"
-
-#: main.py:138
-msgid "Theme"
-msgstr "Motyw"
-
-#: main.py:149
-msgid "Language"
-msgstr "Język"
 
 #: utils/file_operations.py:136
 msgid "Report for"
@@ -178,6 +174,9 @@ msgstr "Logi Anydesk z pliku"
 #: utils/file_operations.py:156
 msgid "No Anydesk logs found!"
 msgstr "Nie znaleziono żadnych logów Anydesk!"
+
+#~ msgid "AnyGrabber - Grabber for AnyDesk logs"
+#~ msgstr "AnyGrabber - Grabber dla logów AnyDesk"
 
 #~ msgid "Search custom location for logs"
 #~ msgstr "Wyszukaj w niestandardowej lokalizacji"

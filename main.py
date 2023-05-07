@@ -73,7 +73,7 @@ class App(customtkinter.CTk):
         super().__init__()
         self.appearance_mode_variable = customtkinter.StringVar(value=_("System"))
         self.geometry("720x490+0+0")
-        self.title(_("AnyGrabber - Grabber for AnyDesk logs"))
+        self.title("AnyGrabber")
         self.iconbitmap(os.path.join(os.path.dirname(os.path.realpath(__file__)), "assets", "AnyGrabberIcon.ico"))
 
         self.minsize(720, 450)
