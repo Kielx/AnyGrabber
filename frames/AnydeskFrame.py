@@ -1,15 +1,15 @@
 import os
+import queue
 import threading
 import tkinter
+from collections import deque
 from typing import Literal
 
 import customtkinter
-from collections import deque
-from utils.locale_utils import change_frame_locale
-import queue
 
 from utils.file_operations import get_anydesk_logs, create_timestamped_directory, copy_and_generate_checksum, \
     create_folders_from_path, generate_txt_report, generate_csv_report
+from utils.locale_utils import change_frame_locale
 
 _ = change_frame_locale('HomeFrame')
 
@@ -24,19 +24,15 @@ write_header: bool = True
 report_folder_path: str = ""
 
 
-def find_files(filename: str | list, search_path: str, worker_threads_queue: queue) -> int:
+def find_files(filename: str | list, search_path: str) -> int:
     """A function that searches for files in a given path and returns a list of paths to found files
 
     :param filename: filename or list of filenames to check when searching for files
     :param search_path: path to the search location
-    :param worker_threads_queue - multiple find_files function can be run simultaneously. The queue
-    holds information about other threads that run the same function. It inserts information when its starts to run
-    and removes it after finding the files.
     """
 
     # Walking top-down from the root
 
-    worker_threads_queue.put(search_path)
     number_of_found_files = 0
     for root, dir, files in os.walk(search_path):
         if type(filename) == list:
@@ -48,7 +44,6 @@ def find_files(filename: str | list, search_path: str, worker_threads_queue: que
             if filename in files:
                 message_queue.append(os.path.join(root, filename))
                 number_of_found_files += 1
-    worker_threads_queue.get(search_path)
     return number_of_found_files
 
 
@@ -156,6 +151,10 @@ class AnydeskFrame(customtkinter.CTkFrame):
         global report_folder_path
         report_folder_path = create_timestamped_directory()
 
+        # Queue holding information about running threads. It is needed because without it,
+        # duplicate information would be shown from multiple threads running at the same time.
+        # For example each thread should display info when it finished searching, but without the queue
+        # the information would get duplicated.
         working_threads_queue = queue.Queue()
 
         # Run a thread for each switch that is turned on
@@ -226,7 +225,9 @@ class AnydeskFrame(customtkinter.CTkFrame):
         # The generate_and_present_search_results function is called recursively until search is finished
         search_finished = False
         self.generate_and_present_search_results()
-        number_of_found_files = find_files(["ad.trace", "ad_svc.trace"], search_location, worker_threads_queue)
+        worker_threads_queue.put(search_location)
+        number_of_found_files = find_files(["ad.trace", "ad_svc.trace"], search_location)
+        worker_threads_queue.get(search_location)
         search_finished = True
         self.finished_searching_callback(worker_threads_queue)
 
@@ -299,6 +300,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
 
 
         :param checkboxes_and_buttons_list: a list of checkboxes and buttons that should be enabled or disabled
+        :param state: state to set
         """
         for checkbox_or_button in checkboxes_and_buttons_list:
             checkbox_or_button.configure(state=state)
