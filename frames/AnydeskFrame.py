@@ -1,9 +1,12 @@
 import os
 import threading
 import tkinter
+from typing import Literal
+
 import customtkinter
 from collections import deque
 from utils.locale_utils import change_frame_locale
+import queue
 
 from utils.file_operations import get_anydesk_logs, create_timestamped_directory, copy_and_generate_checksum, \
     create_folders_from_path, generate_txt_report, generate_csv_report
@@ -21,9 +24,19 @@ write_header: bool = True
 report_folder_path: str = ""
 
 
-def find_files(filename: str | list, search_path) -> int:
-    """A function that searches for files in a given path and returns a list of paths to found files"""
+def find_files(filename: str | list, search_path: str, worker_threads_queue: queue) -> int:
+    """A function that searches for files in a given path and returns a list of paths to found files
+
+    :param filename: filename or list of filenames to check when searching for files
+    :param search_path: path to the search location
+    :param worker_threads_queue - multiple find_files function can be run simultaneously. The queue
+    holds information about other threads that run the same function. It inserts information when its starts to run
+    and removes it after finding the files.
+    """
+
     # Walking top-down from the root
+
+    worker_threads_queue.put(search_path)
     number_of_found_files = 0
     for root, dir, files in os.walk(search_path):
         if type(filename) == list:
@@ -35,6 +48,7 @@ def find_files(filename: str | list, search_path) -> int:
             if filename in files:
                 message_queue.append(os.path.join(root, filename))
                 number_of_found_files += 1
+    worker_threads_queue.get(search_path)
     return number_of_found_files
 
 
@@ -142,15 +156,20 @@ class AnydeskFrame(customtkinter.CTkFrame):
         global report_folder_path
         report_folder_path = create_timestamped_directory()
 
+        working_threads_queue = queue.Queue()
+
         # Run a thread for each switch that is turned on
         # Threads are used to prevent the GUI from freezing
         if self.switch_fetch_appdata_logs.get():
-            threading.Thread(target=self.search_filesystem_callback, args=[app_data_path], daemon=True).start()
+            threading.Thread(target=self.search_filesystem_callback, args=[app_data_path, working_threads_queue],
+                             daemon=True).start()
         if self.switch_fetch_programdata_logs.get():
-            threading.Thread(target=self.search_filesystem_callback, args=[program_data_path], daemon=True).start()
+            threading.Thread(target=self.search_filesystem_callback, args=[program_data_path, working_threads_queue],
+                             daemon=True).start()
         if self.checkbox_search_for_logs_in_location.get():
             search_location = customtkinter.filedialog.askdirectory()
-            threading.Thread(target=self.search_filesystem_callback, args=[search_location], daemon=True).start()
+            threading.Thread(target=self.search_filesystem_callback, args=[search_location, working_threads_queue],
+                             daemon=True).start()
 
     def print_logs_to_textbox(self, log_filename_with_path: str):
         """A function that calls get_anydesk_logs function and prints output to textbox
@@ -174,7 +193,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
             self.textbox.insert("insert", '{} {} \n'.format(_('Logs not found in'), log_filename_with_path)
                                 )
 
-    def search_filesystem_callback(self, search_location: str):
+    def search_filesystem_callback(self, search_location: str, worker_threads_queue: queue):
         """A callback function that calls find_files function and prints output to textbox
 
         It's a wrapper that is responsible for displaying a progressbar while find_files is running, disabling
@@ -190,12 +209,12 @@ class AnydeskFrame(customtkinter.CTkFrame):
                             )
 
         # Disable buttons and checkboxes while searching for files
-        self.toggle_checkboxes_and_buttons_state([
+        self.switch_checkboxes_and_buttons_state([
             self.fetch_logs_button,
             self.checkbox_fetch_appdata_logs,
             self.checkbox_fetch_programdata_logs,
             self.checkbox_search_for_logs_in_location
-        ])
+        ], state="disabled")
 
         # Create a progressbar and start it while searching for files
         progressbar = customtkinter.CTkProgressBar(master=self, mode="indeterminate", indeterminate_speed=1.15)
@@ -207,20 +226,13 @@ class AnydeskFrame(customtkinter.CTkFrame):
         # The generate_and_present_search_results function is called recursively until search is finished
         search_finished = False
         self.generate_and_present_search_results()
-        number_of_found_files = find_files(["ad.trace", "ad_svc.trace"], search_location)
+        number_of_found_files = find_files(["ad.trace", "ad_svc.trace"], search_location, worker_threads_queue)
         search_finished = True
+        self.finished_searching_callback(worker_threads_queue)
 
         # Stop progressbar and destroy it after search is finished
         progressbar.stop()
         progressbar.destroy()
-
-        # Enable buttons and checkboxes after search is finished
-        self.toggle_checkboxes_and_buttons_state([
-            self.fetch_logs_button,
-            self.checkbox_fetch_appdata_logs,
-            self.checkbox_fetch_programdata_logs,
-            self.checkbox_search_for_logs_in_location
-        ])
 
         # Display a message if no files were found in search location
         # Generate a report with a message if no files were found in search location
@@ -229,10 +241,6 @@ class AnydeskFrame(customtkinter.CTkFrame):
             self.textbox.insert("insert", '\n---- {} {}! ----\n\n'.format(_('No files were found in'), search_location))
             with open(os.path.join(report_folder_path, "report.txt"), "a") as report_file:
                 report_file.write('---- {} {} ----\n\n'.format(_('No files were found in'), search_location))
-        # Display a message if search is finished
-        else:
-            self.open_report_button.grid()
-            self.textbox.insert("insert", '---- {}! ----'.format(_('Searching for files finished')))
 
     def generate_and_present_search_results(self):
         """A function that updates the textbox with new logs found by the search function
@@ -255,6 +263,19 @@ class AnydeskFrame(customtkinter.CTkFrame):
         if not search_finished:
             self.after(200, self.generate_and_present_search_results)
 
+    def finished_searching_callback(self, worker_threads_queue: queue):
+        if worker_threads_queue.empty():
+            self.open_report_button.grid()
+            self.textbox.insert("insert", '---- {}! ----'.format(_('Searching for files finished')))
+
+            # Enable buttons and checkboxes after search is finished
+            self.switch_checkboxes_and_buttons_state([
+                self.fetch_logs_button,
+                self.checkbox_fetch_appdata_logs,
+                self.checkbox_fetch_programdata_logs,
+                self.checkbox_search_for_logs_in_location
+            ], state="normal")
+
     @staticmethod
     def turn_off_switches(switches_list: list[tkinter.BooleanVar]):
         """A function that turns off switches passed as a parameter
@@ -271,17 +292,16 @@ class AnydeskFrame(customtkinter.CTkFrame):
             switch.set(False)
 
     @staticmethod
-    def toggle_checkboxes_and_buttons_state(
-            checkboxes_and_buttons_list: list[customtkinter.CTkCheckBox | customtkinter.CTkButton]):
+    def switch_checkboxes_and_buttons_state(
+            checkboxes_and_buttons_list: list[customtkinter.CTkCheckBox | customtkinter.CTkButton],
+            state: Literal["normal", "disabled"]):
         """A function that enables or disables checkboxes and buttons passed as a parameter
+
 
         :param checkboxes_and_buttons_list: a list of checkboxes and buttons that should be enabled or disabled
         """
         for checkbox_or_button in checkboxes_and_buttons_list:
-            if checkbox_or_button.cget('state') == "normal":
-                checkbox_or_button.configure(state="disabled")
-            else:
-                checkbox_or_button.configure(state="normal")
+            checkbox_or_button.configure(state=state)
 
     @staticmethod
     def open_report_folder():
