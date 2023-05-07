@@ -5,6 +5,8 @@ in, along with corresponding dates. This application further provides the capaci
 .csv reports based on the data retrieved. The application's straightforward graphical user interface and localization
 features facilitate ease of use for non-technical users.
 
+![App screenshot](./assets/README/screenshot1.png)
+
 ## Key Features:
 
 - Search for logs in default and custom locations
