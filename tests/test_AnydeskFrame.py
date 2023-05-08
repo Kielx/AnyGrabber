@@ -1,4 +1,6 @@
 import os
+import queue
+
 from frames.AnydeskFrame import AnydeskFrame
 
 
@@ -41,12 +43,15 @@ def test_turn_off_switches():
 def test_if_open_report_button_shows_after_search():
     # Arrange
     anydesk_frame = AnydeskFrame(master=None)
-
+    test_queue = queue.Queue()
     assert anydesk_frame.open_report_button.grid_info() == {}
-    anydesk_frame.search_filesystem_callback(search_location=os.getcwd())
+    anydesk_frame.search_filesystem_callback(os.getcwd(), test_queue)
     assert anydesk_frame.open_report_button.grid_info() != {}
     assert anydesk_frame.open_report_button.grid_info()["in"] == anydesk_frame
-    os.remove('report.txt')
+    try:
+        os.remove('./tests/report.txt')
+    except FileNotFoundError:
+        pass
 
 
 def test_toggle_checkboxes_and_buttons_state():
@@ -58,14 +63,14 @@ def test_toggle_checkboxes_and_buttons_state():
     anydesk_frame.switch_fetch_programdata_logs.set(True)
     anydesk_frame.switch_fetch_appdata_logs.set(True)
 
-    anydesk_frame.toggle_checkboxes_and_buttons_state([
+    anydesk_frame.switch_checkboxes_and_buttons_state([
         anydesk_frame.checkbox_search_for_logs_in_location,
         anydesk_frame.checkbox_fetch_programdata_logs,
         anydesk_frame.checkbox_fetch_appdata_logs,
         anydesk_frame.fetch_logs_button,
         anydesk_frame.open_report_button
 
-    ])
+    ], 'disabled')
 
     assert anydesk_frame.checkbox_search_for_logs_in_location.cget('state') == 'disabled'
     assert anydesk_frame.checkbox_fetch_programdata_logs.cget('state') == 'disabled'
@@ -73,13 +78,13 @@ def test_toggle_checkboxes_and_buttons_state():
     assert anydesk_frame.fetch_logs_button.cget('state') == 'disabled'
     assert anydesk_frame.open_report_button.cget('state') == 'disabled'
 
-    anydesk_frame.toggle_checkboxes_and_buttons_state([
+    anydesk_frame.switch_checkboxes_and_buttons_state([
         anydesk_frame.checkbox_search_for_logs_in_location,
         anydesk_frame.checkbox_fetch_programdata_logs,
         anydesk_frame.checkbox_fetch_appdata_logs,
         anydesk_frame.fetch_logs_button,
         anydesk_frame.open_report_button
-    ])
+    ], 'normal')
 
     assert anydesk_frame.checkbox_search_for_logs_in_location.cget('state') == 'normal'
     assert anydesk_frame.checkbox_fetch_programdata_logs.cget('state') == 'normal'

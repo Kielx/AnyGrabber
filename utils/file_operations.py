@@ -6,12 +6,16 @@ import socket
 import re
 import shutil
 from datetime import datetime
-
 import dateutil.parser as dparser
+from utils.locale_utils import change_frame_locale
 
 # Search string in the log file that is used to identify the line that contains the login information
 search_string = 'Logged in from '
 
+_ = change_frame_locale('HomeFrame')
+def change_locale(new_locale):
+    global _
+    _ = change_frame_locale("HomeFrame", new_locale)
 
 def get_computer_name():
     system_name = platform.system()
@@ -129,12 +133,12 @@ def generate_txt_report(report_directory_path: str, write_header: bool = True,
 
     with open(actual_path, "a") as f:
         if write_header:
-            f.write(f"Report for {computer_name} generated on {current_datetime} \r\n")
+            f.write('{} {} {} {} \r\n'.format(_("Report for"), computer_name, _("generated on"), current_datetime))
             f.write("-------------------------------------------------- \r\n")
         if anydesk_logs_dict == {} or anydesk_logs_dict is None:
-            f.write(f'No Anydesk logs found in file {filename} \r\n')
+            f.write('{} {} \r\n'.format(_("No Anydesk logs from file"), filename))
         else:
-            f.write(f'Anydesk logs from file {filename} : \r\n')
+            f.write('{} {} : \r\n'.format(_("Anydesk logs from file"), filename))
             for entry in anydesk_logs_dict:
                 f.write(entry + " - " + anydesk_logs_dict[entry] + "\r\n")
 
@@ -149,7 +153,7 @@ str] | None = None, filename: str | None = None
         if write_header:
             writer.writerow(['Date', 'IP', 'File'])
         if anydesk_logs_dict == {} or anydesk_logs_dict is None:
-            writer.writerow(["No Anydesk logs found!", "", filename])
+            writer.writerow([_("No Anydesk logs found!"), "", filename])
         else:
             for entry in anydesk_logs_dict:
                 writer.writerow([entry, anydesk_logs_dict[entry], filename])
