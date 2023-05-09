@@ -1,5 +1,7 @@
 # <img src="./assets/AnyGrabberLogo.png" alt="Logo" width="60">  AnyGrabber
 
+[![Tests](https://github.com/Kielx/AnyGrabber/actions/workflows/tests.yml/badge.svg)](https://github.com/Kielx/AnyGrabber/actions/workflows/tests.yml)
+
 AnyGrabber simplifies the process of searching for AnyDesk logs, extracting relevant data concerning IP addresses used for logging
 in, along with corresponding dates. It also generates .txt and
 .csv reports based on the data retrieved. The user-friendly interface and localization features make it easy for anyone to use, regardless of technical proficiency. It's portable and can be used on any Windows machine without the need for installation.
