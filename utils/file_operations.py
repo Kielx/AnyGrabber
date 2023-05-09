@@ -178,7 +178,9 @@ def get_reports_folder_list(reports_directory='REPORTS'):
     :param reports_directory: a name of reports folder inside current working directory
     """
     try:
-        return os.listdir(os.path.join(os.getcwd(), reports_directory))
+        dirlist = os.listdir(os.path.join(os.getcwd(), reports_directory))
+        dirlist.sort(key=lambda x: os.path.getctime(os.path.join(os.getcwd(), reports_directory, x)), reverse=True)
+        return dirlist
     except FileNotFoundError:
         os.mkdir(os.path.join(os.getcwd(), reports_directory))
         return os.listdir(os.path.join(os.getcwd(), reports_directory))
