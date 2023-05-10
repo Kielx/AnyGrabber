@@ -25,6 +25,12 @@ Extracting information from AnyDesk logs can be difficult and time-consuming, es
 
 AnyGrabber is designed to make searching and finding AnyDesk logs easier for everyone. The app has an easy-to-use interface that simplifies the process, making it accessible to both beginners and advanced users. It also offers localization features, so people can use it in their native language.
 
+## Tech used
+
+- Python - https://www.python.org/
+- Customtkinter -  https://github.com/TomSchimansky/CustomTkinter
+- Pytest - https://docs.pytest.org/en/7.3.x/
+- Auto-py-to-exe - https://pypi.org/project/auto-py-to-exe/
 
 ## Building
 
@@ -54,5 +60,12 @@ Un check those
 options [Big thanks to this stackoverflow post](https://stackoverflow.com/questions/36618749/module-imports-work-in-pycharm-dont-work-in-python-idle/36618847#36618847):
 
 ![py-to-exe](./assets/README/Auto-py-to-exe2.png)
+
+## Acknowledgments
+
+- http://greenfishsoftware.org/gfie.php - Greenfish Icon Editor Pro was a great asset at creating icon for app
+- https://figma.com - Figma for free design tools that I used for my logo
+- https://photopea.com - Photopea being a great free image editor I used for my assets and images
+- https://poedit.net/ - Poedit for making language translations a breeze
 
 
