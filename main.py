@@ -7,6 +7,7 @@ from frames.BrowseReportsFrame import BrowseReportsFrame, refresh
 from frames.HomeFrame import HomeFrame
 from utils.locale_utils import change_frame_locale, set_default_locale, default_locale
 import utils.file_operations
+import global_state
 
 _ = change_frame_locale('HomeFrame')
 
@@ -206,7 +207,9 @@ class App(customtkinter.CTk):
     def browse_reports_frame_button_event(self):
         """Browse Reports button event handler."""
         self.select_frame_by_name("browse_reports_frame")
-        refresh(browse_reports_frame_instance=self.browse_reports_frame)
+        if global_state.refresh_reports_list:
+            refresh(browse_reports_frame_instance=self.browse_reports_frame)
+            global_state.refresh_reports_list = False
 
 
 if __name__ == "__main__":

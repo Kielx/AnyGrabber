@@ -7,6 +7,7 @@ from typing import Literal
 
 import customtkinter
 
+import global_state
 from utils.file_operations import get_anydesk_logs, create_timestamped_directory, copy_and_generate_checksum, \
     create_folders_from_path, generate_txt_report, generate_csv_report
 from utils.locale_utils import change_frame_locale
@@ -276,6 +277,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
                 self.checkbox_fetch_programdata_logs,
                 self.checkbox_search_for_logs_in_location
             ], state="normal")
+            global_state.refresh_reports_list = True
 
     @staticmethod
     def turn_off_switches(switches_list: list[tkinter.BooleanVar]):
