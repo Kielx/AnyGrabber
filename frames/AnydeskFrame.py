@@ -2,6 +2,7 @@ import os
 import queue
 import threading
 import tkinter
+import fnmatch
 from collections import deque
 from typing import Literal
 
@@ -25,25 +26,19 @@ write_header: bool = True
 report_folder_path: str = ""
 
 
-def find_files(filename: str | list, search_path: str) -> int:
+def find_files(filename: str, search_path: str) -> int:
     """A function that searches for files in a given path and returns a list of paths to found files
 
-    :param filename: filename or list of filenames to check when searching for files
+    :param filename: filename to check when searching for files
     :param search_path: path to the search location
     """
 
     # Walking top-down from the root
-
     number_of_found_files = 0
     for root, dir, files in os.walk(search_path):
-        if type(filename) == list:
-            for name in filename:
-                if name in files:
-                    message_queue.append(os.path.join(root, name))
-                    number_of_found_files += 1
-        else:
-            if filename in files:
-                message_queue.append(os.path.join(root, filename))
+        for file in files:
+            if fnmatch.fnmatch(file, filename):
+                message_queue.append(os.path.join(root, file))
                 number_of_found_files += 1
     return number_of_found_files
 
@@ -227,7 +222,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         search_finished = False
         self.generate_and_present_search_results()
         worker_threads_queue.put(search_location)
-        number_of_found_files = find_files(["ad.trace", "ad_svc.trace"], search_location)
+        number_of_found_files = find_files("*.trace", search_location)
         worker_threads_queue.get(search_location)
         search_finished = True
         self.finished_searching_callback(worker_threads_queue)
