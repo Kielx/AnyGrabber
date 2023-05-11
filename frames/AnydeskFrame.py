@@ -57,6 +57,8 @@ class AnydeskFrame(customtkinter.CTkFrame):
     def __init__(self, master, **kwargs):
         """Initialize the frame and its widgets."""
         super().__init__(master, **kwargs)
+        self.worker_threads_started = customtkinter.IntVar(value=0)
+        self.worker_threads_finished = customtkinter.IntVar(value=0)
 
         # configure grid of frame
         self.grid_columnconfigure(0, weight=1)
@@ -158,13 +160,16 @@ class AnydeskFrame(customtkinter.CTkFrame):
         if self.switch_fetch_appdata_logs.get():
             threading.Thread(target=self.search_filesystem_callback, args=[app_data_path, working_threads_queue],
                              daemon=True).start()
+            self.worker_threads_started.set(self.worker_threads_started.get() + 1)
         if self.switch_fetch_programdata_logs.get():
             threading.Thread(target=self.search_filesystem_callback, args=[program_data_path, working_threads_queue],
                              daemon=True).start()
+            self.worker_threads_started.set(self.worker_threads_started.get() + 1)
         if self.checkbox_search_for_logs_in_location.get():
             search_location = customtkinter.filedialog.askdirectory()
             threading.Thread(target=self.search_filesystem_callback, args=[search_location, working_threads_queue],
                              daemon=True).start()
+            self.worker_threads_started.set(self.worker_threads_started.get() + 1)
 
     def print_logs_to_textbox(self, log_filename_with_path: str):
         """A function that calls get_anydesk_logs function and prints output to textbox
@@ -224,8 +229,8 @@ class AnydeskFrame(customtkinter.CTkFrame):
         worker_threads_queue.put(search_location)
         number_of_found_files = find_files("*.trace", search_location)
         worker_threads_queue.get(search_location)
+
         search_finished = True
-        self.finished_searching_callback(worker_threads_queue)
 
         # Stop progressbar and destroy it after search is finished
         progressbar.stop()
@@ -257,22 +262,25 @@ class AnydeskFrame(customtkinter.CTkFrame):
             write_header = False
         except IndexError:
             pass
-        if not search_finished:
+        if not search_finished or len(message_queue) > 0:
             self.after(200, self.generate_and_present_search_results)
+        else:
+            self.worker_threads_finished.set(self.worker_threads_finished.get() + 1)
+            if self.worker_threads_finished.get() == self.worker_threads_started.get():
+                self.finished_searching_callback()
 
-    def finished_searching_callback(self, worker_threads_queue: queue):
-        if worker_threads_queue.empty():
-            self.open_report_button.grid()
-            self.textbox.insert("insert", '---- {}! ----'.format(_('Searching for files finished')))
+    def finished_searching_callback(self):
+        self.open_report_button.grid()
+        self.textbox.insert("insert", '---- {}! ----'.format(_('Searching for files finished')))
 
-            # Enable buttons and checkboxes after search is finished
-            self.switch_checkboxes_and_buttons_state([
-                self.fetch_logs_button,
-                self.checkbox_fetch_appdata_logs,
-                self.checkbox_fetch_programdata_logs,
-                self.checkbox_search_for_logs_in_location
-            ], state="normal")
-            global_state.refresh_reports_list = True
+        # Enable buttons and checkboxes after search is finished
+        self.switch_checkboxes_and_buttons_state([
+            self.fetch_logs_button,
+            self.checkbox_fetch_appdata_logs,
+            self.checkbox_fetch_programdata_logs,
+            self.checkbox_search_for_logs_in_location
+        ], state="normal")
+        global_state.refresh_reports_list = True
 
     @staticmethod
     def turn_off_switches(switches_list: list[tkinter.BooleanVar]):
