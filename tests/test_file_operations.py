@@ -136,8 +136,9 @@ class TestGenerateMd5FileChecksum:
         os.makedirs(current_path)
         copy_and_generate_checksum(test_file, os.path.join(os.getcwd(), current_path))
         assert os.path.exists(os.path.join(os.getcwd(), 'REPORTS', 'abc', 'daf', 'test_file.txt'))
-        assert os.path.exists(os.path.join(os.getcwd(), 'REPORTS', 'abc', 'daf', 'checksum.txt'))
-        assert test_file_hash == open(os.path.join(os.getcwd(), 'REPORTS', 'abc', 'daf', 'checksum.txt'), 'r').read()
+        assert os.path.exists(os.path.join(os.getcwd(), 'REPORTS', 'abc', 'daf', 'test_file.txt_checksum.txt'))
+        assert test_file_hash == open(os.path.join(os.getcwd(), 'REPORTS', 'abc', 'daf', 'test_file.txt_checksum.txt'),
+                                      'r').read()
         shutil.rmtree(os.path.join(os.getcwd(), 'REPORTS'))
         os.remove('test_file.txt')
 

@@ -1,4 +1,5 @@
 import csv
+from pathlib import Path
 import hashlib
 import os
 import platform
@@ -13,9 +14,12 @@ from utils.locale_utils import change_frame_locale
 search_string = 'Logged in from '
 
 _ = change_frame_locale('HomeFrame')
+
+
 def change_locale(new_locale):
     global _
     _ = change_frame_locale("HomeFrame", new_locale)
+
 
 def get_computer_name():
     system_name = platform.system()
@@ -112,8 +116,9 @@ def copy_and_generate_checksum(source_file: str, destination_folder_path: str) -
     """A function that copies a file to a destination folder and generates a checksum for it"""
     try:
         shutil.copy2(source_file, destination_folder_path)
+        filename_only = Path(source_file).name
         md5_checksum = generate_md5_file_checksum(source_file)
-        file_path = os.path.join(destination_folder_path, 'checksum.txt')
+        file_path = os.path.join(destination_folder_path, f'{filename_only}_checksum.txt')
         f = open(file_path, "w")
         f.write(md5_checksum)
         f.close()
