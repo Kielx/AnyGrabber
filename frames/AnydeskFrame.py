@@ -36,10 +36,15 @@ def find_files(filename: str, search_path: str) -> int:
     # Walking top-down from the root
     number_of_found_files = 0
     for root, dir, files in os.walk(search_path):
-        for file in files:
-            if fnmatch.fnmatch(file, filename):
-                message_queue.append(os.path.join(root, file))
-                number_of_found_files += 1
+        # If prevents from searching in the REPORTS folder and AnyGrabber folder
+        # It prevents the app from recursively searching for files and logs inside itself
+        if "AnyGrabber" in dir or "REPORTS" in dir:
+            del dir[:]
+        else:
+            for file in files:
+                if fnmatch.fnmatch(file, filename):
+                    message_queue.append(os.path.join(root, file))
+                    number_of_found_files += 1
     return number_of_found_files
 
 
