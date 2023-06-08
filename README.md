@@ -1,6 +1,7 @@
 # <img src="./assets/AnyGrabberLogo.png" alt="Logo" width="60">  AnyGrabber
 
 [![Tests](https://github.com/Kielx/AnyGrabber/actions/workflows/tests.yml/badge.svg)](https://github.com/Kielx/AnyGrabber/actions/workflows/tests.yml)
+![GitHub all releases](https://img.shields.io/github/downloads/kielx/AnyGrabber/total)
 
 AnyGrabber simplifies the process of searching for AnyDesk logs, extracting relevant data concerning IP addresses used
 for logging
