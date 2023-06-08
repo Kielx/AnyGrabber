@@ -63,7 +63,7 @@ class TestGetAnydeskLogs:
     def test_file_with_default_log(self):
         file_with_logs = self.create_anydesk_log_file('anydesk.log')
         found_logs = get_anydesk_logs(file_with_logs)
-        assert found_logs == {'20/03/2023, 09:16:21': '5.173.22.15:52926'}
+        assert found_logs == {'20/03/2023, 09:16:21 UTC': '5.173.22.15:52926'}
         os.remove("anydesk.log")
 
     def test_file_with_custom_log(self):
@@ -91,8 +91,8 @@ class TestGetAnydeskLogs:
                                                                      'Logged in from 255.255.255.255 on relay '
                                                                      '9b6827f2. ')
         found_logs = get_anydesk_logs(file_with_logs)
-        assert found_logs == {'20/03/2023, 09:16:21': '7.1.1.15:5926',
-                              '20/03/2023, 19:16:21': '255.255.255.255'}
+        assert found_logs == {'20/03/2023, 09:16:21 UTC': '7.1.1.15:5926',
+                              '20/03/2023, 19:16:21 UTC': '255.255.255.255'}
         os.remove("anydesk.log")
 
 
