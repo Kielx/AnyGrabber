@@ -38,8 +38,10 @@ def find_files(filename: str, search_path: str) -> int:
     for root, dir, files in os.walk(search_path):
         # If prevents from searching in the REPORTS folder and AnyGrabber folder
         # It prevents the app from recursively searching for files and logs inside itself
-        if "AnyGrabber" in dir or "REPORTS" in dir:
-            del dir[:]
+        if "AnyGrabber" in dir:
+            del dir[dir.index("AnyGrabber")]
+        elif "REPORTS" in dir:
+            del dir[dir.index("REPORTS")]
         else:
             for file in files:
                 if fnmatch.fnmatch(file, filename):
