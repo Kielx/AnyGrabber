@@ -92,15 +92,16 @@ def create_folders_from_path(s, folder_path):
     """
 
     # Use regular expression to match folder names
-    pattern = r"(?:[A-Za-z]:[\\/])?([^\\/]+)[\\/]"
-    matches = re.findall(pattern, s)
+    p = os.path.normpath(s)  # Normalize the path
+    path_to_list = p.split(os.sep)  # Split the path into a list
+    path_to_list.pop()  # Remove the last element from the list which is the file name
+    path_to_list[0] = path_to_list[0].replace(':', '')  # Remove the colon from the drive letter
     # Create folders and subfolders in the specified directory
     path = folder_path
-    for folder in matches:
+    for folder in path_to_list:
         path = os.path.join(path, folder)
         if not os.path.exists(path):
             os.makedirs(path)
-
     return path
 
 
