@@ -116,7 +116,7 @@ class TestCreateFoldersFromPath:
         cwd = os.getcwd()
         current_path = os.path.join(cwd, 'REPORTS', 'abc', 'daf')
         create_folders_from_path(test_path, current_path)
-        assert os.path.exists(os.path.join(cwd, 'REPORTS', 'abc', 'daf', 'Users', 'test'))
+        assert os.path.exists(os.path.join(cwd, 'REPORTS', 'abc', 'daf', 'C', 'Users', 'test'))
         shutil.rmtree(f'{os.getcwd()}/REPORTS')
 
 
