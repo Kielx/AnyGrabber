@@ -24,6 +24,7 @@ message_queue = deque()
 search_finished: bool = False
 write_header: bool = True
 report_folder_path: str = ""
+stop_searching: bool = False
 
 
 def find_files(filename: str, search_path: str) -> int:
@@ -36,6 +37,8 @@ def find_files(filename: str, search_path: str) -> int:
     # Walking top-down from the root
     number_of_found_files = 0
     for root, dir, files in os.walk(search_path):
+        if stop_searching:
+            break
         # If prevents from searching in the REPORTS folder and AnyGrabber folder
         # It prevents the app from recursively searching for files and logs inside itself
         if "AnyGrabber" in dir:
@@ -60,6 +63,11 @@ class AnydeskFrame(customtkinter.CTkFrame):
         self.checkbox_search_for_logs_in_location.configure(text=_("Custom location"))
         self.fetch_logs_button.configure(text=_("Fetch logs"))
         self.open_report_button.configure(text=_("Open report"))
+
+    def stop_threads(self):
+        """A function that sets the flag to stop searching threads"""
+        global stop_searching
+        stop_searching = True
 
     def __init__(self, master, **kwargs):
         """Initialize the frame and its widgets."""
@@ -149,6 +157,10 @@ class AnydeskFrame(customtkinter.CTkFrame):
         Clears texbox contents after it gets invoked, and disables textbox editing after fetching data"""
         global write_header
         write_header = True
+        # This flag is set to true when stop button is pressed
+        # on subsequent searches it should be set to false to allow seaching again
+        global stop_searching
+        stop_searching = False
         self.textbox.configure(state="normal")
         self.textbox.delete("0.0", "end")
 
@@ -215,9 +227,14 @@ class AnydeskFrame(customtkinter.CTkFrame):
                                                                        _('it may take a while'))
                             )
 
+        # Update fetch button to allow stopping of search
+        # When search is in progress
+        self.fetch_logs_button.configure(text=_("Stop fetching"), command=self.stop_threads,
+                                         fg_color=("#f59e0b", "#d97706"),
+                                         hover_color=("#d97706", "#b45309"), text_color="#451a03")
+
         # Disable buttons and checkboxes while searching for files
         self.switch_checkboxes_and_buttons_state([
-            self.fetch_logs_button,
             self.checkbox_fetch_appdata_logs,
             self.checkbox_fetch_programdata_logs,
             self.checkbox_search_for_logs_in_location
@@ -242,6 +259,15 @@ class AnydeskFrame(customtkinter.CTkFrame):
         # Stop progressbar and destroy it after search is finished
         progressbar.stop()
         progressbar.destroy()
+
+        # Update fetch button to allow fetching of logs
+        # After search finishes
+        self.fetch_logs_button.configure(self,
+                                         command=self.fetch_logs_button_callback,
+                                         fg_color=("#3B8ED0", "#1F6AA5"),
+                                         hover_color=("#36719F", "#144870"),
+                                         text_color=("#eee", "#ccc"),
+                                         text=_("Fetch logs"))
 
         # Display a message if no files were found in search location
         # Generate a report with a message if no files were found in search location
