@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AnyGrabber\n"
-"POT-Creation-Date: 2023-06-10 11:10+0200\n"
+"POT-Creation-Date: 2023-06-10 22:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Krzysztof Pañtak, kielx.dev@gmail.com\n"
@@ -76,19 +76,39 @@ msgstr ""
 msgid "Report folder not found!"
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:55
+#: frames/BrowseReportsFrame.py:56
 msgid "Files: "
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:56
+#: frames/BrowseReportsFrame.py:57
 msgid "IP Addresses: "
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:75
+#: frames/BrowseReportsFrame.py:79
 msgid "Open Report folder"
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:103
+#: frames/BrowseReportsFrame.py:97
+msgid "Delete Report"
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:104
+msgid "Delete Report?"
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:105
+msgid "Do you really want to delete the selected report?"
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:106
+msgid "Cancel"
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:106
+msgid "Delete"
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:141
 msgid "Reports List"
 msgstr ""
 

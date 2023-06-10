@@ -104,10 +104,11 @@ class Delete_Report_Button(customtkinter.CTkButton):
         msg = CTkMessagebox(title=_('Delete Report' + "?"),
                             message=_('Do you really want to delete the selected report?'),
                             icon="warning", option_1=_('Cancel'), option_2=_('Delete'), cancel_button="cross")
-        msg.button_2.configure(fg_color=("#ef4444", "#b91c1c"), hover_color=("#dc2626", "#991b1b"))
+        msg.button_2.configure(text_color="#eee", fg_color=("#ef4444", "#b91c1c"),
+                               hover_color=("#dc2626", "#991b1b"))
         response = msg.get()
 
-        if response == "Delete":
+        if response == _('Delete'):
             Delete_Report_Button.delete_report(self)
         else:
             pass
