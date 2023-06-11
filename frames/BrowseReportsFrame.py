@@ -1,5 +1,6 @@
 import csv
 import os
+from CTkMessagebox import CTkMessagebox
 import customtkinter
 
 from utils.file_operations import split_computer_datetime_dirname, get_reports_folder_list
@@ -61,6 +62,9 @@ class Report_Frame(customtkinter.CTkFrame):
 
         self.report_button = Report_Button(self, report_name=self.report_name,
                                            report_path=os.path.join(os.getcwd(), "REPORTS", self.report_path))
+        self.delete_report_button = Delete_Report_Button(master=self, report_name=self.report_name,
+                                                         report_path=os.path.join(os.getcwd(), "REPORTS",
+                                                                                  self.report_path))
 
 
 class Report_Button(customtkinter.CTkButton):
@@ -75,10 +79,45 @@ class Report_Button(customtkinter.CTkButton):
         self.configure(text=_('Open Report folder'), command=self.open_report, fg_color=("gray75", "gray25"),
                        text_color=(
                            "#333", "#ccc"), hover_color=("#6ca9d4", "#1c3b50"))
-        self.grid(row=1, column=0, columnspan=2, sticky="ew", padx=20, pady=10)
+        self.grid(row=1, column=0, columnspan=1, sticky="ew", padx=10, pady=10)
 
     def open_report(self):
         os.startfile(self.report_path)
+
+
+class Delete_Report_Button(customtkinter.CTkButton):
+    """A class representing a button that deletes the report folder."""
+
+    def __init__(self, master, **kwargs):
+        super().__init__(master)
+
+        self.report_name = kwargs.get("report_name")
+        self.report_path = kwargs.get("report_path")
+
+        self.configure(text=_('Delete Report'), command=self.confirm_delete, fg_color=("gray75", "gray25"),
+                       text_color=(
+                           "#333", "#ccc"), hover_color=("#ef4444", "#991b1b"))
+        self.grid(row=1, column=1, columnspan=1, sticky="ew", padx=10, pady=10)
+
+    def confirm_delete(self):
+        # get yes/no answers
+        msg = CTkMessagebox(title=_('Delete Report' + "?"),
+                            message=_('Do you really want to delete the selected report?'),
+                            icon="warning", option_1=_('Cancel'), option_2=_('Delete'), cancel_button="cross")
+        msg.button_2.configure(text_color="#eee", fg_color=("#ef4444", "#b91c1c"),
+                               hover_color=("#dc2626", "#991b1b"))
+        response = msg.get()
+
+        if response == _('Delete'):
+            Delete_Report_Button.delete_report(self)
+        else:
+            pass
+
+    def delete_report(self):
+        import shutil
+        shutil.rmtree(self.report_path)
+        # refresh browse reports frame
+        refresh(self.master.master)
 
 
 def refresh(browse_reports_frame_instance: customtkinter.CTkScrollableFrame):

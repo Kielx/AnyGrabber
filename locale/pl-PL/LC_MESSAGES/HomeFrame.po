@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AnyGrabber\n"
-"POT-Creation-Date: 2023-06-10 11:10+0200\n"
-"PO-Revision-Date: 2023-06-10 11:12+0200\n"
+"POT-Creation-Date: 2023-06-10 22:59+0200\n"
+"PO-Revision-Date: 2023-06-10 23:01+0200\n"
 "Last-Translator: Krzysztof Pańtak <kielx.dev@gmail.com>\n"
 "Language-Team: Krzysztof Pańtak\n"
 "Language: pl\n"
@@ -72,19 +72,39 @@ msgstr "Szukanie plików zakończone"
 msgid "Report folder not found!"
 msgstr "Folder z raportem nie został znaleziony!"
 
-#: frames/BrowseReportsFrame.py:55
+#: frames/BrowseReportsFrame.py:56
 msgid "Files: "
 msgstr "Pliki: "
 
-#: frames/BrowseReportsFrame.py:56
+#: frames/BrowseReportsFrame.py:57
 msgid "IP Addresses: "
 msgstr "Adresy IP: "
 
-#: frames/BrowseReportsFrame.py:75
+#: frames/BrowseReportsFrame.py:79
 msgid "Open Report folder"
 msgstr "Otwórz raport"
 
-#: frames/BrowseReportsFrame.py:103
+#: frames/BrowseReportsFrame.py:97
+msgid "Delete Report"
+msgstr "Usuń Raport"
+
+#: frames/BrowseReportsFrame.py:104
+msgid "Delete Report?"
+msgstr "Usuń Raport?"
+
+#: frames/BrowseReportsFrame.py:105
+msgid "Do you really want to delete the selected report?"
+msgstr "Czy naprawdę chcesz usunąć wybrany raport?"
+
+#: frames/BrowseReportsFrame.py:106
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: frames/BrowseReportsFrame.py:106
+msgid "Delete"
+msgstr "Usuń"
+
+#: frames/BrowseReportsFrame.py:141
 msgid "Reports List"
 msgstr "Lista raportów"
 
@@ -142,15 +162,13 @@ msgstr "Motyw"
 
 #: main.py:65
 msgid "Ciemny"
-msgstr ""
+msgstr "Ciemny"
 
 #: main.py:67
 msgid "Jasny"
-msgstr ""
+msgstr "Jasny"
 
 #: main.py:69
-#, fuzzy
-#| msgid "System"
 msgid "Systemowy"
 msgstr "Systemowy"
 
