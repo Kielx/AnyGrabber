@@ -2,6 +2,7 @@ import csv
 import os
 from CTkMessagebox import CTkMessagebox
 import customtkinter
+from PIL import Image
 
 from utils.file_operations import split_computer_datetime_dirname, get_reports_folder_list
 from utils.widget_utils import add_widgets
@@ -38,6 +39,18 @@ class Report_Frame(customtkinter.CTkFrame):
         super().__init__(master)
         self.report_name = kwargs.get("report_name")
         self.report_path = kwargs.get("report_path")
+
+        # Images for buttons
+        image_path = os.path.join(os.getcwd(), "assets")
+        self.open_report_image = customtkinter.CTkImage(
+            light_image=Image.open(os.path.join(image_path, "open_report_light.png")),
+            dark_image=Image.open(os.path.join(image_path, "open_report_dark.png")),
+            size=(20, 20))
+        self.delete_report_image = customtkinter.CTkImage(
+            light_image=Image.open(os.path.join(image_path, "delete_report_light.png")),
+            dark_image=Image.open(os.path.join(image_path, "delete_report_dark.png")),
+            size=(20, 20))
+
         report_name_details = split_computer_datetime_dirname(self.report_name)
         report_details = get_report_file_and_ip_numbers(report_path=self.report_path)
         self.grid_columnconfigure(0, weight=1)
@@ -76,9 +89,9 @@ class Report_Button(customtkinter.CTkButton):
         self.report_name = kwargs.get("report_name")
         self.report_path = kwargs.get("report_path")
 
-        self.configure(text=_('Open Report folder'), command=self.open_report, fg_color=("gray75", "gray25"),
-                       text_color=(
-                           "#333", "#ccc"), hover_color=("#6ca9d4", "#1c3b50"))
+        self.configure(text=_('Open Report folder'), command=self.open_report, text_color=(
+            "#eee", "#ccc"),
+                       image=self.master.open_report_image)
         self.grid(row=1, column=0, columnspan=1, sticky="ew", padx=10, pady=10)
 
     def open_report(self):
@@ -94,9 +107,10 @@ class Delete_Report_Button(customtkinter.CTkButton):
         self.report_name = kwargs.get("report_name")
         self.report_path = kwargs.get("report_path")
 
-        self.configure(text=_('Delete Report'), command=self.confirm_delete, fg_color=("gray75", "gray25"),
-                       text_color=(
-                           "#333", "#ccc"), hover_color=("#ef4444", "#991b1b"))
+        self.configure(text=_('Delete Report'), command=self.confirm_delete, text_color=("#eee", "#ccc"),
+                       fg_color=("#ef4444", "#b91c1c"),
+                       hover_color=("#dc2626", "#991b1b"),
+                       image=self.master.delete_report_image)
         self.grid(row=1, column=1, columnspan=1, sticky="ew", padx=10, pady=10)
 
     def confirm_delete(self):

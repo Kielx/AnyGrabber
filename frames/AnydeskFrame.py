@@ -5,6 +5,7 @@ import tkinter
 import fnmatch
 from collections import deque
 from typing import Literal
+from PIL import Image
 
 import customtkinter
 
@@ -75,6 +76,21 @@ class AnydeskFrame(customtkinter.CTkFrame):
         self.worker_threads_started = customtkinter.IntVar(value=0)
         self.worker_threads_finished = customtkinter.IntVar(value=0)
 
+        # Images for buttons
+        image_path = os.path.join(os.getcwd(), "assets")
+        self.fetch_logs_image = customtkinter.CTkImage(
+            light_image=Image.open(os.path.join(image_path, "search_light.png")),
+            dark_image=Image.open(os.path.join(image_path, "search_dark.png")),
+            size=(20, 20))
+        self.cancel_fetching_image = customtkinter.CTkImage(
+            light_image=Image.open(os.path.join(image_path, "cancel_light.png")),
+            dark_image=Image.open(os.path.join(image_path, "cancel_dark.png")),
+            size=(20, 20))
+        self.open_report_image = customtkinter.CTkImage(
+            light_image=Image.open(os.path.join(image_path, "open_report_light.png")),
+            dark_image=Image.open(os.path.join(image_path, "open_report_dark.png")),
+            size=(20, 20))
+
         # configure grid of frame
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(2, weight=1)
@@ -137,7 +153,8 @@ class AnydeskFrame(customtkinter.CTkFrame):
         self.fetch_logs_button = customtkinter.CTkButton(self,
                                                          command=self.fetch_logs_button_callback,
                                                          text_color=("#eee", "#ccc"),
-                                                         text=_("Fetch logs"))
+                                                         text=_("Fetch logs"), image=self.fetch_logs_image
+                                                         )
 
         self.fetch_logs_button.grid(row=1, column=0, columnspan=2, padx=20, pady=(20, 0), sticky="ew")
 
@@ -145,7 +162,8 @@ class AnydeskFrame(customtkinter.CTkFrame):
         self.open_report_button = customtkinter.CTkButton(self,
                                                           command=self.open_report_folder,
                                                           text_color=("#eee", "#ccc"),
-                                                          text=_("Open report"))
+                                                          text=_("Open report"),
+                                                          image=self.open_report_image)
         self.open_report_button.grid(row=3, column=0, columnspan=2, padx=20, pady=20, sticky="ew")
         # Hide the button until logs are fetched
         self.open_report_button.grid_remove()
@@ -231,7 +249,10 @@ class AnydeskFrame(customtkinter.CTkFrame):
         # When search is in progress
         self.fetch_logs_button.configure(text=_("Stop fetching"), command=self.stop_threads,
                                          fg_color=("#f59e0b", "#d97706"),
-                                         hover_color=("#d97706", "#b45309"), text_color="#451a03")
+                                         hover_color=("#d97706", "#b45309"), text_color="#fff",
+                                         image=self.cancel_fetching_image
+
+                                         )
 
         # Disable buttons and checkboxes while searching for files
         self.switch_checkboxes_and_buttons_state([
@@ -267,7 +288,8 @@ class AnydeskFrame(customtkinter.CTkFrame):
                                          fg_color=("#3B8ED0", "#1F6AA5"),
                                          hover_color=("#36719F", "#144870"),
                                          text_color=("#eee", "#ccc"),
-                                         text=_("Fetch logs"))
+                                         text=_("Fetch logs"),
+                                         image=self.fetch_logs_image)
 
         # Display a message if no files were found in search location
         # Generate a report with a message if no files were found in search location
