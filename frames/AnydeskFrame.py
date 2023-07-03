@@ -258,7 +258,8 @@ class AnydeskFrame(customtkinter.CTkFrame):
         self.switch_checkboxes_and_buttons_state([
             self.checkbox_fetch_appdata_logs,
             self.checkbox_fetch_programdata_logs,
-            self.checkbox_search_for_logs_in_location
+            self.checkbox_search_for_logs_in_location,
+            self.master.language_menu
         ], state="disabled")
 
         # Create a progressbar and start it while searching for files
@@ -280,16 +281,6 @@ class AnydeskFrame(customtkinter.CTkFrame):
         # Stop progressbar and destroy it after search is finished
         progressbar.stop()
         progressbar.destroy()
-
-        # Update fetch button to allow fetching of logs
-        # After search finishes
-        self.fetch_logs_button.configure(self,
-                                         command=self.fetch_logs_button_callback,
-                                         fg_color=("#3B8ED0", "#1F6AA5"),
-                                         hover_color=("#36719F", "#144870"),
-                                         text_color=("#eee", "#ccc"),
-                                         text=_("Fetch logs"),
-                                         image=self.fetch_logs_image)
 
         # Display a message if no files were found in search location
         # Generate a report with a message if no files were found in search location
@@ -325,15 +316,26 @@ class AnydeskFrame(customtkinter.CTkFrame):
                 self.finished_searching_callback()
 
     def finished_searching_callback(self):
+
+        # Update fetch button to allow fetching of logs
+        # After search finishes
+        self.fetch_logs_button.configure(self,
+                                         command=self.fetch_logs_button_callback,
+                                         fg_color=("#3B8ED0", "#1F6AA5"),
+                                         hover_color=("#36719F", "#144870"),
+                                         text_color=("#eee", "#ccc"),
+                                         text=_("Fetch logs"),
+                                         image=self.fetch_logs_image)
+        
         self.open_report_button.grid()
         self.textbox.insert("insert", '---- {}! ----'.format(_('Searching for files finished')))
 
         # Enable buttons and checkboxes after search is finished
         self.switch_checkboxes_and_buttons_state([
-            self.fetch_logs_button,
             self.checkbox_fetch_appdata_logs,
             self.checkbox_fetch_programdata_logs,
-            self.checkbox_search_for_logs_in_location
+            self.checkbox_search_for_logs_in_location,
+            self.master.language_menu
         ], state="normal")
         global_state.refresh_reports_list = True
 
