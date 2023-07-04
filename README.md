@@ -61,13 +61,13 @@ following the steps:
 
 Use the screenshot below for reference:
 
-![py-to-exe](./assets/README/Auto-py-to-exe.png)
+![py-to-exe](./assets_readme/Auto-py-to-exe.png)
 
 If you prefer to use pyinstaller command you need to swap locations of file to match your system.
 
 **IMPORTANT**- If you are using PyCharm be sure to un-check the following options
 
-![py-to-exe](./assets/README/Auto-py-to-exe2.png)
+![py-to-exe](./assets_readme/Auto-py-to-exe2.png)
 [Big thanks to this stackoverflow post](https://stackoverflow.com/questions/36618749/module-imports-work-in-pycharm-dont-work-in-python-idle/36618847#36618847):
 
 **--- OR ---**
