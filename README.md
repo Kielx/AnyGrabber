@@ -2,6 +2,8 @@
 
 [![Tests](https://github.com/Kielx/AnyGrabber/actions/workflows/tests.yml/badge.svg)](https://github.com/Kielx/AnyGrabber/actions/workflows/tests.yml)
 ![GitHub all releases](https://img.shields.io/github/downloads/kielx/AnyGrabber/total)
+![GitHub](https://img.shields.io/github/license/kielx/Anygrabber)
+
 
 AnyGrabber simplifies the process of searching for AnyDesk logs, extracting relevant data concerning IP addresses used
 for logging
@@ -10,7 +12,7 @@ in, along with corresponding dates. It also generates .txt and
 to use, regardless of technical proficiency. It's portable and can be used on any Windows machine without the need for
 installation.
 
-![App screenshot](./assets/README/screenshot1.png)
+![App screenshot](./assets_readme/screenshot1.png)
 
 ## Key Features:
 
