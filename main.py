@@ -5,11 +5,8 @@ from PIL import Image
 from frames.AnydeskFrame import AnydeskFrame
 from frames.BrowseReportsFrame import BrowseReportsFrame, refresh
 from frames.HomeFrame import HomeFrame
-from utils.locale_utils import change_frame_locale, set_default_locale, default_locale
-import utils.file_operations
+from utils.locale_utils import _, set_default_locale, default_locale, language_mappings
 import global_state
-
-_ = change_frame_locale('HomeFrame')
 
 
 def change_appearance_mode_event(new_appearance_mode):
@@ -22,53 +19,14 @@ def change_appearance_mode_event(new_appearance_mode):
 
 def change_language_event(new_language):
     """Change appearance mode event handler for appearance mode menu."""
-    global _
-    if new_language == _('English'):
-        _ = change_frame_locale('HomeFrame', 'en-US')
-        set_default_locale('en-US')
-    elif new_language == _('Polish'):
-        _ = change_frame_locale('HomeFrame', 'pl-PL')
-        set_default_locale('pl-PL')
+    set_default_locale(language_mappings.inverse[new_language])
 
     app.appearance_mode_menu.configure(values=[_("System"), _("Light"), _("Dark")],
                                        variable=app.appearance_mode_variable)
-    HomeFrame.change_locale(app.home_frame, app.home_frame, new_language)
-    App.change_locale(app, new_language)
-    AnydeskFrame.change_locale(app.anydesk_frame, app.anydesk_frame, new_language)
-    BrowseReportsFrame.change_locale(app.browse_reports_frame, new_language)
-    utils.file_operations.change_locale(new_language)
 
 
 class App(customtkinter.CTk):
     """Main application class."""
-
-    def change_locale(self, language):
-        _ = change_frame_locale("HomeFrame", language)
-        self.language_menu.configure(values=[_("English"), _("Polish")])
-        self.browse_reports_frame_button.configure(text=_("Browse Reports"))
-        self.lanuage_label.configure(text=_("Language"))
-        self.appearance_mode_label.configure(text=_("Theme"))
-        if language == "Angielski":
-            self.language_menu.set(_("English"))
-            curr_appeareance_mode = self.appearance_mode_variable.get()
-            if curr_appeareance_mode == "Ciemny":
-                self.appearance_mode_menu.set(_("Dark"))
-            elif curr_appeareance_mode == "Jasny":
-                self.appearance_mode_menu.set(_("Light"))
-            elif curr_appeareance_mode == "Systemowy":
-                self.appearance_mode_menu.set(_("System"))
-
-        elif language == "Polish":
-            self.language_menu.set(_("Polish"))
-            curr_appeareance_mode = self.appearance_mode_variable.get()
-            if curr_appeareance_mode == "Dark":
-                self.appearance_mode_menu.set(_("Ciemny"))
-            elif curr_appeareance_mode == "Light":
-                self.appearance_mode_menu.set(_("Jasny"))
-            elif curr_appeareance_mode == "System":
-                self.appearance_mode_menu.set(_("Systemowy"))
-
-        self.home_button.configure(text=_("Home"))
 
     def __init__(self):
         super().__init__()
@@ -157,10 +115,7 @@ class App(customtkinter.CTk):
                                                          command=change_language_event)
         self.language_menu.grid(row=9, column=0, padx=20, pady=[0, 20], sticky="s")
 
-        if default_locale == 'pl-PL':
-            self.language_menu.set(_("Polish"))
-        else:
-            self.language_menu.set(_("English"))
+        self.language_menu.set(language_mappings[default_locale])
 
         # create home frame
         self.home_frame = HomeFrame(self, corner_radius=0, fg_color="transparent")

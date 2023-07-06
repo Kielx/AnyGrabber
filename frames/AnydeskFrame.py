@@ -12,9 +12,7 @@ import customtkinter
 import global_state
 from utils.file_operations import get_anydesk_logs, create_timestamped_directory, copy_and_generate_checksum, \
     create_folders_from_path, generate_txt_report, generate_csv_report
-from utils.locale_utils import change_frame_locale
-
-_ = change_frame_locale('HomeFrame')
+from utils.locale_utils import _
 
 # Define paths to AnyDesk log files (ad.trace and ad_svc.trace)
 app_data_path = os.getenv('APPDATA')
@@ -86,8 +84,6 @@ class AnydeskFrame(customtkinter.CTkFrame):
         super().__init__(master, **kwargs)
         self.worker_threads_started = customtkinter.IntVar(value=0)
         self.worker_threads_finished = customtkinter.IntVar(value=0)
-
-
 
         # configure grid of frame
         self.grid_columnconfigure(0, weight=1)
@@ -322,7 +318,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
                                          text=_("Fetch logs"),
                                          image=fetch_logs_image
                                          )
-        
+
         self.open_report_button.grid()
         self.textbox.insert("insert", '---- {}! ----'.format(_('Searching for files finished')))
 

@@ -8,17 +8,10 @@ import re
 import shutil
 from datetime import datetime
 import dateutil.parser as dparser
-from utils.locale_utils import change_frame_locale
+from utils.locale_utils import _
 
 # Search string in the log file that is used to identify the line that contains the login information
 search_string = 'Logged in from '
-
-_ = change_frame_locale('HomeFrame')
-
-
-def change_locale(new_locale):
-    global _
-    _ = change_frame_locale("HomeFrame", new_locale)
 
 
 def get_computer_name():

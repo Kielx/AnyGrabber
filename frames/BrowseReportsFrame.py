@@ -6,18 +6,11 @@ from PIL import Image
 
 from utils.file_operations import split_computer_datetime_dirname, get_reports_folder_list
 from utils.widget_utils import add_widgets
-from utils.locale_utils import change_frame_locale
-
-_ = change_frame_locale('HomeFrame')
+from utils.locale_utils import _
 
 
 class BrowseReportsFrame(customtkinter.CTkScrollableFrame):
     """Browse Reports frame class holding the list of generated reports."""
-
-    def change_locale(self, language):
-        global _
-        _ = change_frame_locale("HomeFrame", language)
-        refresh(self)
 
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)

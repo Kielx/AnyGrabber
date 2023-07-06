@@ -1,17 +1,11 @@
 import gettext
 import json
-
-_ = gettext.gettext
+from bidict import bidict
 
 config = open('config.json', 'r')
 config_data = json.load(config)
-
-if config_data["locale"] == "en-US":
-    default_locale = "en-US"
-elif config_data["locale"] == "pl-PL":
-    default_locale = "pl-PL"
-else:
-    default_locale = "en-US"
+default_locale = config_data["locale"]
+config.close()
 
 
 def set_default_locale(locale_str):
@@ -23,15 +17,11 @@ def set_default_locale(locale_str):
         json.dump(cfg, config_file)
 
 
-def change_frame_locale(frame_name, locale_str=default_locale):
-    """Function that changes locale of selected frame."""
-    en = gettext.translation(frame_name, localedir='locale', languages=['en-US'])
-    pl = gettext.translation(frame_name, localedir='locale', languages=['pl-PL'])
-    global _
-    if locale_str == "en-US":
-        en.install()
-        _ = en.gettext
-    elif locale_str == "pl-PL":
-        pl.install()
-        _ = pl.gettext
-    return _
+lang = gettext.translation("HomeFrame", localedir='locale', languages=[default_locale])
+lang.install()
+_ = lang.gettext
+
+language_mappings = bidict({
+    "en-US": _("English"),
+    "pl-PL": _("Polish"),
+})
