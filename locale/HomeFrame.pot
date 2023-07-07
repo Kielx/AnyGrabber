@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AnyGrabber\n"
-"POT-Creation-Date: 2023-06-10 22:59+0200\n"
+"POT-Creation-Date: 2023-07-07 11:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Krzysztof Pañtak, kielx.dev@gmail.com\n"
@@ -23,163 +23,158 @@ msgstr ""
 "X-Poedit-SearchPath-3: frames\n"
 "X-Poedit-SearchPath-4: utils\n"
 
-#: frames/AnydeskFrame.py:62 frames/AnydeskFrame.py:96
+#: frames/AnydeskFrame.py:98
 msgid "Choose where to search for logs:"
 msgstr ""
 
-#: frames/AnydeskFrame.py:63 frames/AnydeskFrame.py:125
+#: frames/AnydeskFrame.py:127
 msgid "Custom location"
 msgstr ""
 
-#: frames/AnydeskFrame.py:64 frames/AnydeskFrame.py:140
-#: frames/AnydeskFrame.py:270
+#: frames/AnydeskFrame.py:142 frames/AnydeskFrame.py:310
 msgid "Fetch logs"
 msgstr ""
 
-#: frames/AnydeskFrame.py:65 frames/AnydeskFrame.py:148
+#: frames/AnydeskFrame.py:151
 msgid "Open report"
 msgstr ""
 
-#: frames/AnydeskFrame.py:204
+#: frames/AnydeskFrame.py:208
 msgid "Fetching logs from"
 msgstr ""
 
-#: frames/AnydeskFrame.py:206
+#: frames/AnydeskFrame.py:210
 msgid "No IP logs found inside file!"
 msgstr ""
 
-#: frames/AnydeskFrame.py:212
+#: frames/AnydeskFrame.py:216
 msgid "Logs not found in"
 msgstr ""
 
-#: frames/AnydeskFrame.py:226
+#: frames/AnydeskFrame.py:230
 msgid "Searching for files in"
 msgstr ""
 
-#: frames/AnydeskFrame.py:227
+#: frames/AnydeskFrame.py:231
 msgid "it may take a while"
 msgstr ""
 
-#: frames/AnydeskFrame.py:232
+#: frames/AnydeskFrame.py:236
 msgid "Stop fetching"
 msgstr ""
 
-#: frames/AnydeskFrame.py:276 frames/AnydeskFrame.py:278
+#: frames/AnydeskFrame.py:272 frames/AnydeskFrame.py:274
 msgid "No files were found in"
 msgstr ""
 
-#: frames/AnydeskFrame.py:307
+#: frames/AnydeskFrame.py:315
 msgid "Searching for files finished"
 msgstr ""
 
-#: frames/AnydeskFrame.py:352
+#: frames/AnydeskFrame.py:360
 msgid "Report folder not found!"
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:56
+#: frames/BrowseReportsFrame.py:62
 msgid "Files: "
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:57
+#: frames/BrowseReportsFrame.py:63
 msgid "IP Addresses: "
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:79
+#: frames/BrowseReportsFrame.py:85
 msgid "Open Report folder"
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:97
+#: frames/BrowseReportsFrame.py:103
 msgid "Delete Report"
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:104
+#: frames/BrowseReportsFrame.py:111
 msgid "Delete Report?"
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:105
+#: frames/BrowseReportsFrame.py:112
 msgid "Do you really want to delete the selected report?"
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:106
+#: frames/BrowseReportsFrame.py:113
 msgid "Cancel"
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:106
+#: frames/BrowseReportsFrame.py:113 frames/BrowseReportsFrame.py:118
 msgid "Delete"
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:141
+#: frames/BrowseReportsFrame.py:149
 msgid "Reports List"
 msgstr ""
 
-#: frames/HomeFrame.py:21
+#: frames/HomeFrame.py:27
 msgid "welcome screen\n"
 msgstr ""
 
-#: main.py:26 main.py:47 main.py:52 main.py:156 main.py:163
-msgid "English"
+#: main.py:40
+msgid "Restart required"
 msgstr ""
 
-#: main.py:29 main.py:47 main.py:62 main.py:156 main.py:161
-msgid "Polish"
+#: main.py:40
+msgid "Please restart the application to apply changes."
 msgstr ""
 
-#: main.py:33 main.py:59 main.py:75 main.py:146
-msgid "System"
-msgstr ""
-
-#: main.py:33 main.py:57 main.py:146
-msgid "Light"
-msgstr ""
-
-#: main.py:33 main.py:55 main.py:146
-msgid "Dark"
-msgstr ""
-
-#: main.py:48 main.py:133
-msgid "Browse Reports"
-msgstr ""
-
-#: main.py:49 main.py:152
-msgid "Language"
-msgstr ""
-
-#: main.py:50 main.py:141
-msgid "Theme"
-msgstr ""
-
-#: main.py:65
-msgid "Ciemny"
-msgstr ""
-
-#: main.py:67
-msgid "Jasny"
-msgstr ""
-
-#: main.py:69
-msgid "Systemowy"
-msgstr ""
-
-#: main.py:71 main.py:118
+#: main.py:92
 msgid "Home"
 msgstr ""
 
-#: utils/file_operations.py:142
+#: main.py:107
+msgid "Browse Reports"
+msgstr ""
+
+#: main.py:115
+msgid "Theme"
+msgstr ""
+
+#: main.py:120 utils/locale_utils.py:18
+msgid "Light"
+msgstr ""
+
+#: main.py:120 utils/locale_utils.py:19
+msgid "Dark"
+msgstr ""
+
+#: main.py:120 utils/locale_utils.py:20
+msgid "System"
+msgstr ""
+
+#: main.py:126
+msgid "Language"
+msgstr ""
+
+#: main.py:130 utils/locale_utils.py:13
+msgid "English"
+msgstr ""
+
+#: main.py:130 utils/locale_utils.py:14
+msgid "Polish"
+msgstr ""
+
+#: utils/file_operations.py:135
 msgid "Report for"
 msgstr ""
 
-#: utils/file_operations.py:142
+#: utils/file_operations.py:135
 msgid "generated on"
 msgstr ""
 
-#: utils/file_operations.py:145
+#: utils/file_operations.py:138
 msgid "No Anydesk logs from file"
 msgstr ""
 
-#: utils/file_operations.py:147
+#: utils/file_operations.py:140
 msgid "Anydesk logs from file"
 msgstr ""
 
-#: utils/file_operations.py:162
+#: utils/file_operations.py:155
 msgid "No Anydesk logs found!"
 msgstr ""

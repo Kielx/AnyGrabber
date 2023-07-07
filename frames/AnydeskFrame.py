@@ -66,14 +66,6 @@ def find_files(filename: str, search_path: str) -> int:
 class AnydeskFrame(customtkinter.CTkFrame):
     """A frame that contains widgets for fetching AnyDesk logs and displaying them in a textbox."""
 
-    def change_locale(self, master, locale):
-        global _
-        _ = change_frame_locale("HomeFrame", locale)
-        self.checkbox_frame_label.configure(text=_("Choose where to search for logs:"))
-        self.checkbox_search_for_logs_in_location.configure(text=_("Custom location"))
-        self.fetch_logs_button.configure(text=_("Fetch logs"))
-        self.open_report_button.configure(text=_("Open report"))
-
     def stop_threads(self):
         """A function that sets the flag to stop searching threads"""
         global stop_searching
