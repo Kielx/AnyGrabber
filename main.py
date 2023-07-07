@@ -1,28 +1,43 @@
 import os
 import customtkinter
+from CTkMessagebox import CTkMessagebox
 from PIL import Image
 
 from frames.AnydeskFrame import AnydeskFrame
 from frames.BrowseReportsFrame import BrowseReportsFrame, refresh
 from frames.HomeFrame import HomeFrame
-from utils.locale_utils import _, set_default_locale, default_locale, language_mappings
+from utils.locale_utils import _, default_locale, language_mappings, appearance_mode_mappings
+from utils.config_utils import update_config, get_config_parameter_value
 import global_state
 
 
 def change_appearance_mode_event(new_appearance_mode):
-    """Change appearance mode event handler for appearance mode menu."""
+    """Change appearance mode event handler for appearance mode menu.
+    @param new_appearance_mode: new appearance mode - human-readable value with translation from appearance mode menu list.
 
-    appearance_dict = {"Ciemny": "Dark", "Jasny": "Light", "Systemowy": "System",
-                       "Dark": "Dark", "Light": "Light", "System": "System"}
-    customtkinter.set_appearance_mode(appearance_dict[new_appearance_mode])
-
+    This function is called when user changes appearance mode in appearance mode menu.
+    Appearance modes in menu are presented as a set of options that user can choose from,
+    they are human readable and translated to user's language. Therefore they need to be converted
+    to their internal representation (light, dark, system) before they can be used.
+    For that purpose we use bidirectional dictionary (bidict) that maps human readable values to internal values that are stored in locale_utils..
+    """
+    customtkinter.set_appearance_mode(appearance_mode_mappings.inverse[new_appearance_mode])
+    update_config("appearance_mode", appearance_mode_mappings.inverse[new_appearance_mode])
 
 def change_language_event(new_language):
-    """Change appearance mode event handler for appearance mode menu."""
-    set_default_locale(language_mappings.inverse[new_language])
+    """Change appearance mode event handler for appearance mode menu.
+    @param new_language: new language - human-readable value with translation from language menu list.
 
-    app.appearance_mode_menu.configure(values=[_("System"), _("Light"), _("Dark")],
-                                       variable=app.appearance_mode_variable)
+    This function is called when user changes language mode in language mode menu.
+    Languages in menu are presented as a set of options that user can choose from,
+    they are human-readable and translated to user's language. Therefore, they need to be converted
+    to their internal representation (pl-PL, en-US and so on) before they can be used.
+    For that purpose we use bidirectional dictionary (bidict) that maps human-readable values to internal values that are stored in locale_utils.
+    """
+    update_config("locale", language_mappings.inverse[new_language])
+    # Display message that restart is required to apply changes only if default locale is changed.
+    if language_mappings.inverse[new_language] != default_locale:
+        CTkMessagebox(title=_("Restart required"), message=_("Please restart the application to apply changes."))
 
 
 class App(customtkinter.CTk):
@@ -30,12 +45,13 @@ class App(customtkinter.CTk):
 
     def __init__(self):
         super().__init__()
-        self.appearance_mode_variable = customtkinter.StringVar(value=_("System"))
-        self.geometry("720x490+0+0")
+        self.appearance_mode_variable = customtkinter.StringVar(value=appearance_mode_mappings[get_config_parameter_value("appearance_mode")])
+        customtkinter.set_appearance_mode(get_config_parameter_value("appearance_mode"))
+        self.geometry("720x520+0+0")
         self.title("AnyGrabber")
         self.iconbitmap(os.path.join(os.path.dirname(os.path.realpath(__file__)), "assets", "AnyGrabberIcon.ico"))
 
-        self.minsize(720, 450)
+        self.minsize(750, 450)
 
         # set grid layout 1x2
         self.grid_rowconfigure(0, weight=1)
