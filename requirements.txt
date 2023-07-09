@@ -1,0 +1,10 @@
+customtkinter==5.1.2
+Pillow==9.4.0
+python_dateutil==2.8.2
+future~=0.18.3
+CTkMessagebox~=2.0
+bidict~=0.22.1
+python-dateutil~=2.8.2
+cffi~=1.15.1
+six~=1.16.0
+darkdetect~=0.8.0

@@ -1,0 +1,174 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2023-05-05 14:51+0200\n"
+"PO-Revision-Date: 2023-06-09 22:31+0200\n"
+"Last-Translator: Krzysztof Pańtak <kielx.dev@gmail.com>\n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Generated-By: pygettext.py 1.5\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: frames/AnydeskFrame.py:47 frames/AnydeskFrame.py:72
+msgid "Choose where to search for logs:"
+msgstr ""
+
+#: frames/AnydeskFrame.py:48
+msgid "Search custom location for logs"
+msgstr ""
+
+#: frames/AnydeskFrame.py:50 frames/AnydeskFrame.py:116
+msgid "Fetch logs"
+msgstr ""
+
+#: frames/AnydeskFrame.py:51 frames/AnydeskFrame.py:124
+msgid "Open report"
+msgstr ""
+
+#: frames/AnydeskFrame.py:101
+msgid "Custom location"
+msgstr ""
+
+#: frames/AnydeskFrame.py:164
+msgid "Fetching logs from"
+msgstr ""
+
+#: frames/AnydeskFrame.py:166
+msgid "No IP logs found inside file!"
+msgstr ""
+
+#: frames/AnydeskFrame.py:172
+msgid "Logs not found in"
+msgstr ""
+
+#: frames/AnydeskFrame.py:186
+msgid "Searching for files in"
+msgstr ""
+
+#: frames/AnydeskFrame.py:187
+msgid "it may take a while"
+msgstr ""
+
+#: frames/AnydeskFrame.py:227 frames/AnydeskFrame.py:229
+msgid "No files were found in"
+msgstr ""
+
+#: frames/AnydeskFrame.py:233
+msgid "Searching for files finished"
+msgstr ""
+
+#: frames/AnydeskFrame.py:290
+msgid "Report folder not found!"
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:55
+msgid "Files: "
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:56
+msgid "IP Addresses: "
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:75
+msgid "Open Report folder"
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:103
+msgid "Reports List"
+msgstr ""
+
+#: frames/HomeFrame.py:21
+msgid "welcome screen\n"
+msgstr ""
+"Welcome to AnyGrabber - the program designed to help you extract, secure and "
+"present AnyDesk logs from system with ease. \n"
+"\n"
+"Whether you're dealing with cases of fraud or just need to keep track of "
+"AnyDesk activity on your computer, AnyGrabber provides a simple and "
+"intuitive solution for all your logging needs.\n"
+"\n"
+"To get started, simply select the AnyDesk option from the main menu. Then "
+"pick default locations for your AnyDesk logs, or select the 'Browse' option "
+"to specify a custom location. \n"
+"\n"
+"AnyGrabber will automatically search your system for AnyDesk logs and "
+"extract date, time and IP address of each session. \n"
+"\n"
+"\n"
+"Program distributed under MIT License\n"
+"Copyright (c) 2023 Krzysztof Pantak - anygrabber@pantak.net\n"
+"\n"
+
+#: main.py:25 main.py:46 main.py:49 main.py:147 main.py:154
+msgid "English"
+msgstr "English"
+
+#: main.py:28 main.py:46 main.py:59 main.py:147 main.py:152
+msgid "Polish"
+msgstr "Polish"
+
+#: main.py:32 main.py:56 main.py:72 main.py:139
+msgid "System"
+msgstr "System"
+
+#: main.py:32 main.py:54 main.py:139
+msgid "Light"
+msgstr "Light"
+
+#: main.py:32 main.py:52 main.py:139
+msgid "Dark"
+msgstr "Dark"
+
+#: main.py:47 main.py:130
+msgid "Browse Reports"
+msgstr "Browse Reports"
+
+#: main.py:62
+msgid "Ciemny"
+msgstr ""
+
+#: main.py:64
+msgid "Jasny"
+msgstr ""
+
+#: main.py:66
+#, fuzzy
+#| msgid "System"
+msgid "Systemowy"
+msgstr "System"
+
+#: main.py:68 main.py:115
+msgid "Home"
+msgstr "Home"
+
+#: main.py:74
+msgid "AnyGrabber - Grabber for AnyDesk logs"
+msgstr "AnyGrabber - Grabber for AnyDesk logs"
+
+#: utils/file_operations.py:136
+msgid "Report for"
+msgstr ""
+
+#: utils/file_operations.py:136
+msgid "generated on"
+msgstr ""
+
+#: utils/file_operations.py:139
+msgid "No Anydesk logs from file"
+msgstr ""
+
+#: utils/file_operations.py:141
+msgid "Anydesk logs from file"
+msgstr ""
+
+#: utils/file_operations.py:156
+msgid "No Anydesk logs found!"
+msgstr ""

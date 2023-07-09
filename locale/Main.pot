@@ -1,0 +1,180 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: AnyGrabber\n"
+"POT-Creation-Date: 2023-07-07 11:32+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Krzysztof Pañtak, anygrabber@pantak.net\n"
+"Language-Team: Krzysztof Pañtak, anygrabber@pantak.net\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=cp1250\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: _(\";{_(\";{_(\"*\")}\n"
+"X-Poedit-SearchPath-0: frames/HomeFrame.py\n"
+"X-Poedit-SearchPath-1: main.py\n"
+"X-Poedit-SearchPath-2: frames/AnydeskFrame.py\n"
+"X-Poedit-SearchPath-3: frames\n"
+"X-Poedit-SearchPath-4: utils\n"
+
+#: frames/AnydeskFrame.py:98
+msgid "Choose where to search for logs:"
+msgstr ""
+
+#: frames/AnydeskFrame.py:127
+msgid "Custom location"
+msgstr ""
+
+#: frames/AnydeskFrame.py:142 frames/AnydeskFrame.py:310
+msgid "Fetch logs"
+msgstr ""
+
+#: frames/AnydeskFrame.py:151
+msgid "Open report"
+msgstr ""
+
+#: frames/AnydeskFrame.py:208
+msgid "Fetching logs from"
+msgstr ""
+
+#: frames/AnydeskFrame.py:210
+msgid "No IP logs found inside file!"
+msgstr ""
+
+#: frames/AnydeskFrame.py:216
+msgid "Logs not found in"
+msgstr ""
+
+#: frames/AnydeskFrame.py:230
+msgid "Searching for files in"
+msgstr ""
+
+#: frames/AnydeskFrame.py:231
+msgid "it may take a while"
+msgstr ""
+
+#: frames/AnydeskFrame.py:236
+msgid "Stop fetching"
+msgstr ""
+
+#: frames/AnydeskFrame.py:272 frames/AnydeskFrame.py:274
+msgid "No files were found in"
+msgstr ""
+
+#: frames/AnydeskFrame.py:315
+msgid "Searching for files finished"
+msgstr ""
+
+#: frames/AnydeskFrame.py:360
+msgid "Report folder not found!"
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:62
+msgid "Files: "
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:63
+msgid "IP Addresses: "
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:85
+msgid "Open Report folder"
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:103
+msgid "Delete Report"
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:111
+msgid "Delete Report?"
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:112
+msgid "Do you really want to delete the selected report?"
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:113
+msgid "Cancel"
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:113 frames/BrowseReportsFrame.py:118
+msgid "Delete"
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:149
+msgid "Reports List"
+msgstr ""
+
+#: frames/HomeFrame.py:27
+msgid "welcome screen\n"
+msgstr ""
+
+#: main.py:40
+msgid "Restart required"
+msgstr ""
+
+#: main.py:40
+msgid "Please restart the application to apply changes."
+msgstr ""
+
+#: main.py:92
+msgid "Home"
+msgstr ""
+
+#: main.py:107
+msgid "Browse Reports"
+msgstr ""
+
+#: main.py:115
+msgid "Theme"
+msgstr ""
+
+#: main.py:120 utils/locale_utils.py:18
+msgid "Light"
+msgstr ""
+
+#: main.py:120 utils/locale_utils.py:19
+msgid "Dark"
+msgstr ""
+
+#: main.py:120 utils/locale_utils.py:20
+msgid "System"
+msgstr ""
+
+#: main.py:126
+msgid "Language"
+msgstr ""
+
+#: main.py:130 utils/locale_utils.py:13
+msgid "English"
+msgstr ""
+
+#: main.py:130 utils/locale_utils.py:14
+msgid "Polish"
+msgstr ""
+
+#: utils/file_operations.py:135
+msgid "Report for"
+msgstr ""
+
+#: utils/file_operations.py:135
+msgid "generated on"
+msgstr ""
+
+#: utils/file_operations.py:138
+msgid "No Anydesk logs from file"
+msgstr ""
+
+#: utils/file_operations.py:140
+msgid "Anydesk logs from file"
+msgstr ""
+
+#: utils/file_operations.py:155
+msgid "No Anydesk logs found!"
+msgstr ""
