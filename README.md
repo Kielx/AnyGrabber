@@ -58,6 +58,8 @@ following the steps:
     - Customtkinter folder (`/venv/Lib/site-packages/customtkinter`)
     - Dateutil folder (`/venv/Lib/site-packages/dateutil`)
     - PIL folder (`/venv/Lib/site-packages/PIL`)
+    - CTkMessagebox folder (`/venv/Lib/site-packages/CTkMessagebox/`)
+    - Bidict folder (`/venv/Lib/site-packages/bidict/`)
     - `config.json` file
 
 Use the screenshot below for reference:
