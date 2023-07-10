@@ -1,8 +1,15 @@
 # <img src="./assets/AnyGrabberLogo.png" alt="Logo" width="60">  AnyGrabber
 
-[![Tests](https://github.com/Kielx/AnyGrabber/actions/workflows/tests.yml/badge.svg)](https://github.com/Kielx/AnyGrabber/actions/workflows/tests.yml)
-![GitHub all releases](https://img.shields.io/github/downloads/kielx/AnyGrabber/total)
-![GitHub](https://img.shields.io/github/license/kielx/Anygrabber)
+<a href=https://github.com/Kielx/AnyGrabber/releases/download/v1.0.2/AnyGrabber.zip> <img alt="Static Badge" src="https://img.shields.io/badge/Latest_Release-Latest_Release?style=for-the-badge&label=Download"></a>
+<a href=https://github.com/Kielx/AnyGrabber/wiki/Usage> <img alt="Wiki Badge" src="https://img.shields.io/badge/Usage-Usage?style=for-the-badge&label=WIKI&color=%230ea5e9"></a>
+
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/kielx/AnyGrabber/tests.yml?style=for-the-badge&logo=github&label=Tests)
+![GitHub all releases](https://img.shields.io/github/downloads/kielx/AnyGrabber/total?style=for-the-badge)
+![GitHub](https://img.shields.io/github/license/kielx/Anygrabber?style=for-the-badge)
+
+
+
+
 
 
 AnyGrabber simplifies the process of searching for AnyDesk logs, extracting relevant data concerning IP addresses used
