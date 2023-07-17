@@ -7,7 +7,5 @@ class myEvent:
         self.callbacks.append(callback)
 
     def call(self):
-        print('This event has fired')
-
         for callback in self.callbacks:
             callback()
