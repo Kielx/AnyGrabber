@@ -175,7 +175,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
                 report_file.write('---- {} {} ----\n\n'.format(_('No files were found in'), search_path))
 
         self.worker_threads_finished.set(self.worker_threads_finished.get() + 1)
-        if self.worker_threads_finished.get() == self.worker_threads_started.get():
+        if self.worker_threads_finished.get() == self.worker_threads_started.get() or stop_searching:
             self.finished_searching_event.call()
 
     def fetch_logs_button_callback(self):
@@ -292,7 +292,6 @@ class AnydeskFrame(customtkinter.CTkFrame):
         """A function that stops all threads and clears message queue, calls on_finished_searching function"""
         global stop_searching
         stop_searching = True
-        self.textbox.insert("insert", '\n---- {}! ----\n\n'.format(_('Search stopped')))
         message_queue.clear()
 
     def on_finished_searching(self):
@@ -316,7 +315,10 @@ class AnydeskFrame(customtkinter.CTkFrame):
                                          )
 
         self.open_report_button.grid()
-        self.textbox.insert("insert", '---- {}! ----'.format(_('Searching for files finished')))
+        if stop_searching:
+            self.textbox.insert("insert", '\n---- {}! ----\n\n'.format(_('Search stopped')))
+        else:
+            self.textbox.insert("insert", '---- {}! ----'.format(_('Searching for files finished')))
 
         # Enable buttons and checkboxes after search is finished
         self.switch_checkboxes_and_buttons_state([
