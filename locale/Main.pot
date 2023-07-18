@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AnyGrabber\n"
-"POT-Creation-Date: 2023-07-07 11:32+0200\n"
+"POT-Creation-Date: 2023-07-18 14:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Krzysztof Pañtak, anygrabber@pantak.net\n"
 "Language-Team: Krzysztof Pañtak, anygrabber@pantak.net\n"
@@ -23,55 +23,67 @@ msgstr ""
 "X-Poedit-SearchPath-3: frames\n"
 "X-Poedit-SearchPath-4: utils\n"
 
-#: frames/AnydeskFrame.py:98
+#: frames/AnydeskFrame.py:73
 msgid "Choose where to search for logs:"
 msgstr ""
 
-#: frames/AnydeskFrame.py:127
+#: frames/AnydeskFrame.py:102
 msgid "Custom location"
 msgstr ""
 
-#: frames/AnydeskFrame.py:142 frames/AnydeskFrame.py:310
+#: frames/AnydeskFrame.py:117 frames/AnydeskFrame.py:316
 msgid "Fetch logs"
 msgstr ""
 
-#: frames/AnydeskFrame.py:151
+#: frames/AnydeskFrame.py:131
 msgid "Open report"
 msgstr ""
 
-#: frames/AnydeskFrame.py:208
-msgid "Fetching logs from"
-msgstr ""
-
-#: frames/AnydeskFrame.py:210
-msgid "No IP logs found inside file!"
-msgstr ""
-
-#: frames/AnydeskFrame.py:216
-msgid "Logs not found in"
-msgstr ""
-
-#: frames/AnydeskFrame.py:230
+#: frames/AnydeskFrame.py:145
 msgid "Searching for files in"
 msgstr ""
 
-#: frames/AnydeskFrame.py:231
+#: frames/AnydeskFrame.py:146
 msgid "it may take a while"
 msgstr ""
 
-#: frames/AnydeskFrame.py:236
-msgid "Stop fetching"
-msgstr ""
-
-#: frames/AnydeskFrame.py:272 frames/AnydeskFrame.py:274
+#: frames/AnydeskFrame.py:173 frames/AnydeskFrame.py:175
 msgid "No files were found in"
 msgstr ""
 
-#: frames/AnydeskFrame.py:315
+#: frames/AnydeskFrame.py:232
+msgid "Stop fetching"
+msgstr ""
+
+#: frames/AnydeskFrame.py:247
+msgid "Select option"
+msgstr ""
+
+#: frames/AnydeskFrame.py:247
+msgid "Please select at least one option."
+msgstr ""
+
+#: frames/AnydeskFrame.py:260
+msgid "Fetching logs from"
+msgstr ""
+
+#: frames/AnydeskFrame.py:262
+msgid "No IP logs found inside file!"
+msgstr ""
+
+#: frames/AnydeskFrame.py:268
+msgid "Logs not found in"
+msgstr ""
+
+#: frames/AnydeskFrame.py:296
+msgid "Search stopped"
+msgstr ""
+
+#: frames/AnydeskFrame.py:321
 msgid "Searching for files finished"
 msgstr ""
 
-#: frames/AnydeskFrame.py:360
+#: frames/AnydeskFrame.py:365
 msgid "Report folder not found!"
 msgstr ""
 
@@ -115,48 +127,28 @@ msgstr ""
 msgid "welcome screen\n"
 msgstr ""
 
-#: main.py:40
+#: main.py:41
 msgid "Restart required"
 msgstr ""
 
-#: main.py:40
+#: main.py:41
 msgid "Please restart the application to apply changes."
 msgstr ""
 
-#: main.py:92
+#: main.py:94
 msgid "Home"
 msgstr ""
 
-#: main.py:107
+#: main.py:109
 msgid "Browse Reports"
 msgstr ""
 
-#: main.py:115
+#: main.py:117
 msgid "Theme"
 msgstr ""
 
-#: main.py:120 utils/locale_utils.py:18
-msgid "Light"
-msgstr ""
-
-#: main.py:120 utils/locale_utils.py:19
-msgid "Dark"
-msgstr ""
-
-#: main.py:120 utils/locale_utils.py:20
-msgid "System"
-msgstr ""
-
-#: main.py:126
+#: main.py:129
 msgid "Language"
-msgstr ""
-
-#: main.py:130 utils/locale_utils.py:13
-msgid "English"
-msgstr ""
-
-#: main.py:130 utils/locale_utils.py:14
-msgid "Polish"
 msgstr ""
 
 #: utils/file_operations.py:135
@@ -177,4 +169,24 @@ msgstr ""
 
 #: utils/file_operations.py:155
 msgid "No Anydesk logs found!"
+msgstr ""
+
+#: utils/locale_utils.py:21
+msgid "English"
+msgstr ""
+
+#: utils/locale_utils.py:22
+msgid "Polish"
+msgstr ""
+
+#: utils/locale_utils.py:26
+msgid "Light"
+msgstr ""
+
+#: utils/locale_utils.py:27
+msgid "Dark"
+msgstr ""
+
+#: utils/locale_utils.py:28
+msgid "System"
 msgstr ""

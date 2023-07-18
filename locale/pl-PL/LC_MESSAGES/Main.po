@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AnyGrabber\n"
-"POT-Creation-Date: 2023-07-07 11:32+0200\n"
-"PO-Revision-Date: 2023-07-07 11:46+0200\n"
+"POT-Creation-Date: 2023-07-18 14:09+0200\n"
+"PO-Revision-Date: 2023-07-18 14:10+0200\n"
 "Last-Translator: Krzysztof Pańtak <kielx.dev@gmail.com>\n"
 "Language-Team: Krzysztof Pańtak\n"
 "Language: pl\n"
@@ -19,55 +19,67 @@ msgstr ""
 "X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Basepath: .\n"
 
-#: frames/AnydeskFrame.py:98
+#: frames/AnydeskFrame.py:73
 msgid "Choose where to search for logs:"
 msgstr "Wybierz miejsce, w którym chcesz szukać logów programu:"
 
-#: frames/AnydeskFrame.py:127
+#: frames/AnydeskFrame.py:102
 msgid "Custom location"
 msgstr "Niestandardowa lokalizacja"
 
-#: frames/AnydeskFrame.py:142 frames/AnydeskFrame.py:310
+#: frames/AnydeskFrame.py:117 frames/AnydeskFrame.py:316
 msgid "Fetch logs"
 msgstr "Znajdź i pobierz logi"
 
-#: frames/AnydeskFrame.py:151
+#: frames/AnydeskFrame.py:131
 msgid "Open report"
 msgstr "Otwórz raport"
 
-#: frames/AnydeskFrame.py:208
-msgid "Fetching logs from"
-msgstr "Przeszukiwanie logów w pliku"
-
-#: frames/AnydeskFrame.py:210
-msgid "No IP logs found inside file!"
-msgstr "Nie znaleziono adresów IP w pliku!"
-
-#: frames/AnydeskFrame.py:216
-msgid "Logs not found in"
-msgstr "Nie znaleziono żadnych logów programu w"
-
-#: frames/AnydeskFrame.py:230
+#: frames/AnydeskFrame.py:145
 msgid "Searching for files in"
 msgstr "Szukanie plików w"
 
-#: frames/AnydeskFrame.py:231
+#: frames/AnydeskFrame.py:146
 msgid "it may take a while"
 msgstr "to może chwile potrwać"
 
-#: frames/AnydeskFrame.py:236
-msgid "Stop fetching"
-msgstr "Zakończ szukanie"
-
-#: frames/AnydeskFrame.py:272 frames/AnydeskFrame.py:274
+#: frames/AnydeskFrame.py:173 frames/AnydeskFrame.py:175
 msgid "No files were found in"
 msgstr "Nie znaleziono plików w"
 
-#: frames/AnydeskFrame.py:315
+#: frames/AnydeskFrame.py:232
+msgid "Stop fetching"
+msgstr "Zakończ szukanie"
+
+#: frames/AnydeskFrame.py:247
+msgid "Select option"
+msgstr "Wybierz opcje"
+
+#: frames/AnydeskFrame.py:247
+msgid "Please select at least one option."
+msgstr "Proszę wybrać przynajmniej jedną opcję."
+
+#: frames/AnydeskFrame.py:260
+msgid "Fetching logs from"
+msgstr "Przeszukiwanie logów w pliku"
+
+#: frames/AnydeskFrame.py:262
+msgid "No IP logs found inside file!"
+msgstr "Nie znaleziono adresów IP w pliku!"
+
+#: frames/AnydeskFrame.py:268
+msgid "Logs not found in"
+msgstr "Nie znaleziono żadnych logów programu w"
+
+#: frames/AnydeskFrame.py:296
+msgid "Search stopped"
+msgstr "Wyszukiwanie zatrzymane"
+
+#: frames/AnydeskFrame.py:321
 msgid "Searching for files finished"
 msgstr "Szukanie plików zakończone"
 
-#: frames/AnydeskFrame.py:360
+#: frames/AnydeskFrame.py:365
 msgid "Report folder not found!"
 msgstr "Folder z raportem nie został znaleziony!"
 
@@ -127,49 +139,29 @@ msgstr ""
 "Oprogramowanie na licencji MIT\n"
 "Copyright (c) 2023 Krzysztof Pantak - anygrabber@pantak.net\n"
 
-#: main.py:40
+#: main.py:41
 msgid "Restart required"
 msgstr "Wymagany restart"
 
-#: main.py:40
+#: main.py:41
 msgid "Please restart the application to apply changes."
 msgstr "Uruchom ponownie aplikację, aby zastosować zmiany."
 
-#: main.py:92
+#: main.py:94
 msgid "Home"
 msgstr "Start"
 
-#: main.py:107
+#: main.py:109
 msgid "Browse Reports"
 msgstr "Przeglądaj raporty"
 
-#: main.py:115
+#: main.py:117
 msgid "Theme"
 msgstr "Motyw"
 
-#: main.py:120 utils/locale_utils.py:18
-msgid "Light"
-msgstr "Jasny"
-
-#: main.py:120 utils/locale_utils.py:19
-msgid "Dark"
-msgstr "Ciemny"
-
-#: main.py:120 utils/locale_utils.py:20
-msgid "System"
-msgstr "Systemowy"
-
-#: main.py:126
+#: main.py:129
 msgid "Language"
 msgstr "Język"
-
-#: main.py:130 utils/locale_utils.py:13
-msgid "English"
-msgstr "Angielski"
-
-#: main.py:130 utils/locale_utils.py:14
-msgid "Polish"
-msgstr "Polski"
 
 #: utils/file_operations.py:135
 msgid "Report for"
@@ -190,6 +182,26 @@ msgstr "Logi Anydesk z pliku"
 #: utils/file_operations.py:155
 msgid "No Anydesk logs found!"
 msgstr "Nie znaleziono żadnych logów Anydesk!"
+
+#: utils/locale_utils.py:21
+msgid "English"
+msgstr "Angielski"
+
+#: utils/locale_utils.py:22
+msgid "Polish"
+msgstr "Polski"
+
+#: utils/locale_utils.py:26
+msgid "Light"
+msgstr "Jasny"
+
+#: utils/locale_utils.py:27
+msgid "Dark"
+msgstr "Ciemny"
+
+#: utils/locale_utils.py:28
+msgid "System"
+msgstr "Systemowy"
 
 #~ msgid "Ciemny"
 #~ msgstr "Ciemny"
