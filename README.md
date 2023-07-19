@@ -1,6 +1,6 @@
 # <img src="./assets/AnyGrabberLogo.png" alt="Logo" width="60">  AnyGrabber
 
-<a href=https://github.com/Kielx/AnyGrabber/releases/download/v1.0.2/AnyGrabber.zip> <img alt="Static Badge" src="https://img.shields.io/badge/Latest_Release-Latest_Release?style=for-the-badge&label=Download"></a>
+<a href=https://github.com/Kielx/AnyGrabber/releases/latest/download/AnyGrabber.zip> <img alt="Static Badge" src="https://img.shields.io/badge/Latest_Release-Latest_Release?style=for-the-badge&label=Download"></a>
 <a href=https://github.com/Kielx/AnyGrabber/wiki/Usage> <img alt="Wiki Badge" src="https://img.shields.io/badge/Usage-Usage?style=for-the-badge&label=WIKI&color=%230ea5e9"></a>
 
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/kielx/AnyGrabber/tests.yml?style=for-the-badge&logo=github&label=Tests)
