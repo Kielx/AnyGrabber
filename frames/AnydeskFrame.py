@@ -1,11 +1,13 @@
 import os
-import queue
 import threading
 import tkinter
 import fnmatch
 from collections import deque
 from typing import Literal
+
+from CTkMessagebox import CTkMessagebox
 from PIL import Image
+from utils.event_utils import myEvent
 
 import customtkinter
 
@@ -37,40 +39,6 @@ open_report_image = customtkinter.CTkImage(
     size=(20, 20))
 
 
-def find_files(filename: str, search_path: str) -> int:
-    """A function that searches for files in a given path and returns a list of paths to found files
-
-    :param filename: filename to check when searching for files
-    :param search_path: path to the search location
-    """
-
-    # Walking top-down from the root
-    number_of_found_files = 0
-    for root, dir, files in os.walk(search_path):
-        if stop_searching:
-            break
-        # If prevents from searching in the REPORTS folder and AnyGrabber folder
-        # It prevents the app from recursively searching for files and logs inside itself
-        if "AnyGrabber" in dir:
-            del dir[dir.index("AnyGrabber")]
-        elif "REPORTS" in dir:
-            del dir[dir.index("REPORTS")]
-        else:
-            for file in files:
-                if stop_searching:
-                    break
-                if fnmatch.fnmatch(file, filename):
-                    message_queue.append(os.path.join(root, file))
-                    number_of_found_files += 1
-    return number_of_found_files
-
-
-def stop_threads():
-    """A function that sets the flag to stop searching threads"""
-    global stop_searching
-    stop_searching = True
-
-
 class AnydeskFrame(customtkinter.CTkFrame):
     """A frame that contains widgets for fetching AnyDesk logs and displaying them in a textbox."""
 
@@ -79,6 +47,10 @@ class AnydeskFrame(customtkinter.CTkFrame):
         super().__init__(master, **kwargs)
         self.worker_threads_started = customtkinter.IntVar(value=0)
         self.worker_threads_finished = customtkinter.IntVar(value=0)
+        self.found_file_event = myEvent()
+        self.found_file_event.registerCallback(self.on_file_found)
+        self.finished_searching_event = myEvent()
+        self.finished_searching_event.registerCallback(self.on_finished_searching)
 
         # configure grid of frame
         self.grid_columnconfigure(0, weight=1)
@@ -147,6 +119,11 @@ class AnydeskFrame(customtkinter.CTkFrame):
 
         self.fetch_logs_button.grid(row=1, column=0, columnspan=2, padx=20, pady=(20, 0), sticky="ew")
 
+        # Create a progressbar that gets shown when fetching logs
+        self.progressbar = customtkinter.CTkProgressBar(master=self, mode="indeterminate", indeterminate_speed=1.15)
+        self.progressbar.grid(row=4, column=0, pady=20, padx=20, sticky="ew")
+        self.progressbar.grid_remove()
+
         # Button that opens a folder with report
         self.open_report_button = customtkinter.CTkButton(self,
                                                           command=self.open_report_folder,
@@ -157,45 +134,116 @@ class AnydeskFrame(customtkinter.CTkFrame):
         # Hide the button until logs are fetched
         self.open_report_button.grid_remove()
 
+    def find_files(self, search_path: str, filename: str = "*.trace"):
+        """A function that searches for files in a given path and returns a list of paths to found files
+
+        :param search_path: path to the search location
+        :param filename: filename to check when searching for files
+        """
+
+        self.textbox.insert("insert",
+                            '---- {}: \n\n{}\n\n{}! ----\n\n\n'.format(_('Searching for files in'), search_path,
+                                                                       _('it may take a while'))
+                            )
+
+        # Walking top-down from the root
+        number_of_found_files = 0
+        for root, dir, files in os.walk(search_path):
+            if stop_searching:
+                break
+            # If prevents from searching in the REPORTS folder and AnyGrabber folder
+            # It prevents the app from recursively searching for files and logs inside itself
+            if "AnyGrabber" in dir:
+                del dir[dir.index("AnyGrabber")]
+            elif "REPORTS" in dir:
+                del dir[dir.index("REPORTS")]
+            else:
+                for file in files:
+                    if stop_searching:
+                        break
+                    if fnmatch.fnmatch(file, filename):
+                        message_queue.append(os.path.join(root, file))
+                        self.found_file_event.call()
+                        number_of_found_files += 1
+
+        # Display a message if no files were found in search location
+        # Generate a report with a message if no files were found in search location
+        if number_of_found_files == 0:
+            self.open_report_button.grid()
+            self.textbox.insert("insert", '\n---- {} {}! ----\n\n'.format(_('No files were found in'), search_path))
+            with open(os.path.join(report_folder_path, "report.txt"), "a") as report_file:
+                report_file.write('---- {} {} ----\n\n'.format(_('No files were found in'), search_path))
+
+        self.worker_threads_finished.set(self.worker_threads_finished.get() + 1)
+        if self.worker_threads_finished.get() == self.worker_threads_started.get() or stop_searching:
+            self.finished_searching_event.call()
+
     def fetch_logs_button_callback(self):
         """A callback function that calls functions that print output generated by log fetching functions to textbox
-        when appropriate switch is selected
+        when appropriate switch is selected"""
 
-        Clears texbox contents after it gets invoked, and disables textbox editing after fetching data"""
+        # Clears texbox contents after it gets invoked, and disables textbox editing after fetching data
+        self.worker_threads_started.set(0)
+        self.worker_threads_finished.set(0)
         global write_header
         write_header = True
         # This flag is set to true when stop button is pressed
-        # on subsequent searches it should be set to false to allow seaching again
+        # on subsequent searches it should be set to false in order to allow seaching again
         global stop_searching
         stop_searching = False
-        self.textbox.configure(state="normal")
-        self.textbox.delete("0.0", "end")
-
-        # Create a timestamped directory for storing logs and reports
-        global report_folder_path
-        report_folder_path = create_timestamped_directory()
-
-        # Queue holding information about running threads. It is needed because without it,
-        # duplicate information would be shown from multiple threads running at the same time.
-        # For example each thread should display info when it finished searching, but without the queue
-        # the information would get duplicated.
-        working_threads_queue = queue.Queue()
 
         # Run a thread for each switch that is turned on
         # Threads are used to prevent the GUI from freezing
+        threads = []
         if self.switch_fetch_appdata_logs.get():
-            threading.Thread(target=self.search_filesystem_callback, args=[app_data_path, working_threads_queue],
-                             daemon=True).start()
+            t1 = threading.Thread(target=self.find_files, args=[app_data_path],
+                                  daemon=True)
+            threads.append(t1)
             self.worker_threads_started.set(self.worker_threads_started.get() + 1)
         if self.switch_fetch_programdata_logs.get():
-            threading.Thread(target=self.search_filesystem_callback, args=[program_data_path, working_threads_queue],
-                             daemon=True).start()
+            t2 = threading.Thread(target=self.find_files,
+                                  args=[program_data_path],
+                                  daemon=True)
+            threads.append(t2)
             self.worker_threads_started.set(self.worker_threads_started.get() + 1)
         if self.checkbox_search_for_logs_in_location.get():
             search_location = customtkinter.filedialog.askdirectory()
-            threading.Thread(target=self.search_filesystem_callback, args=[search_location, working_threads_queue],
-                             daemon=True).start()
+            t3 = threading.Thread(target=self.find_files, args=[search_location],
+                                  daemon=True)
+            threads.append(t3)
             self.worker_threads_started.set(self.worker_threads_started.get() + 1)
+
+        if threads:
+            self.textbox.configure(state="normal")
+            self.textbox.delete("0.0", "end")
+
+            # Disable buttons and checkboxes while searching for files
+            self.switch_checkboxes_and_buttons_state([
+                self.checkbox_fetch_appdata_logs,
+                self.checkbox_fetch_programdata_logs,
+                self.checkbox_search_for_logs_in_location
+            ], state="disabled")
+
+            self.open_report_button.grid_remove()
+
+            # Update fetch button to allow stopping of search
+            # When search is in progress
+            self.fetch_logs_button.configure(text=_("Stop fetching"), command=self.stop_threads,
+                                             fg_color=("#f59e0b", "#d97706"),
+                                             hover_color=("#d97706", "#b45309"), text_color="#fff")
+
+            self.progressbar.grid()
+            self.progressbar.start()
+
+            # Create a timestamped directory for storing logs and reports
+            global report_folder_path
+            report_folder_path = create_timestamped_directory()
+
+            # Start threads
+            for x in threads:
+                x.start()
+        else:
+            CTkMessagebox(title=_("Select option"), message=_("Please select at least one option."))
 
     def print_logs_to_textbox(self, log_filename_with_path: str):
         """A function that calls get_anydesk_logs function and prints output to textbox
@@ -219,68 +267,13 @@ class AnydeskFrame(customtkinter.CTkFrame):
             self.textbox.insert("insert", '{} {} \n'.format(_('Logs not found in'), log_filename_with_path)
                                 )
 
-    def search_filesystem_callback(self, search_location: str, worker_threads_queue: queue):
-        """A callback function that calls find_files function and prints output to textbox
-
-        It's a wrapper that is responsible for displaying a progressbar while find_files is running, disabling
-        checkboxes and buttons while searching for files and enabling them after search is finished.
-        It calls update_textbox function to update textbox contents while find_files is running.
-        It cleans up after itself by destroying progressbar and enabling buttons and checkboxes after search is finished.
-        """
-        global search_finished, write_header
-        self.open_report_button.grid_remove()
-        self.textbox.insert("insert",
-                            '---- {}: \n\n{}\n\n{}! ----\n\n\n'.format(_('Searching for files in'), search_location,
-                                                                       _('it may take a while'))
-                            )
-
-        # Update fetch button to allow stopping of search
-        # When search is in progress
-        self.fetch_logs_button.configure(text=_("Stop fetching"), command=stop_threads,
-                                         fg_color=("#f59e0b", "#d97706"),
-                                         hover_color=("#d97706", "#b45309"), text_color="#fff")
-
-        # Disable buttons and checkboxes while searching for files
-        self.switch_checkboxes_and_buttons_state([
-            self.checkbox_fetch_appdata_logs,
-            self.checkbox_fetch_programdata_logs,
-            self.checkbox_search_for_logs_in_location,
-            self.master.language_menu
-        ], state="disabled")
-
-        # Create a progressbar and start it while searching for files
-        progressbar = customtkinter.CTkProgressBar(master=self, mode="indeterminate", indeterminate_speed=1.15)
-        progressbar.grid(row=4, column=0, pady=20, padx=20, sticky="ew")
-        progressbar.start()
-
-        # Set search_finished to False while searching for files
-        # This is used to prevent update_textbox function from updating textbox contents after search is finished
-        # The generate_and_present_search_results function is called recursively until search is finished
-        search_finished = False
-        self.generate_and_present_search_results()
-        worker_threads_queue.put(search_location)
-        number_of_found_files = find_files("*.trace", search_location)
-        worker_threads_queue.get(search_location)
-
-        search_finished = True
-
-        # Stop progressbar and destroy it after search is finished
-        progressbar.stop()
-        progressbar.destroy()
-
-        # Display a message if no files were found in search location
-        # Generate a report with a message if no files were found in search location
-        if number_of_found_files == 0:
-            self.open_report_button.grid()
-            self.textbox.insert("insert", '\n---- {} {}! ----\n\n'.format(_('No files were found in'), search_location))
-            with open(os.path.join(report_folder_path, "report.txt"), "a") as report_file:
-                report_file.write('---- {} {} ----\n\n'.format(_('No files were found in'), search_location))
-
-    def generate_and_present_search_results(self):
-        """A function that updates the textbox with new logs found by the search function
-
-        It is called recursively every 2 seconds by the gui thread, and it checks if the search function has finished
-        searching
+    def on_file_found(self):
+        """A function that
+        1. Creates folders from a path to a file if it not already exists
+        2. Copies a file to a destination folder
+        3. Generates a checksum for a file
+        4. Prints logs to textbox
+        5. Generates a report in txt and csv format
         """
         global write_header
         try:
@@ -294,20 +287,21 @@ class AnydeskFrame(customtkinter.CTkFrame):
             write_header = False
         except IndexError:
             pass
-        if stop_searching:
-            # Message queue holds all the files that were found by the search function
-            # If stop_searching is True, it means that the search function has been stopped
-            # So we need to clear the message queue and stop the recursive function
-            self.textbox.insert("insert", '\n---- {}! ----\n\n'.format(_('Search stopped')))
-            message_queue.clear()
-        if not search_finished or len(message_queue) > 0:
-            self.after(200, self.generate_and_present_search_results)
-        else:
-            self.worker_threads_finished.set(self.worker_threads_finished.get() + 1)
-            if self.worker_threads_finished.get() == self.worker_threads_started.get():
-                self.finished_searching_callback()
 
-    def finished_searching_callback(self):
+    def stop_threads(self):
+        """A function that stops all threads and clears message queue, calls on_finished_searching function"""
+        global stop_searching
+        stop_searching = True
+        message_queue.clear()
+
+    def on_finished_searching(self):
+        """A function that is called when all threads are finished, it stops and removes progressbar
+        and enables all checkboxes and buttons previously disabled.
+        It also sets flag that list of reports needs to be refreshed"""
+
+        # Stop progressbar and destroy it after search is finished
+        self.progressbar.stop()
+        self.progressbar.grid_remove()
 
         # Update fetch button to allow fetching of logs
         # After search finishes
@@ -321,14 +315,16 @@ class AnydeskFrame(customtkinter.CTkFrame):
                                          )
 
         self.open_report_button.grid()
-        self.textbox.insert("insert", '---- {}! ----'.format(_('Searching for files finished')))
+        if stop_searching:
+            self.textbox.insert("insert", '\n---- {}! ----\n\n'.format(_('Search stopped')))
+        else:
+            self.textbox.insert("insert", '---- {}! ----'.format(_('Searching for files finished')))
 
         # Enable buttons and checkboxes after search is finished
         self.switch_checkboxes_and_buttons_state([
             self.checkbox_fetch_appdata_logs,
             self.checkbox_fetch_programdata_logs,
-            self.checkbox_search_for_logs_in_location,
-            self.master.language_menu
+            self.checkbox_search_for_logs_in_location
         ], state="normal")
         global_state.refresh_reports_list = True
 

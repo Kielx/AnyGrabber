@@ -151,25 +151,24 @@ class App(customtkinter.CTk):
 
     def select_frame_by_name(self, name):
         """Function that highlights selected button and shows selected frame."""
-        # set button color for selected button
-        self.home_button.configure(fg_color=("gray75", "gray25") if name == "home" else "transparent")
-        self.frame_2_button.configure(fg_color=("gray75", "gray25") if name == "anydesk_frame" else "transparent")
-        self.browse_reports_frame_button.configure(
-            fg_color=("gray75", "gray25") if name == "browse_reports_frame" else "transparent")
 
-        # show selected frame
-        if name == "home":
-            self.home_frame.grid(row=0, column=1, sticky="nsew")
-        else:
-            self.home_frame.grid_forget()
-        if name == "anydesk_frame":
-            self.anydesk_frame.grid(row=0, column=1, sticky="nsew")
-        else:
-            self.anydesk_frame.grid_forget()
-        if name == "browse_reports_frame":
-            self.browse_reports_frame.grid(row=0, column=1, sticky="nsew")
-        else:
-            self.browse_reports_frame.grid_forget()
+        # Define the mappings between name and button/frame
+        frame_mappings = {
+            "home": (self.home_button, self.home_frame),
+            "anydesk_frame": (self.frame_2_button, self.anydesk_frame),
+            "browse_reports_frame": (self.browse_reports_frame_button, self.browse_reports_frame)
+        }
+
+        # Iterate over the mappings and update button colors
+        for frame_name, (button, frame) in frame_mappings.items():
+            button.configure(fg_color=("gray75", "gray25") if name == frame_name else "transparent")
+
+        # Iterate over the mappings and show/hide frames
+        for frame_name, (_, frame) in frame_mappings.items():
+            if name == frame_name:
+                frame.grid(row=0, column=1, sticky="nsew")
+            else:
+                frame.grid_forget()
 
     def home_button_event(self):
         """Home button event handler."""
