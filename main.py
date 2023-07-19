@@ -1,5 +1,6 @@
 import os
 import customtkinter
+import winsound
 from CTkMessagebox import CTkMessagebox
 from PIL import Image
 
@@ -38,7 +39,9 @@ def change_language_event(new_language):
     update_config("locale", language_mappings.inverse[new_language])
     # Display message that restart is required to apply changes only if default locale is changed.
     if language_mappings.inverse[new_language] != default_locale:
-        CTkMessagebox(title=_("Restart required"), message=_("Please restart the application to apply changes."))
+        winsound.MessageBeep()
+        CTkMessagebox(title=_("Restart required"), message=_("Please restart the application to apply changes."),
+                      option_focus=1)
 
 
 class App(customtkinter.CTk):

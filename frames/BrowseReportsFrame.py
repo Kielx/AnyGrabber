@@ -1,5 +1,7 @@
 import csv
 import os
+import winsound
+
 from CTkMessagebox import CTkMessagebox
 import customtkinter
 from PIL import Image
@@ -88,7 +90,12 @@ class Report_Button(customtkinter.CTkButton):
         self.grid(row=1, column=0, columnspan=1, sticky="ew", padx=10, pady=10)
 
     def open_report(self):
-        os.startfile(self.report_path)
+        try:
+            os.startfile(self.report_path)
+        except Exception as e:
+            winsound.MessageBeep()
+            CTkMessagebox(title=_('Error'), message=_('Could not open report folder.'), icon="warning")
+            refresh(self.master.master)
 
 
 class Delete_Report_Button(customtkinter.CTkButton):
@@ -110,7 +117,8 @@ class Delete_Report_Button(customtkinter.CTkButton):
         # get yes/no answers
         msg = CTkMessagebox(title=_('Delete Report' + "?"),
                             message=_('Do you really want to delete the selected report?'),
-                            icon="warning", option_1=_('Cancel'), option_2=_('Delete'), cancel_button="cross")
+                            icon="warning", option_1=_('Cancel'), option_2=_('Delete'), cancel_button="cross",
+                            option_focus=2)
         msg.button_2.configure(text_color="#eee", fg_color=("#ef4444", "#b91c1c"),
                                hover_color=("#dc2626", "#991b1b"))
         response = msg.get()
@@ -122,7 +130,11 @@ class Delete_Report_Button(customtkinter.CTkButton):
 
     def delete_report(self):
         import shutil
-        shutil.rmtree(self.report_path)
+        try:
+            shutil.rmtree(self.report_path)
+        except Exception as e:
+            winsound.MessageBeep()
+            CTkMessagebox(title=_('Error'), message=_('Could not delete report folder.'), icon="warning")
         # refresh browse reports frame
         refresh(self.master.master)
 
