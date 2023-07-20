@@ -94,7 +94,7 @@ class Report_Button(customtkinter.CTkButton):
             os.startfile(self.report_path)
         except Exception as e:
             winsound.MessageBeep()
-            CTkMessagebox(title=_('Error'), message=_('Could not open report folder.'), icon="warning")
+            CTkMessagebox(title=_('Error'), message=_('Could not open report folder.'), icon="warning", option_focus=1)
             refresh(self.master.master)
 
 
@@ -134,7 +134,7 @@ class Delete_Report_Button(customtkinter.CTkButton):
             shutil.rmtree(self.report_path)
         except Exception as e:
             winsound.MessageBeep()
-            CTkMessagebox(title=_('Error'), message=_('Could not delete report folder.'), icon="warning")
+            CTkMessagebox(title=_('Error'), message=_('Could not delete report folder.'), icon="warning", option_focus=1)
         # refresh browse reports frame
         refresh(self.master.master)
 
