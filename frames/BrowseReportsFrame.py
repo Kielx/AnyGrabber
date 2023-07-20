@@ -1,14 +1,13 @@
 import csv
 import os
-import winsound
-
-from CTkMessagebox import CTkMessagebox
 import customtkinter
+from CTkMessagebox import CTkMessagebox
 from PIL import Image
 
 from utils.file_operations import split_computer_datetime_dirname, get_reports_folder_list
 from utils.widget_utils import add_widgets
 from utils.locale_utils import _
+from utils.sound_utils import play_message_beep
 
 
 class BrowseReportsFrame(customtkinter.CTkScrollableFrame):
@@ -29,6 +28,7 @@ class Report_Frame(customtkinter.CTkFrame):
     It also shows the number of files and IP addresses found in the report.
     Button located in frame opens the report folder.
     """
+    master: BrowseReportsFrame
 
     def __init__(self, master, **kwargs):
         super().__init__(master)
@@ -77,6 +77,9 @@ class Report_Frame(customtkinter.CTkFrame):
 
 class Report_Button(customtkinter.CTkButton):
     """A class representing a button that opens the report folder."""
+    master: Report_Frame
+
+
 
     def __init__(self, master, **kwargs):
         super().__init__(master)
@@ -93,13 +96,14 @@ class Report_Button(customtkinter.CTkButton):
         try:
             os.startfile(self.report_path)
         except Exception as e:
-            winsound.MessageBeep()
+            play_message_beep()
             CTkMessagebox(title=_('Error'), message=_('Could not open report folder.'), icon="warning", option_focus=1)
             refresh(self.master.master)
 
 
 class Delete_Report_Button(customtkinter.CTkButton):
     """A class representing a button that deletes the report folder."""
+    master: Report_Frame
 
     def __init__(self, master, **kwargs):
         super().__init__(master)
@@ -133,7 +137,7 @@ class Delete_Report_Button(customtkinter.CTkButton):
         try:
             shutil.rmtree(self.report_path)
         except Exception as e:
-            winsound.MessageBeep()
+            play_message_beep()
             CTkMessagebox(title=_('Error'), message=_('Could not delete report folder.'), icon="warning", option_focus=1)
         # refresh browse reports frame
         refresh(self.master.master)

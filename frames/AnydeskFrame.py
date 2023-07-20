@@ -5,10 +5,10 @@ import fnmatch
 from collections import deque
 from typing import Literal
 
-import winsound
 from CTkMessagebox import CTkMessagebox
 from PIL import Image
 from utils.event_utils import myEvent
+from utils.sound_utils import play_message_beep
 
 import customtkinter
 
@@ -244,7 +244,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
             for x in threads:
                 x.start()
         else:
-            winsound.MessageBeep()
+            play_message_beep()
             CTkMessagebox(title=_("Select option"), message=_("Please select at least one option."), option_focus=1)
 
     def print_logs_to_textbox(self, log_filename_with_path: str):
@@ -330,7 +330,7 @@ class AnydeskFrame(customtkinter.CTkFrame):
         ], state="normal")
 
         global_state.refresh_reports_list = True
-        winsound.MessageBeep()
+        play_message_beep()
 
     @staticmethod
     def turn_off_switches(switches_list: list[tkinter.BooleanVar]):
@@ -366,5 +366,5 @@ class AnydeskFrame(customtkinter.CTkFrame):
         try:
             os.startfile(report_folder_path)
         except FileNotFoundError:
-            winsound.MessageBeep()
+            play_message_beep()
             CTkMessagebox(title=_("Report folder not found!"), message=_("Report folder not found!"), option_focus=1)
