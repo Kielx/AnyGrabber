@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AnyGrabber\n"
-"POT-Creation-Date: 2023-07-18 14:09+0200\n"
-"PO-Revision-Date: 2023-07-18 14:10+0200\n"
+"POT-Creation-Date: 2023-07-19 22:18+0200\n"
+"PO-Revision-Date: 2023-07-19 22:19+0200\n"
 "Last-Translator: Krzysztof Pańtak <kielx.dev@gmail.com>\n"
 "Language-Team: Krzysztof Pańtak\n"
 "Language: pl\n"
@@ -16,34 +16,34 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 "
 "|| n%100>14) ? 1 : 2);\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Poedit-Basepath: .\n"
 
-#: frames/AnydeskFrame.py:73
+#: frames/AnydeskFrame.py:74
 msgid "Choose where to search for logs:"
 msgstr "Wybierz miejsce, w którym chcesz szukać logów programu:"
 
-#: frames/AnydeskFrame.py:102
+#: frames/AnydeskFrame.py:103
 msgid "Custom location"
 msgstr "Niestandardowa lokalizacja"
 
-#: frames/AnydeskFrame.py:117 frames/AnydeskFrame.py:316
+#: frames/AnydeskFrame.py:118 frames/AnydeskFrame.py:316
 msgid "Fetch logs"
 msgstr "Znajdź i pobierz logi"
 
-#: frames/AnydeskFrame.py:131
+#: frames/AnydeskFrame.py:132
 msgid "Open report"
 msgstr "Otwórz raport"
 
-#: frames/AnydeskFrame.py:145
+#: frames/AnydeskFrame.py:146
 msgid "Searching for files in"
 msgstr "Szukanie plików w"
 
-#: frames/AnydeskFrame.py:146
+#: frames/AnydeskFrame.py:147
 msgid "it may take a while"
 msgstr "to może chwile potrwać"
 
-#: frames/AnydeskFrame.py:173 frames/AnydeskFrame.py:175
+#: frames/AnydeskFrame.py:174 frames/AnydeskFrame.py:176
 msgid "No files were found in"
 msgstr "Nie znaleziono plików w"
 
@@ -51,71 +51,83 @@ msgstr "Nie znaleziono plików w"
 msgid "Stop fetching"
 msgstr "Zakończ szukanie"
 
-#: frames/AnydeskFrame.py:247
+#: frames/AnydeskFrame.py:248
 msgid "Select option"
 msgstr "Wybierz opcje"
 
-#: frames/AnydeskFrame.py:247
+#: frames/AnydeskFrame.py:248
 msgid "Please select at least one option."
 msgstr "Proszę wybrać przynajmniej jedną opcję."
 
-#: frames/AnydeskFrame.py:260
+#: frames/AnydeskFrame.py:261
 msgid "Fetching logs from"
 msgstr "Przeszukiwanie logów w pliku"
 
-#: frames/AnydeskFrame.py:262
+#: frames/AnydeskFrame.py:263
 msgid "No IP logs found inside file!"
 msgstr "Nie znaleziono adresów IP w pliku!"
 
-#: frames/AnydeskFrame.py:268
+#: frames/AnydeskFrame.py:269
 msgid "Logs not found in"
 msgstr "Nie znaleziono żadnych logów programu w"
 
-#: frames/AnydeskFrame.py:296
+#: frames/AnydeskFrame.py:322
 msgid "Search stopped"
 msgstr "Wyszukiwanie zatrzymane"
 
-#: frames/AnydeskFrame.py:321
+#: frames/AnydeskFrame.py:324
 msgid "Searching for files finished"
 msgstr "Szukanie plików zakończone"
 
-#: frames/AnydeskFrame.py:365
+#: frames/AnydeskFrame.py:371
 msgid "Report folder not found!"
 msgstr "Folder z raportem nie został znaleziony!"
 
-#: frames/BrowseReportsFrame.py:62
+#: frames/BrowseReportsFrame.py:64
 msgid "Files: "
 msgstr "Pliki: "
 
-#: frames/BrowseReportsFrame.py:63
+#: frames/BrowseReportsFrame.py:65
 msgid "IP Addresses: "
 msgstr "Adresy IP: "
 
-#: frames/BrowseReportsFrame.py:85
+#: frames/BrowseReportsFrame.py:87
 msgid "Open Report folder"
 msgstr "Otwórz raport"
 
-#: frames/BrowseReportsFrame.py:103
+#: frames/BrowseReportsFrame.py:97 frames/BrowseReportsFrame.py:137
+msgid "Error"
+msgstr "Błąd"
+
+#: frames/BrowseReportsFrame.py:97
+msgid "Could not open report folder."
+msgstr "Nie udało się otworzyć folderu z raportem."
+
+#: frames/BrowseReportsFrame.py:110
 msgid "Delete Report"
 msgstr "Usuń Raport"
 
-#: frames/BrowseReportsFrame.py:111
+#: frames/BrowseReportsFrame.py:118
 msgid "Delete Report?"
 msgstr "Usuń Raport?"
 
-#: frames/BrowseReportsFrame.py:112
+#: frames/BrowseReportsFrame.py:119
 msgid "Do you really want to delete the selected report?"
 msgstr "Czy naprawdę chcesz usunąć wybrany raport?"
 
-#: frames/BrowseReportsFrame.py:113
+#: frames/BrowseReportsFrame.py:120
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: frames/BrowseReportsFrame.py:113 frames/BrowseReportsFrame.py:118
+#: frames/BrowseReportsFrame.py:120 frames/BrowseReportsFrame.py:126
 msgid "Delete"
 msgstr "Usuń"
 
-#: frames/BrowseReportsFrame.py:149
+#: frames/BrowseReportsFrame.py:137
+msgid "Could not delete report folder."
+msgstr "Nie udało się usunąć folderu z raportem."
+
+#: frames/BrowseReportsFrame.py:161
 msgid "Reports List"
 msgstr "Lista raportów"
 
@@ -139,27 +151,27 @@ msgstr ""
 "Oprogramowanie na licencji MIT\n"
 "Copyright (c) 2023 Krzysztof Pantak - anygrabber@pantak.net\n"
 
-#: main.py:41
+#: main.py:43
 msgid "Restart required"
 msgstr "Wymagany restart"
 
-#: main.py:41
+#: main.py:43
 msgid "Please restart the application to apply changes."
 msgstr "Uruchom ponownie aplikację, aby zastosować zmiany."
 
-#: main.py:94
+#: main.py:97
 msgid "Home"
 msgstr "Start"
 
-#: main.py:109
+#: main.py:112
 msgid "Browse Reports"
 msgstr "Przeglądaj raporty"
 
-#: main.py:117
+#: main.py:120
 msgid "Theme"
 msgstr "Motyw"
 
-#: main.py:129
+#: main.py:132
 msgid "Language"
 msgstr "Język"
 
@@ -202,6 +214,14 @@ msgstr "Ciemny"
 #: utils/locale_utils.py:28
 msgid "System"
 msgstr "Systemowy"
+
+#~ msgid "Search finished"
+#~ msgstr "Wyszukiwanie zakończone"
+
+#, fuzzy
+#~| msgid "Searching for files finished"
+#~ msgid "Searching for files finished!"
+#~ msgstr "Szukanie plików zakończone"
 
 #~ msgid "Ciemny"
 #~ msgstr "Ciemny"

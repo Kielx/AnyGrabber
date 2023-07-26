@@ -1,12 +1,13 @@
 import csv
 import os
-from CTkMessagebox import CTkMessagebox
 import customtkinter
+from CTkMessagebox import CTkMessagebox
 from PIL import Image
 
 from utils.file_operations import split_computer_datetime_dirname, get_reports_folder_list
 from utils.widget_utils import add_widgets
 from utils.locale_utils import _
+from utils.sound_utils import play_message_beep
 
 
 class BrowseReportsFrame(customtkinter.CTkScrollableFrame):
@@ -27,6 +28,7 @@ class Report_Frame(customtkinter.CTkFrame):
     It also shows the number of files and IP addresses found in the report.
     Button located in frame opens the report folder.
     """
+    master: BrowseReportsFrame
 
     def __init__(self, master, **kwargs):
         super().__init__(master)
@@ -75,6 +77,9 @@ class Report_Frame(customtkinter.CTkFrame):
 
 class Report_Button(customtkinter.CTkButton):
     """A class representing a button that opens the report folder."""
+    master: Report_Frame
+
+
 
     def __init__(self, master, **kwargs):
         super().__init__(master)
@@ -88,11 +93,17 @@ class Report_Button(customtkinter.CTkButton):
         self.grid(row=1, column=0, columnspan=1, sticky="ew", padx=10, pady=10)
 
     def open_report(self):
-        os.startfile(self.report_path)
+        try:
+            os.startfile(self.report_path)
+        except Exception as e:
+            play_message_beep()
+            CTkMessagebox(title=_('Error'), message=_('Could not open report folder.'), icon="warning", option_focus=1)
+            refresh(self.master.master)
 
 
 class Delete_Report_Button(customtkinter.CTkButton):
     """A class representing a button that deletes the report folder."""
+    master: Report_Frame
 
     def __init__(self, master, **kwargs):
         super().__init__(master)
@@ -110,7 +121,8 @@ class Delete_Report_Button(customtkinter.CTkButton):
         # get yes/no answers
         msg = CTkMessagebox(title=_('Delete Report' + "?"),
                             message=_('Do you really want to delete the selected report?'),
-                            icon="warning", option_1=_('Cancel'), option_2=_('Delete'), cancel_button="cross")
+                            icon="warning", option_1=_('Cancel'), option_2=_('Delete'), cancel_button="cross",
+                            option_focus=2)
         msg.button_2.configure(text_color="#eee", fg_color=("#ef4444", "#b91c1c"),
                                hover_color=("#dc2626", "#991b1b"))
         response = msg.get()
@@ -122,7 +134,11 @@ class Delete_Report_Button(customtkinter.CTkButton):
 
     def delete_report(self):
         import shutil
-        shutil.rmtree(self.report_path)
+        try:
+            shutil.rmtree(self.report_path)
+        except Exception as e:
+            play_message_beep()
+            CTkMessagebox(title=_('Error'), message=_('Could not delete report folder.'), icon="warning", option_focus=1)
         # refresh browse reports frame
         refresh(self.master.master)
 

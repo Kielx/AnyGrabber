@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AnyGrabber\n"
-"POT-Creation-Date: 2023-07-18 14:09+0200\n"
+"POT-Creation-Date: 2023-07-19 22:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Krzysztof Pañtak, anygrabber@pantak.net\n"
 "Language-Team: Krzysztof Pañtak, anygrabber@pantak.net\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=cp1250\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: _(\";{_(\";{_(\"*\")}\n"
 "X-Poedit-SearchPath-0: frames/HomeFrame.py\n"
@@ -23,31 +23,31 @@ msgstr ""
 "X-Poedit-SearchPath-3: frames\n"
 "X-Poedit-SearchPath-4: utils\n"
 
-#: frames/AnydeskFrame.py:73
+#: frames/AnydeskFrame.py:74
 msgid "Choose where to search for logs:"
 msgstr ""
 
-#: frames/AnydeskFrame.py:102
+#: frames/AnydeskFrame.py:103
 msgid "Custom location"
 msgstr ""
 
-#: frames/AnydeskFrame.py:117 frames/AnydeskFrame.py:316
+#: frames/AnydeskFrame.py:118 frames/AnydeskFrame.py:316
 msgid "Fetch logs"
 msgstr ""
 
-#: frames/AnydeskFrame.py:131
+#: frames/AnydeskFrame.py:132
 msgid "Open report"
 msgstr ""
 
-#: frames/AnydeskFrame.py:145
+#: frames/AnydeskFrame.py:146
 msgid "Searching for files in"
 msgstr ""
 
-#: frames/AnydeskFrame.py:146
+#: frames/AnydeskFrame.py:147
 msgid "it may take a while"
 msgstr ""
 
-#: frames/AnydeskFrame.py:173 frames/AnydeskFrame.py:175
+#: frames/AnydeskFrame.py:174 frames/AnydeskFrame.py:176
 msgid "No files were found in"
 msgstr ""
 
@@ -55,71 +55,83 @@ msgstr ""
 msgid "Stop fetching"
 msgstr ""
 
-#: frames/AnydeskFrame.py:247
+#: frames/AnydeskFrame.py:248
 msgid "Select option"
 msgstr ""
 
-#: frames/AnydeskFrame.py:247
+#: frames/AnydeskFrame.py:248
 msgid "Please select at least one option."
 msgstr ""
 
-#: frames/AnydeskFrame.py:260
+#: frames/AnydeskFrame.py:261
 msgid "Fetching logs from"
 msgstr ""
 
-#: frames/AnydeskFrame.py:262
+#: frames/AnydeskFrame.py:263
 msgid "No IP logs found inside file!"
 msgstr ""
 
-#: frames/AnydeskFrame.py:268
+#: frames/AnydeskFrame.py:269
 msgid "Logs not found in"
 msgstr ""
 
-#: frames/AnydeskFrame.py:296
+#: frames/AnydeskFrame.py:322
 msgid "Search stopped"
 msgstr ""
 
-#: frames/AnydeskFrame.py:321
+#: frames/AnydeskFrame.py:324
 msgid "Searching for files finished"
 msgstr ""
 
-#: frames/AnydeskFrame.py:365
+#: frames/AnydeskFrame.py:371
 msgid "Report folder not found!"
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:62
+#: frames/BrowseReportsFrame.py:64
 msgid "Files: "
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:63
+#: frames/BrowseReportsFrame.py:65
 msgid "IP Addresses: "
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:85
+#: frames/BrowseReportsFrame.py:87
 msgid "Open Report folder"
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:103
+#: frames/BrowseReportsFrame.py:97 frames/BrowseReportsFrame.py:137
+msgid "Error"
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:97
+msgid "Could not open report folder."
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:110
 msgid "Delete Report"
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:111
+#: frames/BrowseReportsFrame.py:118
 msgid "Delete Report?"
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:112
+#: frames/BrowseReportsFrame.py:119
 msgid "Do you really want to delete the selected report?"
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:113
+#: frames/BrowseReportsFrame.py:120
 msgid "Cancel"
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:113 frames/BrowseReportsFrame.py:118
+#: frames/BrowseReportsFrame.py:120 frames/BrowseReportsFrame.py:126
 msgid "Delete"
 msgstr ""
 
-#: frames/BrowseReportsFrame.py:149
+#: frames/BrowseReportsFrame.py:137
+msgid "Could not delete report folder."
+msgstr ""
+
+#: frames/BrowseReportsFrame.py:161
 msgid "Reports List"
 msgstr ""
 
@@ -127,27 +139,27 @@ msgstr ""
 msgid "welcome screen\n"
 msgstr ""
 
-#: main.py:41
+#: main.py:43
 msgid "Restart required"
 msgstr ""
 
-#: main.py:41
+#: main.py:43
 msgid "Please restart the application to apply changes."
 msgstr ""
 
-#: main.py:94
+#: main.py:97
 msgid "Home"
 msgstr ""
 
-#: main.py:109
+#: main.py:112
 msgid "Browse Reports"
 msgstr ""
 
-#: main.py:117
+#: main.py:120
 msgid "Theme"
 msgstr ""
 
-#: main.py:129
+#: main.py:132
 msgid "Language"
 msgstr ""
 

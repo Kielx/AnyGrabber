@@ -8,6 +8,7 @@ from frames.BrowseReportsFrame import BrowseReportsFrame, refresh
 from frames.HomeFrame import HomeFrame
 from utils.locale_utils import _, default_locale, language_mappings, appearance_mode_mappings
 from utils.config_utils import update_config, get_config_parameter_value
+from utils.sound_utils import play_message_beep
 import global_state
 
 
@@ -38,7 +39,9 @@ def change_language_event(new_language):
     update_config("locale", language_mappings.inverse[new_language])
     # Display message that restart is required to apply changes only if default locale is changed.
     if language_mappings.inverse[new_language] != default_locale:
-        CTkMessagebox(title=_("Restart required"), message=_("Please restart the application to apply changes."))
+        play_message_beep()
+        CTkMessagebox(title=_("Restart required"), message=_("Please restart the application to apply changes."),
+                      option_focus=1)
 
 
 class App(customtkinter.CTk):
