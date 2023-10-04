@@ -1,5 +1,5 @@
 customtkinter==5.1.2
-Pillow==9.4.0
+Pillow==10.0.1
 python_dateutil==2.8.2
 future~=0.18.3
 CTkMessagebox~=2.0
